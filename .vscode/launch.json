@@ -18,6 +18,14 @@
       "program": "${workspaceFolder}/interpreter.py",
       "console": "integratedTerminal",
       "args": "${workspaceFolder}/examples/factorial.🍝"
+    },
+    {
+      "name": "Custom file",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/interpreter.py",
+      "console": "integratedTerminal",
+      "args": "${command:pickArgs}"
     }
   ]
 }
