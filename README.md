@@ -9,8 +9,8 @@ A programming language that only uses emojis as syntax and encourages writing sp
 ⚙️ 🔢❗ 🔰
     👋 🏁 1
     🔃 🔰 🤜 1
-        👋✖️ 🏁 🔰
-        👋➖ 🔰
+        👋 🏁 (🏁 ✖️ 🔰)
+        👋 🔰 (🔰 ➖ 1)
     ↪️ 🏁
 
 🗨️ "Enter a number to calculate the factorial: "
@@ -90,7 +90,7 @@ The language supports basic operators for logical and arithmetic operations. The
 - 🤝: Logical OR
 - 🙅: Logical NOT
 
-Operators can be used directly after 👋 in variable assignments to perform operations on the variable. For example, `👋➕ x 1` will increment the variable `x` by 1.
+<!-- Operators can be used directly after 👋 in variable assignments to perform operations on the variable. For example, `👋➕ x 1` will increment the variable `x` by 1. -->
 
 ### Strings
 
