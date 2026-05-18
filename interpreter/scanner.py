@@ -31,6 +31,7 @@ class Scanner:
             self.start = self.current
             self.scan_token()
 
+        self.tokens.append(Token(TokenType.EOF, "", None, self.line))
         return self.tokens
 
     def is_at_end(self) -> bool:
@@ -135,6 +136,8 @@ class Scanner:
         text = self.source[self.start : self.current]
         if text in KEYWORDS:
             self.add_token(KEYWORDS[text])
+            return
+
         self.add_token(TokenType.IDENTIFIER, text)
 
 

@@ -4,6 +4,8 @@ Entry point for the Spamoji interpreter.
 
 import sys
 
+from interpreter.helpers import ASTPrinter
+from interpreter.parser import Parser
 from interpreter.scanner import Scanner
 
 
@@ -39,8 +41,11 @@ def run(source: str):
     """Runs a piece of code."""
     scanner = Scanner(source)
     tokens = scanner.scan_tokens()
-    for token in tokens:
-        print(token)
+    parser = Parser(tokens)
+    expression = parser.parse()
+    if expression is None:
+        return
+    print(ASTPrinter().print(expression))
 
 
 if __name__ == "__main__":
