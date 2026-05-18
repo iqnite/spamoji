@@ -9,8 +9,7 @@
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/interpreter.py",
-      "console": "integratedTerminal",
-      "args": "${command:pickArgs}"
+      "console": "integratedTerminal"
     },
     {
       "name": "Example file",
