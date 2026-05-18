@@ -55,6 +55,7 @@ Each line of code starts with an emoji that indicates the type of statement. Eac
 - 🎯 Jump statement: Used to transfer control to a labeled statement
 - ⚙️ Function definition: Followed by the function name and parameters
   - ↪️ Return statement: Followed by the value to return
+- 🛑 Stop statement: Terminates the program
 - 🧩 Import statement: Followed by a file name, it gets replaced by the contents of that file before execution
 - 🐍 Python statement: Followed by Python code to be executed
 
