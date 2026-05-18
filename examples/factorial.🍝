@@ -1,0 +1,15 @@
+🗒️ A function to calculate factorial
+⚙️ 🔢❗ 🔰
+    👋 🏁 1
+    🔃 🔰 🤜 1
+        👋✖️ 🏁 🔰
+        👋➖ 🔰
+    ↪️ 🏁
+
+🗨️ "Enter a number to calculate the factorial: "
+👋 😀 (🔢 ⌨️)
+🤔 (😀 🟰 ⚠️)
+👍️
+    🗨️ "Invalid input." ↩️
+👎
+    🗨️ "The factorial of "😀" is "(🔢❗ 😀) ↩️
