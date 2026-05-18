@@ -53,60 +53,6 @@ class Scanner:
                 self.add_token(TokenType.COMMENT)
                 while self.peek() != "\n" and not self.is_at_end():
                     self.advance()
-            case "⚙️":
-                self.add_token(TokenType.FUNCTION)
-            case "🔃":
-                self.add_token(TokenType.WHILE)
-            case "⛔":
-                self.add_token(TokenType.BREAK)
-            case "⤴️":
-                self.add_token(TokenType.CONTINUE)
-            case "↪️":
-                self.add_token(TokenType.RETURN)
-            case "🟰":
-                self.add_token(TokenType.EQUALS)
-            case "🆚":
-                self.add_token(TokenType.NOT_EQUALS)
-            case "🤜":
-                self.add_token(TokenType.GREATER_THAN)
-            case "🤛":
-                self.add_token(TokenType.LESS_THAN)
-            case "🤔":
-                self.add_token(TokenType.IF)
-            case "👍":
-                self.add_token(TokenType.IFTRUE)
-            case "👎":
-                self.add_token(TokenType.ELSE)
-            case "✅":
-                self.add_token(TokenType.TRUE)
-            case "❌":
-                self.add_token(TokenType.FALSE)
-            case "👋":
-                self.add_token(TokenType.VAR)
-            case "🚩":
-                self.add_token(TokenType.LABEL)
-            case "🎯":
-                self.add_token(TokenType.JUMP)
-            case "🧩":
-                self.add_token(TokenType.IMPORT)
-            case "🐍":
-                self.add_token(TokenType.PYTHON)
-            case "🤝":
-                self.add_token(TokenType.OR)
-            case "🙅":
-                self.add_token(TokenType.NOT)
-            case "➕":
-                self.add_token(TokenType.PLUS)
-            case "➖":
-                self.add_token(TokenType.MINUS)
-            case "✖️":
-                self.add_token(TokenType.MULTIPLY)
-            case "➗":
-                self.add_token(TokenType.DIVIDE)
-            case "🛑":
-                self.add_token(TokenType.STOP)
-            case "⚠️":
-                self.add_token(TokenType.ERROR)
             case '"':
                 self.string()
             case _:
@@ -186,4 +132,37 @@ class Scanner:
             self.advance()
 
         text = self.source[self.start : self.current]
+        if text in KEYWORDS:
+            self.add_token(KEYWORDS[text])
         self.add_token(TokenType.IDENTIFIER, text)
+
+
+KEYWORDS = {
+    "⚙️": (TokenType.FUNCTION),
+    "🔃": (TokenType.WHILE),
+    "⛔": (TokenType.BREAK),
+    "⤴️": (TokenType.CONTINUE),
+    "↪️": (TokenType.RETURN),
+    "🟰": (TokenType.EQUALS),
+    "🆚": (TokenType.NOT_EQUALS),
+    "🤜": (TokenType.GREATER_THAN),
+    "🤛": (TokenType.LESS_THAN),
+    "🤔": (TokenType.IF),
+    "👍": (TokenType.IFTRUE),
+    "👎": (TokenType.ELSE),
+    "✅": (TokenType.TRUE),
+    "❌": (TokenType.FALSE),
+    "👋": (TokenType.VAR),
+    "🚩": (TokenType.LABEL),
+    "🎯": (TokenType.JUMP),
+    "🧩": (TokenType.IMPORT),
+    "🐍": (TokenType.PYTHON),
+    "🤝": (TokenType.OR),
+    "🙅": (TokenType.NOT),
+    "➕": (TokenType.PLUS),
+    "➖": (TokenType.MINUS),
+    "✖️": (TokenType.MULTIPLY),
+    "➗": (TokenType.DIVIDE),
+    "🛑": (TokenType.STOP),
+    "⚠️": (TokenType.ERROR),
+}
