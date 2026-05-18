@@ -44,6 +44,7 @@ class Scanner:
             case " " | "\r" | "\t":
                 pass
             case "\n":
+                self.add_token(TokenType.NEWLINE)
                 self.line += 1
             case "(":
                 self.add_token(TokenType.LEFT_PAREN)

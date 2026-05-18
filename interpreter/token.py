@@ -41,6 +41,7 @@ class TokenType(Enum):
     ERROR = 43
     EOF = 44
     NULL = 45
+    NEWLINE = 46
 
 
 class Token:
