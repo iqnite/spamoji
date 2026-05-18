@@ -39,6 +39,8 @@ class TokenType(Enum):
     DIVIDE = 41
     STOP = 42
     ERROR = 43
+    EOF = 44
+    NULL = 45
 
 
 class Token:

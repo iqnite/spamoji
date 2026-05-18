@@ -107,6 +107,7 @@ The language includes several built-in functions and values for common operation
 - 🗨️: Print output to the console
 - ✅: A special value representing true
 - ❌: A special value representing false
+- 🫥: A special value representing null
 - ⚠️: A special value representing an error or undefined value
 - ↩️: A special character representing a newline for output
 
