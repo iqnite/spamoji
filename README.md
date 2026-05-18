@@ -82,7 +82,8 @@ The language supports basic operators for logical and arithmetic operations. The
 - ➖: Subtraction
 - ✖️: Multiplication or logical AND
 - ➗: Division
-- 🟰: Equality
+- 🟰: Equal
+- 🆚: Not equal
 - 🤜: Greater than
 - 🤛: Less than
 - 🤝: Logical OR
