@@ -33,7 +33,9 @@ def define_ast(output_dir: str, base_name: str, types: list[str]):
         f.write("from abc import ABC\n\n")
         f.write("from interpreter.token import Token\n\n\n")
         f.write(f"class {base_name}(ABC):\n")
-        f.write(f'    """Base class for all {base_name.lower()}s."""\n\n\n')
+        f.write(f'    """Base class for all {base_name.lower()}s."""\n')
+        f.write('    def accept(self, visitor: "Visitor") -> object:\n')
+        f.write("        pass\n\n\n")
         define_visitor(f, base_name, types)
         for type in types:
             class_name, fields = type.split("@")
@@ -50,7 +52,7 @@ def define_type(f, base_name: str, class_name: str, fields: str):
         name = field.strip().split(":")[0]
         f.write(f"        self.{name} = {name}\n")
     f.write("\n")
-    f.write("    def accept(self, visitor: Visitor):\n")
+    f.write("    def accept(self, visitor: Visitor) -> object:\n")
     f.write(
         f"        return visitor.visit_{class_name.lower()}_{base_name.lower()}(self)\n"
     )
@@ -62,7 +64,7 @@ def define_visitor(f, base_name: str, types: list[str]):
         type_name = t.split("@")[0].strip()
         f.write(f"    def visit_{type_name.lower()}_{base_name.lower()}(")
         f.write(f'self, {base_name.lower()}: "{type_name}") -> object:\n')
-        f.write(f"        pass\n\n")
+        f.write(f"        pass\n")
 
 
 if __name__ == "__main__":
