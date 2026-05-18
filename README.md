@@ -56,6 +56,7 @@ Each line of code starts with an emoji that indicates the type of statement. Eac
 - ⚙️ Function definition: Followed by the function name and parameters
   - ↪️ Return statement: Followed by the value to return
 - 🧩 Import statement: Followed by a file name, it gets replaced by the contents of that file before execution
+- 🐍 Python statement: Followed by Python code to be executed
 
 Some statements can be nested, such as if statements and loops. Indentation is used to indicate the scope of these statements. Indented blocks are considered part of the previous statement until the indentation level decreases.
 
