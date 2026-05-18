@@ -19,7 +19,7 @@ A programming language that only uses emojis as syntax and encourages writing sp
 👍️
     🗨️ "Invalid input." ↩️
 👎
-    🗨️ "The factorial of " 😀 " is " (🔢❗ 😀) ↩️
+    🗨️ "The factorial of "😀" is "(🔢❗ 😀) ↩️
 ```
 
 ## What's this all about?
@@ -89,6 +89,12 @@ The language supports basic operators for logical and arithmetic operations. The
 - 🙅: Logical NOT
 
 Operators can be used directly after 👋 in variable assignments to perform operations on the variable. For example, `👋➕ x 1` will increment the variable `x` by 1.
+
+### Strings
+
+Strings are sequences of characters enclosed in double quotes. They can contain any characters, including emojis. Strings can be used in variable assignments, printed to the console, and concatenated using the ➕ operator.
+
+Values directly before or after a string will also be concatenated with that string.
 
 ### Built-ins
 
