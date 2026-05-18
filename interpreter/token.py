@@ -1,3 +1,7 @@
+"""
+This module defines the Token class and the TokenType enumeration for the Spamoji programming language.
+"""
+
 from enum import Enum
 
 
