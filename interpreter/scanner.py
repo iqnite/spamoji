@@ -2,14 +2,19 @@
 This module contains the Scanner class for the Spamoji programming language.
 """
 
-from interpreter.helpers import error
+import typing
+
 from interpreter.token import Token, TokenType
 
 
 class Scanner:
     """Scanner for the Spamoji language."""
 
-    def __init__(self, source: str):
+    def __init__(
+        self,
+        source: str,
+        error_handler: typing.Callable[[int, str], typing.Any] | None = None,
+    ):
         """
         Initializes a scanner instance.
 
@@ -20,6 +25,7 @@ class Scanner:
         self.start: int = 0
         self.current: int = 0
         self.line: int = 1
+        self.error_handler = error_handler
 
     def scan_tokens(self) -> list[Token]:
         """
@@ -97,7 +103,8 @@ class Scanner:
             self.advance()
 
         if self.is_at_end():
-            error(self.line, "Unterminated string.")
+            if self.error_handler:
+                self.error_handler(self.line, "Unterminated string.")
             return
 
         # The closing ".

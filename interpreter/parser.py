@@ -2,6 +2,8 @@
 Parser for the Spamoji language. Converts a list of tokens into an abstract syntax tree (AST).
 """
 
+import typing
+
 from interpreter.expr import Binary, Expr, Grouping, Literal, Unary
 from interpreter.helpers import error_token
 from interpreter.token import Token, TokenType
@@ -16,13 +18,18 @@ class ParseError(Exception):
 class Parser:
     """Parser for the Spamoji language. Converts a list of tokens into an AST."""
 
-    def __init__(self, tokens: list[Token]):
+    def __init__(
+        self,
+        tokens: list[Token],
+        error_handler: typing.Callable[[int, str, str], typing.Any] | None = None,
+    ):
         """
         Initializes the parser with a list of tokens.
         :param list[Token] tokens: The list of tokens to parse.
         """
         self.tokens = tokens
         self.current = 0
+        self.error_handler = error_handler
 
     def parse(self) -> Expr | None:
         """Parses the tokens and returns the resulting AST."""
@@ -128,7 +135,8 @@ class Parser:
         raise self.error(self.peek(), message)
 
     def error(self, token: Token, message: str) -> ParseError:
-        error_token(token, message)
+        if self.error_handler:
+            error_token(token, message, self.error_handler)
         return ParseError()
 
     def synchronize(self):
