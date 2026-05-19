@@ -73,13 +73,13 @@ class Interpreter(Visitor):
         right_f = typing.cast(float, right)
         match expr.operator.token_type:
             case TokenType.MINUS:
-                self.check_number_operands(expr.operator, expr.left, expr.right)
+                self.check_number_operands(expr.operator, left, right)
                 return left_f - right_f
             case TokenType.MULTIPLY:
-                self.check_number_operands(expr.operator, expr.left, expr.right)
+                self.check_number_operands(expr.operator, left, right)
                 return left_f * right_f
             case TokenType.DIVIDE:
-                self.check_number_operands(expr.operator, expr.left, expr.right)
+                self.check_number_operands(expr.operator, left, right)
                 try:
                     return left_f / right_f
                 except ZeroDivisionError:
@@ -93,10 +93,10 @@ class Interpreter(Visitor):
                     expr.operator, "Operands must be numbers or strings."
                 )
             case TokenType.GREATER_THAN:
-                self.check_number_operands(expr.operator, expr.left, expr.right)
+                self.check_number_operands(expr.operator, left, right)
                 return left_f > right_f
             case TokenType.LESS_THAN:
-                self.check_number_operands(expr.operator, expr.left, expr.right)
+                self.check_number_operands(expr.operator, left, right)
                 return left_f < right_f
             case TokenType.EQUALS:
                 return left == right
