@@ -49,7 +49,7 @@ class Parser:
 
     def expression(self) -> Expr:
         """Parses an expression."""
-        return self.logic_or()
+        return self.assignment()
 
     def declaration(self) -> Stmt | None:
         try:
@@ -92,6 +92,13 @@ class Parser:
             TokenType.COMMENT,
         )
         return stmt.Expression(expr)
+
+    def assignment(self) -> Expr:
+        if self.match(TokenType.VAR):
+            name = self.consume("Expect variable name.", TokenType.IDENTIFIER)
+            value = self.assignment()
+            return expr.Assign(name, value)
+        return self.logic_or()
 
     def equality(self) -> Expr:
         """Parses an equality expression."""

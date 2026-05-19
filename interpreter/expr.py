@@ -14,6 +14,8 @@ class Expr(ABC):
 
 
 class Visitor(ABC):
+    def visit_assign_expr(self, expr: "Assign") -> object:
+        pass
     def visit_binary_expr(self, expr: "Binary") -> object:
         pass
     def visit_grouping_expr(self, expr: "Grouping") -> object:
@@ -24,6 +26,17 @@ class Visitor(ABC):
         pass
     def visit_variable_expr(self, expr: "Variable") -> object:
         pass
+
+
+class Assign(Expr):
+    """Represents a assign expression."""
+
+    def __init__(self, name: Token, value: Expr):
+        self.name = name
+        self.value = value
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_assign_expr(self)
 
 
 class Binary(Expr):
