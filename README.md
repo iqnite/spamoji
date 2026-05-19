@@ -31,11 +31,15 @@ This language is a learning project. I have written this documentation before wr
 
 ## Usage
 
-To run a spamoji program, you will need to use the spamoji interpreter. It doesn't exist yet, but you can imagine it as a command-line tool that takes a spamoji file (with the .🍝 extension) as input and executes the code. For example:
+To run a spamoji program, you will need to use the spamoji interpreter.
+
+You can provide a spamoji file (with the .🍝 extension) as input to run it. For example:
 
 ```bash
 spamoji my_program.🍝
 ```
+
+If no file is supplied, the interactive REPL will start, which allows to enter and evaluate expressions directly.
 
 ## Syntax
 
