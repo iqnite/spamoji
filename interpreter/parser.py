@@ -147,6 +147,7 @@ class Parser:
             TokenType.TRUE,
             TokenType.FALSE,
             TokenType.NULL,
+            TokenType.IDENTIFIER,
         )
 
     def factor(self) -> Expr:
