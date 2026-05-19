@@ -177,4 +177,5 @@ KEYWORDS = {
     "➗": TokenType.DIVIDE,
     "🛑": TokenType.STOP,
     "⚠️": TokenType.ERROR,
+    "🫥": TokenType.NULL,
 }
