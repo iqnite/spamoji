@@ -88,7 +88,7 @@ class Interpreter(Visitor):
                 if isinstance(left, float) and isinstance(right, float):
                     return left + right
                 if isinstance(left, str) or isinstance(right, str):
-                    return str(left) + str(right)
+                    return self.stringify(left) + self.stringify(right)
                 raise SpamojiRuntimeError(
                     expr.operator, "Operands must be numbers or strings."
                 )
