@@ -84,10 +84,10 @@ class Interpreter(Visitor):
             case TokenType.PLUS:
                 if isinstance(left, float) and isinstance(right, float):
                     return left + right
-                if isinstance(left, str) and isinstance(right, str):
-                    return left + right
+                if isinstance(left, str) or isinstance(right, str):
+                    return str(left) + str(right)
                 raise SpamojiRuntimeError(
-                    expr.operator, "Operands must be two numbers or two strings."
+                    expr.operator, "Operands must be numbers or strings."
                 )
             case TokenType.GREATER_THAN:
                 self.check_number_operands(expr.operator, expr.left, expr.right)
