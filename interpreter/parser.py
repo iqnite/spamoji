@@ -5,6 +5,7 @@ Parser for the Spamoji language. Converts a list of tokens into an abstract synt
 import typing
 
 from interpreter.expr import Binary, Expr, Grouping, Literal, Unary
+from interpreter.stmt import Expression, Python, Stmt
 from interpreter.helpers import error_token
 from interpreter.token import Token, TokenType
 
@@ -31,16 +32,32 @@ class Parser:
         self.current = 0
         self.error_handler = error_handler
 
-    def parse(self) -> Expr | None:
+    def parse(self) -> list[Stmt]:
         """Parses the tokens and returns the resulting AST."""
-        try:
-            return self.expression()
-        except ParseError:
-            return None
+        statements = []
+        while not self.is_at_end():
+            statements.append(self.statement())
+        return statements
 
     def expression(self) -> Expr:
         """Parses an expression."""
         return self.logic_or()
+
+    def statement(self) -> Stmt:
+        """Parses a statement."""
+        if self.match(TokenType.PYTHON):
+            return self.python_statement()
+        return self.expression_statement()
+
+    def python_statement(self) -> Stmt:
+        value = self.expression()
+        self.consume(TokenType.NEWLINE, "Expect 1 statement per line")
+        return Python(value)
+
+    def expression_statement(self) -> Stmt:
+        expr = self.expression()
+        self.consume(TokenType.NEWLINE, "Expect 1 statement per line")
+        return Expression(expr)
 
     def equality(self) -> Expr:
         """Parses an equality expression."""

@@ -4,7 +4,7 @@ Entry point for the Spamoji interpreter.
 
 import sys
 
-from interpreter.helpers import ASTPrinter, SpamojiRuntimeError
+from interpreter.helpers import SpamojiRuntimeError
 from interpreter.interpreter import Interpreter
 from interpreter.parser import Parser
 from interpreter.scanner import Scanner
@@ -50,10 +50,10 @@ class Spamoji:
         scanner = Scanner(source, self.error)
         tokens = scanner.scan_tokens()
         parser = Parser(tokens, self.report)
-        expression = parser.parse()
-        if expression is None:
+        statements = parser.parse()
+        if self.had_error:
             return
-        self.interpreter.interpret(expression, self.runtime_error)
+        self.interpreter.interpret(statements, self.runtime_error)
 
     def error(self, line: int, message: str):
         """Reports an error with a given message and line number."""

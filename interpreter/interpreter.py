@@ -4,22 +4,23 @@ Contains the actual interpreter.
 
 import typing
 
-from interpreter.expr import Binary, Expr, Grouping, Literal, Unary, Visitor
+from interpreter import expr, stmt
+from interpreter.expr import Binary, Expr, Grouping, Literal, Unary
 from interpreter.helpers import SpamojiRuntimeError
 from interpreter.token import Token, TokenType
 
 
-class Interpreter(Visitor):
+class Interpreter(expr.Visitor, stmt.Visitor):
     """Interpreter for the Spamoji language. Evaluates an AST and produces a result."""
 
     def interpret(
         self,
-        expr: Expr,
+        statements: list[stmt.Stmt],
         error_handler: typing.Callable[[SpamojiRuntimeError], typing.Any],
     ):
         try:
-            value = self.evaluate(expr)
-            print(self.stringify(value))
+            for statement in statements:
+                self.execute(statement)
         except SpamojiRuntimeError as exc:
             error_handler(exc)
 
@@ -65,6 +66,16 @@ class Interpreter(Visitor):
 
     def evaluate(self, expr: Expr) -> object:
         return expr.accept(self)
+
+    def execute(self, stmt: stmt.Stmt) -> object:
+        return stmt.accept(self)
+
+    def visit_expression_stmt(self, stmt: stmt.Expression) -> object:
+        return self.evaluate(stmt.expression)
+
+    def visit_python_stmt(self, stmt: stmt.Python) -> object:
+        value = self.evaluate(stmt.expression)
+        return eval(typing.cast(str, value))
 
     def visit_binary_expr(self, expr: Binary) -> object:
         left = self.evaluate(expr.left)
