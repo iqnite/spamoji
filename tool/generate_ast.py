@@ -19,6 +19,7 @@ def main():
             "Grouping @ expression: Expr",
             "Literal  @ value: object",
             "Unary    @ operator: Token, right: Expr",
+            "Variable @ name: Token",
         ],
         imports=["from interpreter.token import Token"],
     )
@@ -28,6 +29,7 @@ def main():
         [
             "Expression @ expression: Expr",
             "Python     @ expression: Expr",
+            "Variable   @ name: Token, initializer: Expr",
         ],
         imports=["from interpreter.expr import Expr"],
     )

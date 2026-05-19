@@ -22,6 +22,8 @@ class Visitor(ABC):
         pass
     def visit_unary_expr(self, expr: "Unary") -> object:
         pass
+    def visit_variable_expr(self, expr: "Variable") -> object:
+        pass
 
 
 class Binary(Expr):
@@ -65,3 +67,13 @@ class Unary(Expr):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_unary_expr(self)
+
+
+class Variable(Expr):
+    """Represents a variable expression."""
+
+    def __init__(self, name: Token):
+        self.name = name
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_variable_expr(self)

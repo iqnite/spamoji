@@ -18,6 +18,8 @@ class Visitor(ABC):
         pass
     def visit_python_stmt(self, stmt: "Python") -> object:
         pass
+    def visit_variable_stmt(self, stmt: "Variable") -> object:
+        pass
 
 
 class Expression(Stmt):
@@ -38,3 +40,14 @@ class Python(Stmt):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_python_stmt(self)
+
+
+class Variable(Stmt):
+    """Represents a variable expression."""
+
+    def __init__(self, name: Token, initializer: Expr):
+        self.name = name
+        self.initializer = initializer
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_variable_stmt(self)
