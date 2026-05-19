@@ -11,15 +11,15 @@ A programming language that only uses emojis as syntax and encourages writing sp
     🔃 🔰 🤜 1
         👋 🏁 (🏁 ✖️ 🔰)
         👋 🔰 (🔰 ➖ 1)
-    ↪️ 🏁
+    ↩️ 🏁
 
-🗨️ "Enter a number to calculate the factorial: "
+💭 "Enter a number to calculate the factorial: "
 👋 😀 (🔢 ⌨️)
 🤔 (😀 🟰 ⚠️)
 👍️
-    🗨️ "Invalid input." ↩️
+    💬 "Invalid input."
 👎
-    🗨️ "The factorial of "😀" is "(🔢❗ 😀) ↩️
+    💬 "The factorial of "😀" is "(🔢❗ 😀)
 ```
 
 ## What's this all about?
@@ -58,7 +58,7 @@ Each line of code starts with an emoji that indicates the type of statement. Eac
 - 🚩 Label statement: Used to mark a location in the code for use with jump statements
 - 🎯 Jump statement: Used to transfer control to a labeled statement
 - ⚙️ Function definition: Followed by the function name and parameters
-  - ↪️ Return statement: Followed by the value to return
+  - ↩️ Return statement: Followed by the value to return
 - 🛑 Stop statement: Terminates the program
 - 🧩 Import statement: Followed by a file name, it gets replaced by the contents of that file before execution
 - 🐍 Python statement: Followed by Python code to be executed
@@ -109,12 +109,12 @@ The language includes several built-in functions and values for common operation
 
 - 🔢: Convert input to a number
 - ⌨️: Read input from the user
-- 🗨️: Print output to the console
+- 💬: Print output to a new line in the console
+- 💭: Print output to the console without creating a new line
 - ✅: A special value representing true
 - ❌: A special value representing false
 - 🫥: A special value representing null
 - ⚠️: A special value representing an error or undefined value
-- ↩️: A special character representing a newline for output
 
 ## Credits
 
