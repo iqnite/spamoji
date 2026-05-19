@@ -57,7 +57,7 @@ class Scanner:
                 self.add_token(TokenType.LEFT_PAREN)
             case ")":
                 self.add_token(TokenType.RIGHT_PAREN)
-            case "🗒️":
+            case "🗒️" | "🗒":
                 self.add_token(TokenType.COMMENT)
                 while self.peek() != "\n" and not self.is_at_end():
                     self.advance()

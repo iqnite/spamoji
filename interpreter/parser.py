@@ -36,6 +36,13 @@ class Parser:
         """Parses the tokens and returns the resulting AST."""
         statements = []
         while not self.is_at_end():
+            while (
+                self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT)
+                and not self.is_at_end()
+            ):
+                self.advance()
+            if self.is_at_end():
+                break
             statements.append(self.statement())
         return statements
 
@@ -51,12 +58,22 @@ class Parser:
 
     def python_statement(self) -> Stmt:
         value = self.expression()
-        self.consume(TokenType.NEWLINE, "Expect 1 statement per line")
+        self.consume(
+            "Expect 1 statement per line",
+            TokenType.NEWLINE,
+            TokenType.EOF,
+            TokenType.COMMENT,
+        )
         return Python(value)
 
     def expression_statement(self) -> Stmt:
         expr = self.expression()
-        self.consume(TokenType.NEWLINE, "Expect 1 statement per line")
+        self.consume(
+            "Expect 1 statement per line",
+            TokenType.NEWLINE,
+            TokenType.EOF,
+            TokenType.COMMENT,
+        )
         return Expression(expr)
 
     def equality(self) -> Expr:
@@ -76,11 +93,11 @@ class Parser:
                 return True
         return False
 
-    def check(self, token_type: TokenType) -> bool:
-        """Checks if the current token is of the given type."""
+    def check(self, *token_types: TokenType) -> bool:
+        """Checks if the current token is of any of the given types."""
         if self.is_at_end():
             return False
-        return self.peek().token_type == token_type
+        return self.peek().token_type in token_types
 
     def advance(self) -> Token:
         """Advances to the next token and returns the previous one."""
@@ -193,12 +210,12 @@ class Parser:
             return Literal(self.previous().literal)
         if self.match(TokenType.LEFT_PAREN):
             expr = self.expression()
-            self.consume(TokenType.RIGHT_PAREN, "Expect ')' after expression.")
+            self.consume("Expect ')' after expression.", TokenType.RIGHT_PAREN)
             return Grouping(expr)
         raise self.error(self.peek(), "Expected expression.")
 
-    def consume(self, token_type: TokenType, message: str) -> Token:
-        if self.check(token_type):
+    def consume(self, message: str, *token_types: TokenType) -> Token:
+        if self.check(*token_types):
             return self.advance()
         raise self.error(self.peek(), message)
 
