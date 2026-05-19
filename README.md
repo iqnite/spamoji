@@ -118,4 +118,4 @@ Thanks to Robert Nystrom for his book "Crafting Interpreters" which inspired the
 
 Also thanks to Hack Club for providing a supportive community and motivating me to work on this project.
 
-This documentation was entirely written by hand. I might use AI tools while writing the interpreter.
+This documentation was entirely written by hand. I might use AI tools for assistance while writing the interpreter.
