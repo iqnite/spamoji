@@ -80,7 +80,10 @@ class Interpreter(Visitor):
                 return left_f * right_f
             case TokenType.DIVIDE:
                 self.check_number_operands(expr.operator, expr.left, expr.right)
-                return left_f / right_f
+                try:
+                    return left_f / right_f
+                except ZeroDivisionError:
+                    return "⚠️"
             case TokenType.PLUS:
                 if isinstance(left, float) and isinstance(right, float):
                     return left + right
