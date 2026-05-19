@@ -4,8 +4,9 @@ Parser for the Spamoji language. Converts a list of tokens into an abstract synt
 
 import typing
 
+from interpreter import expr, stmt
 from interpreter.expr import Binary, Expr, Grouping, Literal, Unary
-from interpreter.stmt import Expression, Python, Stmt
+from interpreter.stmt import Stmt
 from interpreter.helpers import error_token
 from interpreter.token import Token, TokenType
 
@@ -43,12 +44,21 @@ class Parser:
                 self.advance()
             if self.is_at_end():
                 break
-            statements.append(self.statement())
+            statements.append(self.declaration())
         return statements
 
     def expression(self) -> Expr:
         """Parses an expression."""
         return self.logic_or()
+
+    def declaration(self) -> Stmt | None:
+        try:
+            if self.match(TokenType.VAR):
+                return self.var_declaration()
+            return self.statement()
+        except ParseError:
+            self.synchronize()
+            return None
 
     def statement(self) -> Stmt:
         """Parses a statement."""
@@ -64,7 +74,14 @@ class Parser:
             TokenType.EOF,
             TokenType.COMMENT,
         )
-        return Python(value)
+        return stmt.Python(value)
+
+    def var_declaration(self) -> Stmt:
+        name = self.consume("Except variable name.", TokenType.IDENTIFIER)
+        initializer = None
+        if not self.match(TokenType.NEWLINE, TokenType.COMMENT, TokenType.EOF):
+            initializer = self.expression()
+        return stmt.Variable(name, initializer)
 
     def expression_statement(self) -> Stmt:
         expr = self.expression()
@@ -74,7 +91,7 @@ class Parser:
             TokenType.EOF,
             TokenType.COMMENT,
         )
-        return Expression(expr)
+        return stmt.Expression(expr)
 
     def equality(self) -> Expr:
         """Parses an equality expression."""
@@ -208,10 +225,12 @@ class Parser:
             return Literal(None)
         if self.match(TokenType.NUMBER, TokenType.STRING):
             return Literal(self.previous().literal)
+        if self.match(TokenType.IDENTIFIER):
+            return expr.Variable(self.previous())
         if self.match(TokenType.LEFT_PAREN):
-            expr = self.expression()
+            expression = self.expression()
             self.consume("Expect ')' after expression.", TokenType.RIGHT_PAREN)
-            return Grouping(expr)
+            return Grouping(expression)
         raise self.error(self.peek(), "Expected expression.")
 
     def consume(self, message: str, *token_types: TokenType) -> Token:

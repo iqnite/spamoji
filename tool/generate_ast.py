@@ -29,9 +29,12 @@ def main():
         [
             "Expression @ expression: Expr",
             "Python     @ expression: Expr",
-            "Variable   @ name: Token, initializer: Expr",
+            "Variable   @ name: Token, initializer: Expr | None",
         ],
-        imports=["from interpreter.expr import Expr"],
+        imports=[
+            "from interpreter.expr import Expr",
+            "from interpreter.token import Token",
+        ],
     )
 
 
