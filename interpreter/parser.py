@@ -40,7 +40,7 @@ class Parser:
 
     def expression(self) -> Expr:
         """Parses an expression."""
-        return self.equality()
+        return self.logic_or()
 
     def equality(self) -> Expr:
         """Parses an equality expression."""
@@ -82,6 +82,22 @@ class Parser:
     def previous(self) -> Token:
         """Returns the most recently consumed token."""
         return self.tokens[self.current - 1]
+
+    def logic_or(self) -> Expr:
+        expr = self.logic_and()
+        while self.match(TokenType.OR):
+            operator = self.previous()
+            right = self.logic_and()
+            expr = Binary(expr, operator, right)
+        return expr
+
+    def logic_and(self) -> Expr:
+        expr = self.equality()
+        while self.match(TokenType.AND):
+            operator = self.previous()
+            right = self.equality()
+            expr = Binary(expr, operator, right)
+        return expr
 
     def comparison(self) -> Expr:
         expr = self.term()

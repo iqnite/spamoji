@@ -81,13 +81,14 @@ The language supports basic operators for logical and arithmetic operations. The
 
 - ➕: Addition
 - ➖: Subtraction
-- ✖️: Multiplication or logical AND
+- ✖️: Multiplication
 - ➗: Division
 - 🟰: Equal
 - 🆚: Not equal
 - 🤜: Greater than
 - 🤛: Less than
-- 🤝: Logical OR
+- 🤝: Logical AND
+- 🤲: Logical OR
 - 🙅: Logical NOT
 
 <!-- Operators can be used directly after 👋 in variable assignments to perform operations on the variable. For example, `👋➕ x 1` will increment the variable `x` by 1. -->

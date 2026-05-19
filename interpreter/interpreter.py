@@ -102,5 +102,9 @@ class Interpreter(Visitor):
                 return left == right
             case TokenType.NOT_EQUALS:
                 return left != right
+            case TokenType.AND:
+                return self.is_truthy(left) and self.is_truthy(right)
+            case TokenType.OR:
+                return self.is_truthy(left) or self.is_truthy(right)
             case _:
                 return None
