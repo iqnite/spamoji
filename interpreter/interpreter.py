@@ -1,0 +1,82 @@
+"""
+Contains the actual interpreter.
+"""
+
+import typing
+
+from interpreter.expr import Binary, Expr, Grouping, Literal, Unary, Visitor
+from interpreter.helpers import SpamojiRuntimeError
+from interpreter.token import Token, TokenType
+
+
+class Interpreter(Visitor):
+    """Interpreter for the Spamoji language. Evaluates an AST and produces a result."""
+
+    def visit_literal_expr(self, expr: Literal) -> object:
+        return expr.value
+
+    def visit_unary_expr(self, expr: Unary) -> object:
+        right = self.evaluate(expr.right)
+        match expr.operator.token_type:
+            case TokenType.MINUS:
+                self.check_number_operands(expr.operator, expr.right)
+                return -typing.cast(float, right)
+            case TokenType.NOT:
+                return not self.is_truthy(right)
+            case _:
+                return None
+
+    def check_number_operands(self, operator: Token, *operands: object):
+        for operand in operands:
+            if not isinstance(operand, float):
+                raise SpamojiRuntimeError(operator, "Operands must be numbers.")
+
+    def is_truthy(self, obj: object) -> bool:
+        if obj is None:
+            return False
+        if isinstance(obj, bool):
+            return obj
+        return True
+
+    def visit_grouping_expr(self, expr: Grouping) -> object:
+        return self.evaluate(expr.expression)
+
+    def evaluate(self, expr: Expr) -> object:
+        return expr.accept(self)
+
+    def visit_binary_expr(self, expr: Binary) -> object:
+        left = self.evaluate(expr.left)
+        right = self.evaluate(expr.right)
+        left_f = typing.cast(float, left)
+        right_f = typing.cast(float, right)
+        match expr.operator.token_type:
+            case TokenType.MINUS:
+                self.check_number_operands(expr.operator, expr.left, expr.right)
+                return left_f - right_f
+            case TokenType.MULTIPLY:
+                self.check_number_operands(expr.operator, expr.left, expr.right)
+                return left_f * right_f
+            case TokenType.DIVIDE:
+                self.check_number_operands(expr.operator, expr.left, expr.right)
+                return left_f / right_f
+            case TokenType.PLUS:
+                if isinstance(left, float) and isinstance(right, float):
+                    return left + right
+                if isinstance(left, str) and isinstance(right, str):
+                    return left + right
+                raise SpamojiRuntimeError(
+                    expr.operator, "Operands must be two numbers or two strings."
+                )
+            case TokenType.GREATER_THAN:
+                self.check_number_operands(expr.operator, expr.left, expr.right)
+                return left_f > right_f
+            case TokenType.LESS_THAN:
+                self.check_number_operands(expr.operator, expr.left, expr.right)
+                return left_f < right_f
+            case TokenType.EQUALS:
+                return left == right
+            case TokenType.NOT_EQUALS:
+                return left != right
+
+            case _:
+                return None
