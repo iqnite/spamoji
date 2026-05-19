@@ -5,6 +5,7 @@ Contains the actual interpreter.
 import typing
 
 from interpreter import expr, stmt
+from interpreter.environment import Environment
 from interpreter.expr import Binary, Expr, Grouping, Literal, Unary
 from interpreter.helpers import SpamojiRuntimeError
 from interpreter.token import Token, TokenType
@@ -12,6 +13,10 @@ from interpreter.token import Token, TokenType
 
 class Interpreter(expr.Visitor, stmt.Visitor):
     """Interpreter for the Spamoji language. Evaluates an AST and produces a result."""
+
+    def __init__(self):
+        super().__init__()
+        self.environment = Environment()
 
     def interpret(
         self,
@@ -37,6 +42,9 @@ class Interpreter(expr.Visitor, stmt.Visitor):
                 return not self.is_truthy(right)
             case _:
                 return None
+
+    def visit_variable_expr(self, expr: expr.Variable) -> object:
+        return self.environment.get(expr.name)
 
     def check_number_operands(self, operator: Token, *operands: object):
         for operand in operands:
@@ -76,6 +84,13 @@ class Interpreter(expr.Visitor, stmt.Visitor):
     def visit_python_stmt(self, stmt: stmt.Python) -> object:
         value = self.evaluate(stmt.expression)
         return eval(typing.cast(str, value))
+
+    def visit_variable_stmt(self, stmt: stmt.Variable) -> object:
+        value = None
+        if stmt.initializer is not None:
+            value = self.evaluate(stmt.initializer)
+        self.environment.define(stmt.name.lexeme, value)
+        return value
 
     def visit_binary_expr(self, expr: Binary) -> object:
         left = self.evaluate(expr.left)
