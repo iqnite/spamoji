@@ -59,3 +59,7 @@ class SpamojiRuntimeError(RuntimeError):
     def __init__(self, token: Token, message: str, *args: object):
         super().__init__(message, *args)
         self.token = token
+
+
+def runtime_error(error: SpamojiRuntimeError):
+    print(f"{error}\n[line {error.token.line}]")

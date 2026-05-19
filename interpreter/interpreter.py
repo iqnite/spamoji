@@ -5,12 +5,19 @@ Contains the actual interpreter.
 import typing
 
 from interpreter.expr import Binary, Expr, Grouping, Literal, Unary, Visitor
-from interpreter.helpers import SpamojiRuntimeError
+from interpreter.helpers import SpamojiRuntimeError, runtime_error
 from interpreter.token import Token, TokenType
 
 
 class Interpreter(Visitor):
     """Interpreter for the Spamoji language. Evaluates an AST and produces a result."""
+
+    def interpret(self, expr: Expr):
+        try:
+            value = self.evaluate(expr)
+            print(self.stringify(value))
+        except SpamojiRuntimeError as exc:
+            runtime_error(exc)
 
     def visit_literal_expr(self, expr: Literal) -> object:
         return expr.value
@@ -37,6 +44,17 @@ class Interpreter(Visitor):
         if isinstance(obj, bool):
             return obj
         return True
+
+    def stringify(self, obj: object) -> str:
+        if obj is None:
+            return "🫥"
+        text = str(obj)
+        if isinstance(obj, float):
+            if text.endswith(".0"):
+                return text[:-2]
+        if isinstance(obj, bool):
+            return "✅" if obj else "❌"
+        return text
 
     def visit_grouping_expr(self, expr: Grouping) -> object:
         return self.evaluate(expr.expression)
@@ -77,6 +95,5 @@ class Interpreter(Visitor):
                 return left == right
             case TokenType.NOT_EQUALS:
                 return left != right
-
             case _:
                 return None
