@@ -53,9 +53,9 @@ class Scanner:
             case "\n":
                 self.add_token(TokenType.NEWLINE)
                 self.line += 1
-            case "(":
+            case "🫸":
                 self.add_token(TokenType.LEFT_PAREN)
-            case ")":
+            case "🫷":
                 self.add_token(TokenType.RIGHT_PAREN)
             case "🗒️" | "🗒":
                 self.add_token(TokenType.COMMENT)

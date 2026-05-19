@@ -9,17 +9,17 @@ A programming language that only uses emojis as syntax and encourages writing sp
 ⚙️ 🔢❗ 🔰
     👋 🏁 1
     🔃 🔰 🤜 1
-        👋 🏁 (🏁 ✖️ 🔰)
-        👋 🔰 (🔰 ➖ 1)
+        👋 🏁 🫸🏁 ✖️ 🔰🫷
+        👋 🔰 🫸🔰 ➖ 1🫷
     ↩️ 🏁
 
 💭 🔤Enter a number to calculate the factorial: 🔤
-👋 😀 (🔢 ⌨️)
-🤔 (😀 🟰 ⚠️)
+👋 😀 🫸🔢 ⌨️🫷
+🤔 🫸😀 🟰 ⚠️🫷
 👍️
     💬 🔤Invalid input.🔤
 👎
-    💬 🔤The factorial of 🔤😀🔤 is 🔤(🔢❗ 😀) 🔤
+    💬 🔤The factorial of 🔤😀🔤 is 🔤🫸🔢❗ 😀🫷 🔤
 ```
 
 ## What's this all about?
@@ -77,7 +77,7 @@ Variables are assigned using the 👋 emoji, followed by the variable name and v
 
 ### Expressions
 
-Many statements can be used as expressions within other statements. Parentheses can be used to group expressions and control the order of evaluation. For example, you can use a function call as part of an if statement condition or as part of a variable assignment.
+Many statements can be used as expressions within other statements. 🫸 and 🫷 can be used to group expressions and control the order of evaluation. For example, you can use a function call as part of an if statement condition or as part of a variable assignment.
 
 ### Operators
 
