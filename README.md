@@ -19,7 +19,7 @@ A programming language that only uses emojis as syntax and encourages writing sp
 👍️
     💬 🔤Invalid input.🔤
 👎
-    💬 🔤The factorial of 🔤😀🔤 is 🔤🫸🔢❗ 😀🫷 🔤
+    💬 🔤The factorial of 🔤😀🔤 is 🔤🫸🔢❗ 😀🫷
 ```
 
 ## What's this all about?
