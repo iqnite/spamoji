@@ -229,7 +229,7 @@ class Parser:
             return expr.Variable(self.previous())
         if self.match(TokenType.LEFT_PAREN):
             expression = self.expression()
-            self.consume("Expect ')' after expression.", TokenType.RIGHT_PAREN)
+            self.consume("Expect '🫷' after expression.", TokenType.RIGHT_PAREN)
             return Grouping(expression)
         raise self.error(self.peek(), "Expected expression.")
 
