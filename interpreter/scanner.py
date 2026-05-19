@@ -61,7 +61,7 @@ class Scanner:
                 self.add_token(TokenType.COMMENT)
                 while self.peek() != "\n" and not self.is_at_end():
                     self.advance()
-            case '"':
+            case "🔤":
                 self.string()
             case _:
                 if c.isdigit():
@@ -97,7 +97,7 @@ class Scanner:
 
     def string(self):
         """Scans a string literal."""
-        while self.peek() != '"' and not self.is_at_end():
+        while self.peek() != "🔤" and not self.is_at_end():
             if self.peek() == "\n":
                 self.line += 1
             self.advance()

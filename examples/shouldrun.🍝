@@ -1,2 +1,2 @@
 🗒️ This code should run without errors.
-🐍 "print('1 + 1 is', "(1 ➕ 1)")"  🗒️ Basic Python evaluation.
+🐍 🔤print("1 + 1 is", 🔤(1 ➕ 1)🔤)🔤  🗒️ Basic Python evaluation.
