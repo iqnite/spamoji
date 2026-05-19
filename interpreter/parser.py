@@ -109,11 +109,45 @@ class Parser:
 
     def term(self) -> Expr:
         expr = self.factor()
-        while self.match(TokenType.PLUS, TokenType.MINUS):
-            operator = self.previous()
-            right = self.factor()
-            expr = Binary(expr, operator, right)
+        while True:
+            if self.match(TokenType.PLUS, TokenType.MINUS):
+                operator = self.previous()
+                right = self.factor()
+                expr = Binary(expr, operator, right)
+                continue
+            if self.can_implicitly_concatenate(expr):
+                operator = Token(TokenType.PLUS, "➕", None, self.peek().line)
+                right = self.factor()
+                expr = Binary(expr, operator, right)
+                continue
+            break
         return expr
+
+    def can_implicitly_concatenate(self, expr: Expr) -> bool:
+        if self.is_string_expr(expr):
+            return self.starts_value(self.peek().token_type)
+        return self.peek().token_type == TokenType.STRING
+
+    def is_string_expr(self, expr: Expr) -> bool:
+        if isinstance(expr, Literal):
+            return isinstance(expr.value, str)
+        if isinstance(expr, Grouping):
+            return self.is_string_expr(expr.expression)
+        if isinstance(expr, Unary):
+            return self.is_string_expr(expr.right)
+        if isinstance(expr, Binary):
+            return self.is_string_expr(expr.left) or self.is_string_expr(expr.right)
+        return False
+
+    def starts_value(self, token_type: TokenType) -> bool:
+        return token_type in (
+            TokenType.LEFT_PAREN,
+            TokenType.NUMBER,
+            TokenType.STRING,
+            TokenType.TRUE,
+            TokenType.FALSE,
+            TokenType.NULL,
+        )
 
     def factor(self) -> Expr:
         expr = self.unary()
