@@ -36,7 +36,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         right = self.evaluate(expr.right)
         match expr.operator.token_type:
             case TokenType.MINUS:
-                self.check_number_operands(expr.operator, expr.right)
+                self.check_number_operands(expr.operator, right)
                 return -typing.cast(float, right)
             case TokenType.NOT:
                 return not self.is_truthy(right)
