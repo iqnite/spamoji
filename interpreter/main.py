@@ -69,5 +69,9 @@ class Spamoji:
         print(f"[line {line}] Error{where}: {message}", file=sys.stderr)
 
 
-if __name__ == "__main__":
+def main():
     Spamoji().main()
+
+
+if __name__ == "__main__":
+    main()
