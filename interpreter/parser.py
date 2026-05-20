@@ -86,30 +86,6 @@ class Parser:
             return self.while_statement()
         if self.match(TokenType.INDENT):
             return Block(self.block())
-        if self.match(TokenType.BREAK):
-            level = 1
-            if self.match(TokenType.NUMBER):
-                level_token = self.previous()
-                if (
-                    isinstance(level_token.literal, float)
-                    and level_token.literal.is_integer()
-                ):
-                    level = int(level_token.literal)
-                else:
-                    raise self.error(level_token, "Break level must be an integer.")
-            return stmt.Break(level)
-        if self.match(TokenType.CONTINUE):
-            level = 1
-            if self.match(TokenType.NUMBER):
-                level_token = self.previous()
-                if (
-                    isinstance(level_token.literal, float)
-                    and level_token.literal.is_integer()
-                ):
-                    level = int(level_token.literal)
-                else:
-                    raise self.error(level_token, "Continue level must be an integer.")
-            return stmt.Continue(level)
         if self.match(TokenType.PYTHON):
             return self.python_statement()
         return self.expression_statement()
@@ -122,26 +98,17 @@ class Parser:
         )
         while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
             self.advance()
-        self.consume_optional_branch_indent(TokenType.IFTRUE)
         if self.match(TokenType.IFTRUE):
             while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
                 self.advance()
             then_branch = self.statement()
         while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
             self.advance()
-        self.consume_optional_branch_indent(TokenType.ELSE)
         if self.match(TokenType.ELSE):
             while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
                 self.advance()
             else_branch = self.statement()
         return stmt.If(condition, then_branch, else_branch)
-
-    def consume_optional_branch_indent(self, branch_token_type: TokenType) -> None:
-        if (
-            self.check(TokenType.INDENT)
-            and self.peek_next().token_type == branch_token_type
-        ):
-            self.advance()
 
     def while_statement(self) -> Stmt:
         condition = self.expression()
@@ -247,11 +214,6 @@ class Parser:
     def previous(self) -> Token:
         """Returns the most recently consumed token."""
         return self.tokens[self.current - 1]
-
-    def peek_next(self) -> Token:
-        if self.current + 1 >= len(self.tokens):
-            return self.tokens[-1]
-        return self.tokens[self.current + 1]
 
     def logic_or(self) -> Expr:
         expr = self.logic_and()

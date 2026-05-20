@@ -1,6 +1,4 @@
 🗒️ This code should run without errors.
-    👋 😀
-
 👋 😀 🫴 🔤This shouldn't get printed🔤
 😀 🫴 🔤A 🔤 ➕ 🔤variable🔤
 🐍 🔤print("🔤😀🔤")🔤  🗒️ Basic Python evaluation.
@@ -52,17 +50,4 @@
 👋 ⏰ 🫴 0
 🔃 ⏰ 🤛 10
     ⏰ 🫴 ⏰ ➕ 1
-    🤔 ⏰ 🤜 4
-    👍
-        🐍 🔤print("🔤⏰🔤")🔤
-
-👋 ⏰ 🫴 0
-🔃 ✅
-    ⏰ 🫴 ⏰ ➕ 1
-    🤔 ⏰ 🤛 10
-    👍
-        ⤴️
-    🤔 ⏰ 🤜 10
-    👍
-        ⛔
     🐍 🔤print("🔤⏰🔤")🔤

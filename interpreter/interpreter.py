@@ -19,8 +19,6 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         self.environment = Environment()
         self.print_expressions = False
         self.prints = []
-        self.break_level = 0
-        self.continue_level = 0
 
     def interpret(
         self,
@@ -96,8 +94,6 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         try:
             self.environment = environment
             for statement in statements:
-                if self.break_level > 0 or self.continue_level > 0:
-                    break
                 self.execute(statement)
         finally:
             self.environment = previous_environment
@@ -116,22 +112,8 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             return self.execute(stmt.else_branch)
 
     def visit_while_stmt(self, stmt: stmt.While) -> object:
-        self.break_level = 0
-        self.continue_level = 0
         while self.is_truthy(self.evaluate(stmt.condition)):
             self.execute(stmt.body)
-            if self.break_level > 0:
-                self.break_level -= 1
-                break
-            if self.continue_level > 0:
-                self.continue_level -= 1
-                continue
-
-    def visit_break_stmt(self, stmt: stmt.Break) -> object:
-        self.break_level += stmt.level
-
-    def visit_continue_stmt(self, stmt: stmt.Continue) -> object:
-        self.continue_level += stmt.level
 
     def visit_python_stmt(self, stmt: stmt.Python) -> object:
         value = self.evaluate(stmt.expression)
