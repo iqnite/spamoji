@@ -64,6 +64,8 @@ class Parser:
                 current_indent = typing.cast(int, self.previous().literal)
                 if current_indent < block_indent:
                     return statements
+                if current_indent > block_indent:
+                    statements.append(Block(self.block()))
             elif statements:
                 return statements
             statements.append(self.declaration())
@@ -98,12 +100,14 @@ class Parser:
         )
         while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
             self.advance()
+        self.match(TokenType.INDENT)
         if self.match(TokenType.IFTRUE):
             while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
                 self.advance()
             then_branch = self.statement()
         while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
             self.advance()
+        self.match(TokenType.INDENT)
         if self.match(TokenType.ELSE):
             while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
                 self.advance()

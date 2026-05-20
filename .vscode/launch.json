@@ -17,7 +17,7 @@
       "request": "launch",
       "program": "${workspaceFolder}/interpreter.py",
       "console": "integratedTerminal",
-      "args": "${workspaceFolder}/examples/shouldrun.🍝"
+      "args": "${workspaceFolder}/examples/flowcontrol.🍝"
     },
     {
       "name": "Custom file",
