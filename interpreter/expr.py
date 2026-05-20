@@ -18,6 +18,8 @@ class Visitor(ABC):
         pass
     def visit_binary_expr(self, expr: "Binary") -> object:
         pass
+    def visit_if_expr(self, expr: "If") -> object:
+        pass
     def visit_grouping_expr(self, expr: "Grouping") -> object:
         pass
     def visit_literal_expr(self, expr: "Literal") -> object:
@@ -49,6 +51,18 @@ class Binary(Expr):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_binary_expr(self)
+
+
+class If(Expr):
+    """Represents a if expression."""
+
+    def __init__(self, condition: Expr, then_branch: Expr, else_branch: Expr):
+        self.condition = condition
+        self.then_branch = then_branch
+        self.else_branch = else_branch
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_if_expr(self)
 
 
 class Grouping(Expr):

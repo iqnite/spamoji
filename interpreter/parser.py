@@ -136,7 +136,7 @@ class Parser:
         return stmt.Expression(expr)
 
     def assignment(self) -> Expr:
-        expression = self.logic_or()
+        expression = self.ternary()
         if self.match(TokenType.ASSIGNMENT):
             assignment_operator = self.previous()
             value = self.assignment()
@@ -145,6 +145,22 @@ class Parser:
                 return expr.Assign(name, value)
             self.error(assignment_operator, "Invalid assignment target.")
         return expression
+
+    def ternary(self) -> Expr:
+        if self.match(TokenType.IF):
+            condition = self.expression()
+            self.consume(
+                "Expect '👍' after condition in 🤔 expression.",
+                TokenType.IFTRUE,
+            )
+            then_branch = self.expression()
+            self.consume(
+                "Expect '👎' branch for 🤔 expression.",
+                TokenType.ELSE,
+            )
+            else_branch = self.expression()
+            return expr.If(condition, then_branch, else_branch)
+        return self.logic_or()
 
     def equality(self) -> Expr:
         """Parses an equality expression."""

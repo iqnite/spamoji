@@ -17,6 +17,7 @@ def main():
         [
             "Assign   @ name: Token, value: Expr",
             "Binary   @ left: Expr, operator: Token, right: Expr",
+            "If       @ condition: Expr, then_branch: Expr, else_branch: Expr",
             "Grouping @ expression: Expr",
             "Literal  @ value: object",
             "Unary    @ operator: Token, right: Expr",

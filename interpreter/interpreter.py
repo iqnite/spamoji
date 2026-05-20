@@ -127,6 +127,13 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         self.environment.assign(expr.name, value)
         return value
 
+    def visit_if_expr(self, expr: expr.If) -> object:
+        return (
+            self.evaluate(expr.then_branch)
+            if self.is_truthy(self.evaluate(expr.condition))
+            else self.evaluate(expr.else_branch)
+        )
+
     def visit_binary_expr(self, expr: Binary) -> object:
         left = self.evaluate(expr.left)
         right = self.evaluate(expr.right)
