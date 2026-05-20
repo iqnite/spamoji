@@ -36,6 +36,7 @@ def main():
             "While      @ condition: Expr, body: Stmt",
             "LoopCtrl   @ type: Token",
             "Python     @ expression: Expr",
+            "Print      @ value: Expr",
             "Variable   @ name: Token, initializer: Expr | None",
         ],
         imports=[

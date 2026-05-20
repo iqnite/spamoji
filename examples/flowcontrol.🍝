@@ -3,15 +3,15 @@
     ⏰ 🫴 ⏰ ➕ 1
     🤔 ⏰ 🤛 5
     👍
-        🐍 🔤print("🔤⏰🔤 is smaller than 5, continue")🔤
+        💬 ⏰🔤 is smaller than 5 -> continue🔤
         ⤴️
     👎
         🤔 ⏰ 🤜 10
         👍
             🔃 ⏰ 🤛 15
-                🐍 🔤print("🔤⏰🔤 greater than 10, finishing")🔤
+                💬 ⏰🔤 greater than 10 -> finishing🔤
                 ⏰ 🫴 ⏰ ➕ 1
             ⛔
         🐍 🔤print("🔤⏰🔤 is at least 5", end="")🔤
-    🐍 🔤print(", no continue")🔤
-🐍 🔤print("Finished")🔤
+    💬 🔤 -> no continue🔤
+💬 🔤Finished🔤

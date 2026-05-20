@@ -93,6 +93,8 @@ class Parser:
             return Block(self.block())
         if self.match(TokenType.PYTHON):
             return self.python_statement()
+        if self.match(TokenType.PRINT):
+            return self.print_statement()
         return self.expression_statement()
 
     def if_statement(self) -> Stmt:
@@ -148,6 +150,16 @@ class Parser:
             TokenType.COMMENT,
         )
         return stmt.Python(value)
+
+    def print_statement(self) -> Stmt:
+        value = self.expression()
+        self.consume(
+            "Expect 1 statement per line",
+            TokenType.NEWLINE,
+            TokenType.EOF,
+            TokenType.COMMENT,
+        )
+        return stmt.Print(value)
 
     def var_declaration(self) -> Stmt:
         name = self.consume("Except variable name.", TokenType.IDENTIFIER)

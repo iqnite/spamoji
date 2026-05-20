@@ -138,6 +138,9 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         value = self.evaluate(stmt.expression)
         return eval(typing.cast(str, value))
 
+    def visit_print_stmt(self, stmt: stmt.Print) -> object:
+        print(self.stringify(self.evaluate(stmt.value)))
+
     def visit_variable_stmt(self, stmt: stmt.Variable) -> object:
         value = None
         if stmt.initializer is not None:
