@@ -1,17 +1,17 @@
 👋 ⏰ 🫴 0
 🔃 ✅
     ⏰ 🫴 ⏰ ➕ 1
-    🤔 ⏰ 🤛 5
+    🤔 ⏰ 🤛 5 🤲 ⏰ 🟰 5
     👍
-        💬 ⏰🔤 is smaller than 5 -> continue🔤
+        💬 ⏰🔤 <= 5 -> continue🔤
         ⤴️
     👎
         🤔 ⏰ 🤜 10
         👍
             🔃 ⏰ 🤛 15
-                💬 ⏰🔤 greater than 10 -> finishing🔤
+                💬 ⏰🔤 > 10 -> finishing🔤
                 ⏰ 🫴 ⏰ ➕ 1
             ⛔
-        🐍 🔤print("🔤⏰🔤 is at least 5", end="")🔤
+        🐍 🔤print("🔤⏰🔤 > 5", end="")🔤
     💬 🔤 -> no continue🔤
 💬 🔤Finished🔤
