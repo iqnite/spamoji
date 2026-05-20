@@ -38,12 +38,12 @@ class Spamoji:
         print("🍝 Spamoji REPL v1.0")
         try:
             while True:
-                line = input("> ")
-                self.run(line)
+                line = input("> ") + "\n"
+                self.run(line, print_expressions=True)
         except KeyboardInterrupt:
             sys.exit()
 
-    def run(self, source: str):
+    def run(self, source: str, print_expressions: bool = False):
         """Runs a piece of code."""
         scanner = Scanner(source, self.error)
         tokens = scanner.scan_tokens()
@@ -51,7 +51,11 @@ class Spamoji:
         statements = parser.parse()
         if self.had_error:
             return
-        self.interpreter.interpret(statements, self.runtime_error)
+        self.interpreter.interpret(
+            statements,
+            print_expressions=print_expressions,
+            error_handler=self.runtime_error,
+        )
 
     def error(self, line: int, message: str):
         """Reports an error with a given message and line number."""

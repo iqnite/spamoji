@@ -17,17 +17,25 @@ class Interpreter(expr.Visitor, stmt.Visitor):
     def __init__(self):
         super().__init__()
         self.environment = Environment()
+        self.print_expressions = False
+        self.prints = []
 
     def interpret(
         self,
         statements: list[stmt.Stmt],
-        error_handler: typing.Callable[[SpamojiRuntimeError], typing.Any],
+        print_expressions: bool = False,
+        error_handler: typing.Callable[[SpamojiRuntimeError], typing.Any] | None = None,
     ):
+        self.print_expressions = print_expressions
+        self.prints = []
         try:
             for statement in statements:
                 self.execute(statement)
+                if self.print_expressions and self.prints:
+                    print(self.stringify(self.prints.pop()))
         except SpamojiRuntimeError as exc:
-            error_handler(exc)
+            if error_handler:
+                error_handler(exc)
 
     def visit_literal_expr(self, expr: Literal) -> object:
         return expr.value
@@ -73,7 +81,10 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         return self.evaluate(expr.expression)
 
     def evaluate(self, expr: Expr) -> object:
-        return expr.accept(self)
+        result = expr.accept(self)
+        if self.print_expressions:
+            self.prints.append(result)
+        return result
 
     def execute(self, stmt: stmt.Stmt) -> object:
         return stmt.accept(self)
