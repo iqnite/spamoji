@@ -8,8 +8,10 @@
     👎
         🤔 ⏰ 🤜 10
         👍
-            🐍 🔤print("🔤⏰🔤 is greater than 10", end="")🔤
+            🔃 ⏰ 🤛 15
+                🐍 🔤print("🔤⏰🔤 greater than 10, finishing")🔤
+                ⏰ 🫴 ⏰ ➕ 1
             ⛔
         🐍 🔤print("🔤⏰🔤 is at least 5", end="")🔤
     🐍 🔤print(", no continue")🔤
-🐍 🔤print(", break")🔤
+🐍 🔤print("Finished")🔤
