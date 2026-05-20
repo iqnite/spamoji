@@ -50,7 +50,7 @@ class Parser:
     def expression(self) -> Expr:
         """Parses an expression."""
         return self.assignment()
-    
+
     def block(self) -> list[Stmt]:
         statements = []
         block_indent = typing.cast(int, self.previous().literal)
@@ -99,7 +99,7 @@ class Parser:
     def var_declaration(self) -> Stmt:
         name = self.consume("Except variable name.", TokenType.IDENTIFIER)
         initializer = None
-        if not self.match(TokenType.NEWLINE, TokenType.COMMENT, TokenType.EOF):
+        if self.match(TokenType.ASSIGNMENT):
             initializer = self.expression()
         return stmt.Variable(name, initializer)
 
@@ -114,11 +114,15 @@ class Parser:
         return stmt.Expression(expr)
 
     def assignment(self) -> Expr:
-        if self.match(TokenType.IDENTIFIER):
-            name = self.previous()
+        expression = self.logic_or()
+        if self.match(TokenType.ASSIGNMENT):
+            assignment_operator = self.previous()
             value = self.assignment()
-            return expr.Assign(name, value)
-        return self.logic_or()
+            if isinstance(expression, expr.Variable):
+                name = expression.name
+                return expr.Assign(name, value)
+            self.error(assignment_operator, "Invalid assignment target.")
+        return expression
 
     def equality(self) -> Expr:
         """Parses an equality expression."""

@@ -7,15 +7,15 @@ A programming language that only uses emojis as syntax and encourages writing sp
 ```spamoji
 🗒️ A function to calculate factorial
 ⚙️ 🔢❗ 🔰
-    👋 🏁 1
+    👋 🏁 🫴 1
     🔃 🔰 🤜 1
-        🏁 🫸🏁 ✖️ 🔰🫷
-        🔰 🫸🔰 ➖ 1🫷
+        🏁 🫴 🏁 ✖️ 🔰
+        🔰 🫴 🔰 ➖ 1
     ↩️ 🏁
 
 💭 🔤Enter a number to calculate the factorial: 🔤
-👋 😀 🫸🔢 ⌨️🫷
-🤔 🫸😀 🟰 ⚠️🫷
+👋 😀 🫴 🔢 ⌨️
+🤔 😀 🟰 ⚠️
 👍️
     💬 🔤Invalid input.🔤
 👎
@@ -48,7 +48,7 @@ If no file is supplied, the interactive REPL will start, which allows to enter a
 Each line of code starts with an emoji that indicates the type of statement. Each statement is followed by the relevant information, separated by spaces. Statements include:
 
 - 🗒️ Comment: Text in this line will be ignored
-- 👋 Variable assignment: Followed by the variable name and value
+- 👋 Variable declaration: Followed by the variable assignment
 - 🤔 If statement: Followed by the condition
   - 👍 If true block
   - 👎 Else block
@@ -63,7 +63,7 @@ Each line of code starts with an emoji that indicates the type of statement. Eac
 - 🧩 Import statement: Followed by a file name, it gets replaced by the contents of that file before execution
 - 🐍 Python statement: Followed by Python code to be executed
 
-Some statements can be nested, such as if statements and loops. Indentation is used to indicate the scope of these statements. Indented blocks are considered part of the previous statement until the indentation level decreases.
+Some statements can be nested, such as if statements and loops. Indentation is used to indicate the scope of these statements. Indented blocks are considered part of the previous statement until the indentation level decreases. Variables declared inside of a block are only accessible inside of that block and any nested blocks.
 
 ### Functions
 
@@ -73,7 +73,7 @@ Functions can be called by using their name followed by the arguments, separated
 
 ### Variables
 
-Variables are assigned using the 👋 emoji, followed by the variable name and value. Variable names can be any combination of letters, numbers, and emojis, but must start with a letter or emoji. Variables can be used in expressions and statements after they have been assigned.
+Variables are declared using the 👋 emoji, followed by the variable assignment expression. An assinment expression starts with the variable name, followed by 🫴 and a value. Variable names can be any combination of letters, numbers, and emojis, but must start with a letter or emoji. Variables can be used in expressions and statements after they have been assigned.
 
 ### Expressions
 

@@ -44,6 +44,7 @@ class TokenType(Enum):
     NEWLINE = 46
     AND = 47
     INDENT = 48
+    ASSIGNMENT = 49
 
 
 class Token:

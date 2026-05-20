@@ -190,6 +190,7 @@ KEYWORDS = {
     "🎯": TokenType.JUMP,
     "🧩": TokenType.IMPORT,
     "🐍": TokenType.PYTHON,
+    "🫴": TokenType.ASSIGNMENT,
     "🤝": TokenType.AND,
     "🤲": TokenType.OR,
     "🙅": TokenType.NOT,
