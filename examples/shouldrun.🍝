@@ -6,6 +6,7 @@
 🐍 🔤print("🔤🫸➖ 1🫷🔤")🔤
 🐍 🔤print("🗒️🔤🫸🙅 ✅🫷🔤")🔤
 🐍 🔤print("1 + 1 is", 🔤🫸1 ➕ 1🫷🔤)🔤
+🐍 🔤print("Implicit concatenation (should be 0_0): 🔤 ➕ 0🔤_🔤0 ➕ 🔤")🔤
 
 👋 😎 1
     🐍 🔤print("🔤😎🔤", end="")🔤
