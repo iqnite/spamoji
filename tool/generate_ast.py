@@ -28,6 +28,7 @@ def main():
         output_dir,
         "Stmt",
         [
+            "Block      @ statements: list[Stmt]",
             "Expression @ expression: Expr",
             "Python     @ expression: Expr",
             "Variable   @ name: Token, initializer: Expr | None",

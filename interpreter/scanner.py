@@ -25,6 +25,7 @@ class Scanner:
         self.start: int = 0
         self.current: int = 0
         self.line: int = 1
+        self.line_start: bool = True
         self.error_handler = error_handler
 
     def scan_tokens(self) -> list[Token]:
@@ -48,26 +49,35 @@ class Scanner:
         """Scans a single token."""
         c = self.advance()
         match c:
-            case " " | "\r" | "\t":
-                pass
+            case "\r":
+                self.line_start = True
+            case " " | "\t":
+                if self.line_start:
+                    self.indent()
             case "\n":
                 self.add_token(TokenType.NEWLINE)
                 self.line += 1
+                self.line_start = True
             case "🫸":
                 self.add_token(TokenType.LEFT_PAREN)
+                self.line_start = False
             case "🫷":
                 self.add_token(TokenType.RIGHT_PAREN)
+                self.line_start = False
             case "🗒️" | "🗒":
                 self.add_token(TokenType.COMMENT)
                 while self.peek() != "\n" and not self.is_at_end():
                     self.advance()
+                self.line_start = False
             case "🔤":
                 self.string()
+                self.line_start = False
             case _:
                 if c.isdigit():
                     self.number()
                 else:
                     self.identifier()
+                self.line_start = False
 
     def advance(self) -> str:
         """Advances the scanner and returns the next character."""
@@ -95,6 +105,18 @@ class Scanner:
             return "\0"
         return self.source[self.current]
 
+    def indent(self):
+        """Scans the indent of a line."""
+        while self.peek() in "\t ":
+            self.advance()
+            if self.is_at_end() or self.peek() == "\n":
+                return
+        value = self.current - self.start
+        if value == 0:
+            return
+        self.add_token(TokenType.INDENT, value)
+        self.line_start = False
+
     def string(self):
         """Scans a string literal."""
         while self.peek() != "🔤" and not self.is_at_end():
@@ -107,10 +129,10 @@ class Scanner:
                 self.error_handler(self.line, "Unterminated string.")
             return
 
-        # The closing ".
+        # The closing 🔤
         self.advance()
 
-        # Trim the surrounding quotes.
+        # Trim the surrounding 🔤s
         value = self.source[self.start + 1 : self.current - 1]
         self.add_token(TokenType.STRING, value)
 

@@ -27,9 +27,7 @@ class Spamoji:
     def run_file(self, filename):
         """Runs a script file."""
         with open(filename, "r", encoding="utf-8") as f:
-            lines = f.readlines()
-            for line in lines:
-                self.run(line)
+            self.run(f.read())
         if self.had_error:
             sys.exit(65)
         if self.had_runtime_error:

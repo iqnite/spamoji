@@ -15,12 +15,24 @@ class Stmt(ABC):
 
 
 class Visitor(ABC):
+    def visit_block_stmt(self, stmt: "Block") -> object:
+        pass
     def visit_expression_stmt(self, stmt: "Expression") -> object:
         pass
     def visit_python_stmt(self, stmt: "Python") -> object:
         pass
     def visit_variable_stmt(self, stmt: "Variable") -> object:
         pass
+
+
+class Block(Stmt):
+    """Represents a block expression."""
+
+    def __init__(self, statements: list[Stmt]):
+        self.statements = statements
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_block_stmt(self)
 
 
 class Expression(Stmt):

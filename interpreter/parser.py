@@ -6,7 +6,7 @@ import typing
 
 from interpreter import expr, stmt
 from interpreter.expr import Binary, Expr, Grouping, Literal, Unary
-from interpreter.stmt import Stmt
+from interpreter.stmt import Block, Stmt
 from interpreter.helpers import error_token
 from interpreter.token import Token, TokenType
 
@@ -50,6 +50,24 @@ class Parser:
     def expression(self) -> Expr:
         """Parses an expression."""
         return self.assignment()
+    
+    def block(self) -> list[Stmt]:
+        statements = []
+        block_indent = typing.cast(int, self.previous().literal)
+        while not self.is_at_end():
+            while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
+                self.advance()
+            if self.is_at_end():
+                return statements
+            if self.peek().token_type == TokenType.INDENT:
+                self.advance()
+                current_indent = typing.cast(int, self.previous().literal)
+                if current_indent < block_indent:
+                    return statements
+            elif statements:
+                return statements
+            statements.append(self.declaration())
+        return statements
 
     def declaration(self) -> Stmt | None:
         try:
@@ -62,6 +80,8 @@ class Parser:
 
     def statement(self) -> Stmt:
         """Parses a statement."""
+        if self.match(TokenType.INDENT):
+            return Block(self.block())
         if self.match(TokenType.PYTHON):
             return self.python_statement()
         return self.expression_statement()
