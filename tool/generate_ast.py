@@ -34,6 +34,8 @@ def main():
             "Expression @ expression: Expr",
             "If         @ condition: Expr, then_branch: Stmt | None, else_branch: Stmt | None",
             "While      @ condition: Expr, body: Stmt",
+            "Break      @ level: int = 1",
+            "Continue   @ level: int = 1",
             "Python     @ expression: Expr",
             "Variable   @ name: Token, initializer: Expr | None",
         ],

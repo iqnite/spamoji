@@ -23,6 +23,10 @@ class Visitor(ABC):
         pass
     def visit_while_stmt(self, stmt: "While") -> object:
         pass
+    def visit_break_stmt(self, stmt: "Break") -> object:
+        pass
+    def visit_continue_stmt(self, stmt: "Continue") -> object:
+        pass
     def visit_python_stmt(self, stmt: "Python") -> object:
         pass
     def visit_variable_stmt(self, stmt: "Variable") -> object:
@@ -70,6 +74,26 @@ class While(Stmt):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_while_stmt(self)
+
+
+class Break(Stmt):
+    """Represents a break expression."""
+
+    def __init__(self, level: int = 1):
+        self.level = level
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_break_stmt(self)
+
+
+class Continue(Stmt):
+    """Represents a continue expression."""
+
+    def __init__(self, level: int = 1):
+        self.level = level
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_continue_stmt(self)
 
 
 class Python(Stmt):
