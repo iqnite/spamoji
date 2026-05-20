@@ -1,7 +1,8 @@
 🗒️ This code should run without errors.
-👋 😀 🔤A 🔤 ➕ 🔤variable🔤
-🐍 🔤print("🔤😀🔤")🔤
-🐍 🔤print("🔤🫸👋 😀 1🫷🔤")🔤
+👋 😀 🔤This shouldn't get printed🔤
+😀 🔤A 🔤 ➕ 🔤variable🔤
+🐍 🔤print("🔤😀🔤")🔤  🗒️ Basic Python evaluation.
+🐍 🔤print("🔤🫸😀 1🫷🔤")🔤
 🐍 🔤print("🔤🫸➖ 1🫷🔤")🔤
 🐍 🔤print("🗒️🔤🫸🙅 ✅🫷🔤")🔤
-🐍 🔤print("1 + 1 is", 🔤🫸1 ➕ 1🫷🔤)🔤  🗒️ Basic Python evaluation.
+🐍 🔤print("1 + 1 is", 🔤🫸1 ➕ 1🫷🔤)🔤

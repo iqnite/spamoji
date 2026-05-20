@@ -9,8 +9,8 @@ A programming language that only uses emojis as syntax and encourages writing sp
 ⚙️ 🔢❗ 🔰
     👋 🏁 1
     🔃 🔰 🤜 1
-        👋 🏁 🫸🏁 ✖️ 🔰🫷
-        👋 🔰 🫸🔰 ➖ 1🫷
+        🏁 🫸🏁 ✖️ 🔰🫷
+        🔰 🫸🔰 ➖ 1🫷
     ↩️ 🏁
 
 💭 🔤Enter a number to calculate the factorial: 🔤

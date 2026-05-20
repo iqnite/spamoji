@@ -94,8 +94,8 @@ class Parser:
         return stmt.Expression(expr)
 
     def assignment(self) -> Expr:
-        if self.match(TokenType.VAR):
-            name = self.consume("Expect variable name.", TokenType.IDENTIFIER)
+        if self.match(TokenType.IDENTIFIER):
+            name = self.previous()
             value = self.assignment()
             return expr.Assign(name, value)
         return self.logic_or()
