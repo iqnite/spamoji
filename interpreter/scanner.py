@@ -25,7 +25,7 @@ class Scanner:
         self.start: int = 0
         self.current: int = 0
         self.line: int = 1
-        self.line_start: bool = True
+        self.is_line_start: bool = True
         self.error_handler = error_handler
 
     def scan_tokens(self) -> list[Token]:
@@ -50,34 +50,34 @@ class Scanner:
         c = self.advance()
         match c:
             case "\r":
-                self.line_start = True
+                self.is_line_start = True
             case " " | "\t":
-                if self.line_start:
+                if self.is_line_start:
                     self.indent()
             case "\n":
                 self.add_token(TokenType.NEWLINE)
                 self.line += 1
-                self.line_start = True
+                self.is_line_start = True
             case "🫸":
                 self.add_token(TokenType.LEFT_PAREN)
-                self.line_start = False
+                self.is_line_start = False
             case "🫷":
                 self.add_token(TokenType.RIGHT_PAREN)
-                self.line_start = False
+                self.is_line_start = False
             case "🗒️" | "🗒":
                 self.add_token(TokenType.COMMENT)
                 while self.peek() != "\n" and not self.is_at_end():
                     self.advance()
-                self.line_start = False
+                self.is_line_start = False
             case "🔤":
                 self.string()
-                self.line_start = False
+                self.is_line_start = False
             case _:
                 if c.isdigit():
                     self.number()
                 else:
                     self.identifier()
-                self.line_start = False
+                self.is_line_start = False
 
     def advance(self) -> str:
         """Advances the scanner and returns the next character."""
@@ -115,7 +115,7 @@ class Scanner:
         if value == 0:
             return
         self.add_token(TokenType.INDENT, value)
-        self.line_start = False
+        self.is_line_start = False
 
     def string(self):
         """Scans a string literal."""
