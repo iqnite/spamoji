@@ -21,3 +21,26 @@
 👋 😂 🫴 2
     👋 😂 🫴 😂 ✖️ 2
     🐍 🔤print("Should be 4: 🔤😂🔤")🔤
+
+👋 🥸 🫴 ✅
+🤔 🥸
+👍
+    🐍 🔤print("If works")🔤
+
+🤔 🥸  🗒️ Comment
+👍  🗒️ Comment
+    🐍 🔤print("If/else works")🔤  🗒️ Comment
+👎  🗒️ Comment
+    🐍 🔤print("If/else doesn't work")🔤  🗒️ Comment
+
+🤔 🙅 🥸
+👍
+    🐍 🔤print("If doesn't work")🔤
+👎
+    🐍 🔤print("Else/if works")🔤
+
+🤔 🙅 🥸
+👎
+    🐍 🔤print("Else works")🔤
+
+🤔 🙅 🥸

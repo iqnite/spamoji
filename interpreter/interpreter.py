@@ -104,6 +104,13 @@ class Interpreter(expr.Visitor, stmt.Visitor):
     def visit_expression_stmt(self, stmt: stmt.Expression) -> object:
         return self.evaluate(stmt.expression)
 
+    def visit_if_stmt(self, stmt: stmt.If) -> object:
+        if self.is_truthy(self.evaluate(stmt.condition)):
+            if stmt.then_branch:
+                return self.execute(stmt.then_branch)
+        elif stmt.else_branch:
+            return self.execute(stmt.else_branch)
+
     def visit_python_stmt(self, stmt: stmt.Python) -> object:
         value = self.evaluate(stmt.expression)
         return eval(typing.cast(str, value))

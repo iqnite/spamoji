@@ -80,11 +80,33 @@ class Parser:
 
     def statement(self) -> Stmt:
         """Parses a statement."""
+        if self.match(TokenType.IF):
+            return self.if_statement()
         if self.match(TokenType.INDENT):
             return Block(self.block())
         if self.match(TokenType.PYTHON):
             return self.python_statement()
         return self.expression_statement()
+
+    def if_statement(self) -> Stmt:
+        then_branch = else_branch = None
+        condition = self.expression()
+        self.consume(
+            "Expect newline after if condition.", TokenType.NEWLINE, TokenType.COMMENT
+        )
+        while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
+            self.advance()
+        if self.match(TokenType.IFTRUE):
+            while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
+                self.advance()
+            then_branch = self.statement()
+        while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
+            self.advance()
+        if self.match(TokenType.ELSE):
+            while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
+                self.advance()
+            else_branch = self.statement()
+        return stmt.If(condition, then_branch, else_branch)
 
     def python_statement(self) -> Stmt:
         value = self.expression()

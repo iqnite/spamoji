@@ -19,6 +19,8 @@ class Visitor(ABC):
         pass
     def visit_expression_stmt(self, stmt: "Expression") -> object:
         pass
+    def visit_if_stmt(self, stmt: "If") -> object:
+        pass
     def visit_python_stmt(self, stmt: "Python") -> object:
         pass
     def visit_variable_stmt(self, stmt: "Variable") -> object:
@@ -43,6 +45,18 @@ class Expression(Stmt):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_expression_stmt(self)
+
+
+class If(Stmt):
+    """Represents a if expression."""
+
+    def __init__(self, condition: Expr, then_branch: Stmt | None, else_branch: Stmt | None):
+        self.condition = condition
+        self.then_branch = then_branch
+        self.else_branch = else_branch
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_if_stmt(self)
 
 
 class Python(Stmt):
