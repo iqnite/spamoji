@@ -63,6 +63,7 @@ class Parser:
                 self.advance()
                 current_indent = typing.cast(int, self.previous().literal)
                 if current_indent < block_indent:
+                    self.current -= 1
                     return statements
                 if current_indent > block_indent:
                     statements.append(Block(self.block()))
@@ -86,6 +87,8 @@ class Parser:
             return self.if_statement()
         if self.match(TokenType.WHILE):
             return self.while_statement()
+        if self.match(TokenType.BREAK, TokenType.CONTINUE):
+            return self.loop_control_statement()
         if self.match(TokenType.INDENT):
             return Block(self.block())
         if self.match(TokenType.PYTHON):
@@ -100,15 +103,13 @@ class Parser:
         )
         while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
             self.advance()
-        self.match(TokenType.INDENT)
-        if self.match(TokenType.IFTRUE):
+        if self.match_indented(TokenType.IFTRUE):
             while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
                 self.advance()
             then_branch = self.statement()
         while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
             self.advance()
-        self.match(TokenType.INDENT)
-        if self.match(TokenType.ELSE):
+        if self.match_indented(TokenType.ELSE):
             while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
                 self.advance()
             else_branch = self.statement()
@@ -123,6 +124,20 @@ class Parser:
         )
         body = self.statement()
         return stmt.While(condition, body)
+
+    def match_indented(self, token_type: TokenType) -> bool:
+        if (
+            self.check(TokenType.INDENT)
+            and self.current + 1 < len(self.tokens)
+            and self.tokens[self.current + 1].token_type == token_type
+        ):
+            self.advance()
+            self.advance()
+            return True
+        return self.match(token_type)
+
+    def loop_control_statement(self):
+        return stmt.LoopCtrl(self.previous())
 
     def python_statement(self) -> Stmt:
         value = self.expression()

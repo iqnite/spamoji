@@ -19,6 +19,8 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         self.environment = Environment()
         self.print_expressions = False
         self.prints = []
+        self.break_loop = False
+        self.continue_loop = False
 
     def interpret(
         self,
@@ -95,6 +97,10 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             self.environment = environment
             for statement in statements:
                 self.execute(statement)
+                if self.break_loop:
+                    break
+                if self.continue_loop:
+                    break
         finally:
             self.environment = previous_environment
 
@@ -112,8 +118,21 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             return self.execute(stmt.else_branch)
 
     def visit_while_stmt(self, stmt: stmt.While) -> object:
+        self.break_loop = False
+        self.continue_loop = False
         while self.is_truthy(self.evaluate(stmt.condition)):
             self.execute(stmt.body)
+            if self.break_loop:
+                break
+            if self.continue_loop:
+                self.continue_loop = False
+
+    def visit_loopctrl_stmt(self, stmt: stmt.LoopCtrl) -> object:
+        match stmt.type.token_type:
+            case TokenType.BREAK:
+                self.break_loop = True
+            case TokenType.CONTINUE:
+                self.continue_loop = True
 
     def visit_python_stmt(self, stmt: stmt.Python) -> object:
         value = self.evaluate(stmt.expression)

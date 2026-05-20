@@ -23,6 +23,8 @@ class Visitor(ABC):
         pass
     def visit_while_stmt(self, stmt: "While") -> object:
         pass
+    def visit_loopctrl_stmt(self, stmt: "LoopCtrl") -> object:
+        pass
     def visit_python_stmt(self, stmt: "Python") -> object:
         pass
     def visit_variable_stmt(self, stmt: "Variable") -> object:
@@ -70,6 +72,16 @@ class While(Stmt):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_while_stmt(self)
+
+
+class LoopCtrl(Stmt):
+    """Represents a loopctrl expression."""
+
+    def __init__(self, type: Token):
+        self.type = type
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_loopctrl_stmt(self)
 
 
 class Python(Stmt):
