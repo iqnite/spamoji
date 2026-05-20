@@ -5,7 +5,7 @@ Parser for the Spamoji language. Converts a list of tokens into an abstract synt
 import typing
 
 from interpreter import expr, stmt
-from interpreter.expr import Binary, Expr, Grouping, Literal, Unary
+from interpreter.expr import Binary, Expr, Grouping, Literal, Logical, Unary
 from interpreter.stmt import Block, Stmt
 from interpreter.helpers import error_token
 from interpreter.token import Token, TokenType
@@ -208,7 +208,7 @@ class Parser:
         while self.match(TokenType.OR):
             operator = self.previous()
             right = self.logic_and()
-            expr = Binary(expr, operator, right)
+            expr = Logical(expr, operator, right)
         return expr
 
     def logic_and(self) -> Expr:
@@ -216,7 +216,7 @@ class Parser:
         while self.match(TokenType.AND):
             operator = self.previous()
             right = self.equality()
-            expr = Binary(expr, operator, right)
+            expr = Logical(expr, operator, right)
         return expr
 
     def comparison(self) -> Expr:

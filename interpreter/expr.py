@@ -18,6 +18,8 @@ class Visitor(ABC):
         pass
     def visit_binary_expr(self, expr: "Binary") -> object:
         pass
+    def visit_logical_expr(self, expr: "Logical") -> object:
+        pass
     def visit_if_expr(self, expr: "If") -> object:
         pass
     def visit_grouping_expr(self, expr: "Grouping") -> object:
@@ -51,6 +53,18 @@ class Binary(Expr):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_binary_expr(self)
+
+
+class Logical(Expr):
+    """Represents a logical expression."""
+
+    def __init__(self, left: Expr, operator: Token, right: Expr):
+        self.left = left
+        self.operator = operator
+        self.right = right
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_logical_expr(self)
 
 
 class If(Expr):

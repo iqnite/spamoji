@@ -4,7 +4,7 @@
 🐍 🔤print("🔤😀🔤")🔤  🗒️ Basic Python evaluation.
 🐍 🔤print("🔤🫸😀 🫴 1🫷🔤")🔤
 🐍 🔤print("🔤🫸➖ 1🫷🔤")🔤
-🐍 🔤print("🗒️🔤🫸🙅 ✅🫷🔤")🔤
+🐍 🔤print("🗒️🔤🫸✅ 🤝 ❌ 🤲 🙅 ❌🫷🔤")🔤
 🐍 🔤print("1 + 1 is", 🔤🫸1 ➕ 1🫷🔤)🔤
 🐍 🔤print("Implicit concatenation (should be 0_0): 🔤 ➕ 0🔤_🔤0 ➕ 🔤")🔤
 

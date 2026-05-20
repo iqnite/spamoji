@@ -176,3 +176,13 @@ class Interpreter(expr.Visitor, stmt.Visitor):
                 return self.is_truthy(left) or self.is_truthy(right)
             case _:
                 return None
+
+    def visit_logical_expr(self, expr: expr.Logical) -> object:
+        left = self.evaluate(expr.left)
+        if expr.operator.token_type == TokenType.OR:
+            if self.is_truthy(left):
+                return left
+        else:
+            if not self.is_truthy(left):
+                return left
+        return self.evaluate(expr.right)
