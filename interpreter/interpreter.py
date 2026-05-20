@@ -111,6 +111,10 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         elif stmt.else_branch:
             return self.execute(stmt.else_branch)
 
+    def visit_while_stmt(self, stmt: stmt.While) -> object:
+        while self.is_truthy(self.evaluate(stmt.condition)):
+            self.execute(stmt.body)
+
     def visit_python_stmt(self, stmt: stmt.Python) -> object:
         value = self.evaluate(stmt.expression)
         return eval(typing.cast(str, value))

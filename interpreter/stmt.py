@@ -21,6 +21,8 @@ class Visitor(ABC):
         pass
     def visit_if_stmt(self, stmt: "If") -> object:
         pass
+    def visit_while_stmt(self, stmt: "While") -> object:
+        pass
     def visit_python_stmt(self, stmt: "Python") -> object:
         pass
     def visit_variable_stmt(self, stmt: "Variable") -> object:
@@ -57,6 +59,17 @@ class If(Stmt):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_if_stmt(self)
+
+
+class While(Stmt):
+    """Represents a while expression."""
+
+    def __init__(self, condition: Expr, body: Stmt):
+        self.condition = condition
+        self.body = body
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_while_stmt(self)
 
 
 class Python(Stmt):

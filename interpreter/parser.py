@@ -82,6 +82,8 @@ class Parser:
         """Parses a statement."""
         if self.match(TokenType.IF):
             return self.if_statement()
+        if self.match(TokenType.WHILE):
+            return self.while_statement()
         if self.match(TokenType.INDENT):
             return Block(self.block())
         if self.match(TokenType.PYTHON):
@@ -107,6 +109,16 @@ class Parser:
                 self.advance()
             else_branch = self.statement()
         return stmt.If(condition, then_branch, else_branch)
+
+    def while_statement(self) -> Stmt:
+        condition = self.expression()
+        self.consume(
+            "Expect newline after while condition.",
+            TokenType.NEWLINE,
+            TokenType.COMMENT,
+        )
+        body = self.statement()
+        return stmt.While(condition, body)
 
     def python_statement(self) -> Stmt:
         value = self.expression()
