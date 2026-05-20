@@ -26,6 +26,14 @@
       "program": "${workspaceFolder}/interpreter.py",
       "console": "integratedTerminal",
       "args": "${command:pickArgs}"
+    },
+        {
+      "name": "Generate AST",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/tool/generate_ast.py",
+      "console": "integratedTerminal",
+      "args": ["interpreter"]
     }
   ]
 }
