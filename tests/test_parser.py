@@ -36,9 +36,9 @@ class TestParser(unittest.TestCase):
         assert isinstance(ast[1].body.statements[1], stmt.If)
         self.assertIsInstance(ast[1].body.statements[1].then_branch, stmt.Block)
         self.assertIsInstance(ast[1].body.statements[1].else_branch, stmt.Block)
-        self.assertIsInstance(ast[1].body.statements[2], stmt.Python)
-        assert isinstance(ast[1].body.statements[2], stmt.Python)
-        self.assertIsInstance(ast[2], stmt.Python)
+        self.assertIsInstance(ast[1].body.statements[2], stmt.Print)
+        assert isinstance(ast[1].body.statements[2], stmt.Print)
+        self.assertIsInstance(ast[2], stmt.Print)
 
 
 if __name__ == "__main__":
