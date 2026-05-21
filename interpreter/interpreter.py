@@ -2,6 +2,7 @@
 Contains the actual interpreter.
 """
 
+import time
 import typing
 
 from interpreter import expr, stmt
@@ -16,11 +17,13 @@ class Interpreter(expr.Visitor, stmt.Visitor):
 
     def __init__(self):
         super().__init__()
-        self.environment = Environment()
+        self.globals = Environment()
+        self.environment = self.globals
         self.print_expressions = False
         self.prints = []
         self.break_loop = False
         self.continue_loop = False
+        self.define_natives()
 
     def interpret(
         self,
@@ -38,6 +41,9 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         except SpamojiRuntimeError as exc:
             if error_handler:
                 error_handler(exc)
+
+    def define_natives(self):
+        self.globals.define("🕰️", Clock())
 
     def visit_literal_expr(self, expr: Literal) -> object:
         return expr.value
@@ -231,3 +237,11 @@ class Interpreter(expr.Visitor, stmt.Visitor):
 class SpamojiCallable:
     def call(self, interpreter: Interpreter, arguments: list[object]) -> object: ...
     def arity(self) -> int: ...
+
+
+class Clock(SpamojiCallable):
+    def call(self, interpreter: Interpreter, arguments: list[object]) -> float:
+        return time.time()
+
+    def arity(self) -> int:
+        return 0
