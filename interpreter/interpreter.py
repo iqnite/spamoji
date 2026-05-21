@@ -203,6 +203,20 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             case _:
                 return None
 
+    def visit_call_expr(self, expr: expr.Call) -> object:
+        callee = self.evaluate(expr.callee)
+        arguments = []
+        for argument in expr.arguments:
+            arguments.append(self.evaluate(argument))
+        if not isinstance(callee, SpamojiCallable):
+            raise SpamojiRuntimeError(expr.paren, "Can only call functions.")
+        func = typing.cast(SpamojiCallable, callee)
+        if (got_args := len(arguments)) != (expected_args := func.arity()):
+            raise SpamojiRuntimeError(
+                expr.paren, f"Expected {expected_args} arguments but got {got_args}."
+            )
+        return func.call(self, arguments)
+
     def visit_logical_expr(self, expr: expr.Logical) -> object:
         left = self.evaluate(expr.left)
         if expr.operator.token_type == TokenType.OR:
@@ -212,3 +226,8 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             if not self.is_truthy(left):
                 return left
         return self.evaluate(expr.right)
+
+
+class SpamojiCallable:
+    def call(self, interpreter: Interpreter, arguments: list[object]) -> object: ...
+    def arity(self) -> int: ...
