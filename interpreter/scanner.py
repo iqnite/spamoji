@@ -67,6 +67,10 @@ class Scanner:
             case "🫷":
                 self.add_token(TokenType.RIGHT_PAREN)
                 self.is_line_start = False
+            case "❗":
+                self.add_token(TokenType.LEFT_PAREN)
+                self.add_token(TokenType.RIGHT_PAREN)
+                self.is_line_start = False
             case "🗒️" | "🗒":
                 while self.peek() != "\n" and not self.is_at_end():
                     self.advance()

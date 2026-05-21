@@ -302,7 +302,26 @@ class Parser:
             operator = self.previous()
             right = self.unary()
             return Unary(operator, right)
-        return self.primary()
+        return self.call()
+
+    def call(self) -> Expr:
+        expression = self.primary()
+        while True:
+            if self.match(TokenType.LEFT_PAREN):
+                expression = self.finish_call(expression)
+            else:
+                break
+        return expression
+
+    def finish_call(self, callee: Expr) -> Expr:
+        arguments = []
+        if not self.check(TokenType.RIGHT_PAREN):
+            while True:
+                arguments.append(self.expression())
+                if not self.match(TokenType.COMMA):
+                    break
+        paren = self.consume("Expect '🫷' after arguments.", TokenType.RIGHT_PAREN)
+        return expr.Call(callee, paren, arguments)
 
     def primary(self) -> Expr:
         if self.match(TokenType.FALSE):
