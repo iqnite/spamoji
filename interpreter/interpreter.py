@@ -25,6 +25,7 @@ from interpreter.natives import (
     Print,
     PrintNoNewline,
     PythonCall,
+    Sleep,
     StopProgram,
     Randint,
 )
@@ -67,6 +68,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         self.globals.define("⌨️", GetUserInput())
         self.globals.define("🔢", ConvertToNumber())
         self.globals.define("🕰️", Clock())
+        self.globals.define("⏳", Sleep())
         self.globals.define("🛑", StopProgram())
         self.globals.define("🎲", Randint())
 

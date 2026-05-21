@@ -66,6 +66,14 @@ class Clock(SpamojiCallable):
         return 0
 
 
+class Sleep(SpamojiCallable):
+    def call(self, interpreter: "Interpreter", arguments: list[object]) -> None:
+        time.sleep(float(typing.cast(float, arguments[0])))
+
+    def arity(self) -> int:
+        return 1
+
+
 class StopProgram(SpamojiCallable):
     def call(self, interpreter: "Interpreter", arguments: list[object]) -> float:
         sys.exit()
