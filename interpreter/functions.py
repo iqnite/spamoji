@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING
 
 from interpreter import stmt
 from interpreter.environment import Environment
-from interpreter.interpreter import Interpreter
 
 if TYPE_CHECKING:
     from interpreter.interpreter import Interpreter
@@ -21,7 +20,7 @@ class SpamojiFunction(SpamojiCallable):
     def __init__(self, declaration: stmt.Function):
         self.declaration = declaration
 
-    def call(self, interpreter: Interpreter, arguments: list[object]) -> object:
+    def call(self, interpreter: "Interpreter", arguments: list[object]) -> object:
         environment = Environment(interpreter.globals)
         for arg in self.declaration.arguments:
             environment.define(arg.lexeme, arg)

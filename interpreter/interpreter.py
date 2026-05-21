@@ -2,7 +2,6 @@
 Contains the actual interpreter.
 """
 
-import time
 import typing
 
 from interpreter import expr, stmt
@@ -11,8 +10,15 @@ from interpreter.environment import Environment
 from interpreter.expr import Binary, Expr, Grouping, Literal, Unary
 from interpreter.helpers import (
     SpamojiRuntimeError,
-    SpamojiValueError,
     spamojiValueError,
+)
+from interpreter.natives import (
+    Clock,
+    ConvertToNumber,
+    GetUserInput,
+    Print,
+    PrintNoNewline,
+    PythonCall,
 )
 from interpreter.token import Token, TokenType
 
@@ -244,55 +250,3 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             if not self.is_truthy(left):
                 return left
         return self.evaluate(expr.right)
-
-
-class PythonCall(SpamojiCallable):
-    def call(self, interpreter: Interpreter, arguments: list[object]) -> object:
-        return eval(str(arguments[0]))
-
-    def arity(self) -> int:
-        return 1
-
-
-class Print(SpamojiCallable):
-    def call(self, interpreter: Interpreter, arguments: list[object]) -> object:
-        print(interpreter.stringify(arguments[0]))
-        return arguments[0]
-
-    def arity(self) -> int:
-        return 1
-
-
-class PrintNoNewline(Print):
-    def call(self, interpreter: Interpreter, arguments: list[object]) -> object:
-        print(interpreter.stringify(arguments[0]), end="")
-        return arguments[0]
-
-
-class GetUserInput(SpamojiCallable):
-    def call(self, interpreter: Interpreter, arguments: list[object]) -> str:
-        return input()
-
-    def arity(self) -> int:
-        return 0
-
-
-class ConvertToNumber(SpamojiCallable):
-    def call(
-        self, interpreter: Interpreter, arguments: list[object]
-    ) -> float | SpamojiValueError:
-        try:
-            return float(typing.cast(float, arguments[0]))
-        except ValueError:
-            return spamojiValueError
-
-    def arity(self) -> int:
-        return 1
-
-
-class Clock(SpamojiCallable):
-    def call(self, interpreter: Interpreter, arguments: list[object]) -> float:
-        return time.time()
-
-    def arity(self) -> int:
-        return 0

@@ -1,20 +1,23 @@
 🗒️ Calculates the factorial of a number entered by the user
 👋 😀
-👋 😀🔰
+
+⚙️ 🔢❕🫸🔰🫷
+    👋 🏁 🫴 1
+    🔃 🔰 🤜 1
+        🏁 🫴 🏁 ✖️ 🔰
+        🔰 🫴 🔰 ➖ 1
+    ↩️ 🏁
 
 🔃 ✅
     💭🫸🔤Enter a number to calculate the factorial: 🔤🫷
-    😀🔰 🫴 😀 🫴 🔢🫸⌨️❗🫷
+    😀 🫴 🔢🫸⌨️❗🫷
     🤔 😀 🟰 ⚠️
     👍
         💬🫸🔤Invalid input.🔤🫷
     👎
         ⛔
 
-👋 😀❕ 🫴 1
-🔃 😀 🤜 1
-    😀❕ 🫴 😀❕ ✖️ 😀
-    😀 🫴 😀 ➖ 1
+👋 😀❕ 🫴 🔢❕🫸🔰🫷
 
-💬🫸🔤The factorial of 🔤😀🔰🔤 is 🔤😀❕🫷
+💬🫸🔤The factorial of 🔤😀🔤 is 🔤😀❕🫷
 💬🫸🤔 😀❕ 🤜 1000 👍 🔤That's a very large number!🔤 👎 🔤🔤🫷
