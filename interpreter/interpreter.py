@@ -43,6 +43,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
                 error_handler(exc)
 
     def define_natives(self):
+        self.globals.define("💬", Print())
         self.globals.define("🕰️", Clock())
 
     def visit_literal_expr(self, expr: Literal) -> object:
@@ -144,9 +145,6 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         value = self.evaluate(stmt.expression)
         return eval(typing.cast(str, value))
 
-    def visit_print_stmt(self, stmt: stmt.Print) -> object:
-        print(self.stringify(self.evaluate(stmt.value)))
-
     def visit_variable_stmt(self, stmt: stmt.Variable) -> object:
         value = None
         if stmt.initializer is not None:
@@ -237,6 +235,15 @@ class Interpreter(expr.Visitor, stmt.Visitor):
 class SpamojiCallable:
     def call(self, interpreter: Interpreter, arguments: list[object]) -> object: ...
     def arity(self) -> int: ...
+
+
+class Print(SpamojiCallable):
+    def call(self, interpreter: Interpreter, arguments: list[object]) -> object:
+        print(interpreter.stringify(arguments[0]))
+        return arguments[0]
+
+    def arity(self) -> int:
+        return 1
 
 
 class Clock(SpamojiCallable):

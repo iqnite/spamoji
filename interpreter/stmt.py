@@ -27,8 +27,6 @@ class Visitor(ABC):
         pass
     def visit_python_stmt(self, stmt: "Python") -> object:
         pass
-    def visit_print_stmt(self, stmt: "Print") -> object:
-        pass
     def visit_variable_stmt(self, stmt: "Variable") -> object:
         pass
 
@@ -94,16 +92,6 @@ class Python(Stmt):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_python_stmt(self)
-
-
-class Print(Stmt):
-    """Represents a print expression."""
-
-    def __init__(self, value: Expr):
-        self.value = value
-
-    def accept(self, visitor: Visitor) -> object:
-        return visitor.visit_print_stmt(self)
 
 
 class Variable(Stmt):
