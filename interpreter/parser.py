@@ -71,6 +71,8 @@ class Parser:
 
     def declaration(self) -> Stmt | None:
         try:
+            if self.match(TokenType.FUNCTION):
+                return self.function("function")
             if self.match(TokenType.VAR):
                 return self.var_declaration()
             return self.statement()
@@ -139,6 +141,22 @@ class Parser:
         expr = self.expression()
         self.consume("Expect 1 statement per line", TokenType.NEWLINE, TokenType.EOF)
         return stmt.Expression(expr)
+
+    def function(self, kind: str):
+        name = self.consume(f"Expect {kind} name.", TokenType.IDENTIFIER)
+        self.consume(f"Expect '🫸' or '❗' after {kind} name.")
+        arguments = []
+        if not self.check(TokenType.RIGHT_PAREN):
+            while True:
+                arguments.append(
+                    self.consume("Expect argument name.", TokenType.IDENTIFIER)
+                )
+                if not self.match(TokenType.COMMA):
+                    break
+        self.consume("Expect '🫷' after arguments.", TokenType.RIGHT_PAREN)
+        self.consume(f"Expect newline before {kind} body.", TokenType.NEWLINE)
+        body = self.block()
+        return stmt.Function(name, arguments, body)
 
     def assignment(self) -> Expr:
         expression = self.ternary()

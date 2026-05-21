@@ -19,6 +19,8 @@ class Visitor(ABC):
         pass
     def visit_expression_stmt(self, stmt: "Expression") -> object:
         pass
+    def visit_function_stmt(self, stmt: "Function") -> object:
+        pass
     def visit_if_stmt(self, stmt: "If") -> object:
         pass
     def visit_while_stmt(self, stmt: "While") -> object:
@@ -47,6 +49,18 @@ class Expression(Stmt):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_expression_stmt(self)
+
+
+class Function(Stmt):
+    """Represents a function expression."""
+
+    def __init__(self, name: Token, arguments: list[Token], body: list[Stmt]):
+        self.name = name
+        self.arguments = arguments
+        self.body = body
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_function_stmt(self)
 
 
 class If(Stmt):

@@ -6,6 +6,7 @@ import time
 import typing
 
 from interpreter import expr, stmt
+from interpreter.functions import SpamojiCallable, SpamojiFunction
 from interpreter.environment import Environment
 from interpreter.expr import Binary, Expr, Grouping, Literal, Unary
 from interpreter.helpers import (
@@ -130,6 +131,10 @@ class Interpreter(expr.Visitor, stmt.Visitor):
     def visit_expression_stmt(self, stmt: stmt.Expression) -> object:
         return self.evaluate(stmt.expression)
 
+    def visit_function_stmt(self, stmt: stmt.Function) -> object:
+        func = SpamojiFunction(stmt)
+        self.environment.define(stmt.name.lexeme, func)
+
     def visit_if_stmt(self, stmt: stmt.If) -> object:
         if self.is_truthy(self.evaluate(stmt.condition)):
             if stmt.then_branch:
@@ -239,11 +244,6 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             if not self.is_truthy(left):
                 return left
         return self.evaluate(expr.right)
-
-
-class SpamojiCallable:
-    def call(self, interpreter: Interpreter, arguments: list[object]) -> object: ...
-    def arity(self) -> int: ...
 
 
 class PythonCall(SpamojiCallable):
