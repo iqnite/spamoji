@@ -5,7 +5,7 @@ Contains the actual interpreter.
 import typing
 
 from interpreter import expr, stmt
-from interpreter.functions import SpamojiCallable, SpamojiFunction
+from interpreter.functions import Return, SpamojiCallable, SpamojiFunction
 from interpreter.environment import Environment
 from interpreter.expr import Binary, Expr, Grouping, Literal, Unary
 from interpreter.helpers import (
@@ -157,6 +157,12 @@ class Interpreter(expr.Visitor, stmt.Visitor):
                 break
             if self.continue_loop:
                 self.continue_loop = False
+
+    def visit_return_stmt(self, stmt: stmt.Return) -> object:
+        value = None
+        if stmt.value is not None:
+            value = self.evaluate(stmt.value)
+        raise Return(value)
 
     def visit_loopctrl_stmt(self, stmt: stmt.LoopCtrl) -> object:
         match stmt.type.token_type:

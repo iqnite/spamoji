@@ -21,6 +21,8 @@ class Visitor(ABC):
         pass
     def visit_function_stmt(self, stmt: "Function") -> object:
         pass
+    def visit_return_stmt(self, stmt: "Return") -> object:
+        pass
     def visit_if_stmt(self, stmt: "If") -> object:
         pass
     def visit_while_stmt(self, stmt: "While") -> object:
@@ -61,6 +63,17 @@ class Function(Stmt):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_function_stmt(self)
+
+
+class Return(Stmt):
+    """Represents a return expression."""
+
+    def __init__(self, keyword: Token, value: Expr | None):
+        self.keyword = keyword
+        self.value = value
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_return_stmt(self)
 
 
 class If(Stmt):

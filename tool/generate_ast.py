@@ -34,6 +34,7 @@ def main():
             "Block      @ statements: list[Stmt]",
             "Expression @ expression: Expr",
             "Function   @ name: Token, arguments: list[Token], body: list[Stmt]",
+            "Return     @ keyword: Token, value: Expr | None",
             "If         @ condition: Expr, then_branch: Stmt | None, else_branch: Stmt | None",
             "While      @ condition: Expr, body: Stmt",
             "LoopCtrl   @ type: Token",

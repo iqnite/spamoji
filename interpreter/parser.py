@@ -127,7 +127,15 @@ class Parser:
             return True
         return self.match(token_type)
 
-    def loop_control_statement(self):
+    def return_statement(self) -> Stmt:
+        keyword = self.previous()
+        value = None
+        if not self.check(TokenType.NEWLINE):
+            value = self.expression()
+        self.consume("Cannot return more than 1 value.", TokenType.NEWLINE)
+        return stmt.Return(keyword, value)
+
+    def loop_control_statement(self) -> Stmt:
         return stmt.LoopCtrl(self.previous())
 
     def var_declaration(self) -> Stmt:

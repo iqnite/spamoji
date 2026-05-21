@@ -24,10 +24,19 @@ class SpamojiFunction(SpamojiCallable):
         environment = Environment(interpreter.globals)
         for arg in self.declaration.arguments:
             environment.define(arg.lexeme, arg)
-        interpreter.execute_block(self.declaration.body, environment)
+        try:
+            interpreter.execute_block(self.declaration.body, environment)
+        except Return as return_value:
+            return return_value.value
 
     def arity(self) -> int:
         return len(self.declaration.arguments)
 
     def __str__(self) -> str:
         return f"<⚙️ {self.declaration.name.lexeme}>"
+
+
+class Return(RuntimeError):
+    def __init__(self, value: object, *_):
+        super().__init__()
+        self.value = value
