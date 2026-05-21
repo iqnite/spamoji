@@ -363,7 +363,6 @@ class Parser:
             if self.peek().token_type in (
                 TokenType.FUNCTION,
                 TokenType.VAR,
-                TokenType.LABEL,
                 TokenType.IF,
                 TokenType.WHILE,
                 TokenType.RETURN,

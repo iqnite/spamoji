@@ -55,8 +55,6 @@ Each line of code starts with an emoji that indicates the type of statement. Eac
 - 🔃 Loop: Followed by the loop variable and condition
   - ⛔ Break statement: Used to exit the loop
   - ⤴️ Continue statement: Used to skip to the next iteration of the loop
-- 🚩 Label statement: Used to mark a location in the code for use with jump statements
-- 🎯 Jump statement: Used to transfer control to a labeled statement
 - ⚙️ Function definition: Followed by the function name and parameters
   - ↩️ Return statement: Followed by the value to return
 - 🛑 Stop statement: Terminates the program
@@ -110,7 +108,6 @@ The language includes several built-in functions and values for common operation
 - 🔢: Convert input to a number
 - ⌨️: Read input from the user
 - 💬: Print output to a new line in the console
-- 💭: Print output to the console without creating a new line
 - ✅: A special value representing true
 - ❌: A special value representing false
 - 🫥: A special value representing null

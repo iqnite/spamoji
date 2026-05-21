@@ -186,8 +186,6 @@ KEYWORDS = {
     "✅": TokenType.TRUE,
     "❌": TokenType.FALSE,
     "👋": TokenType.VAR,
-    "🚩": TokenType.LABEL,
-    "🎯": TokenType.JUMP,
     "🧩": TokenType.IMPORT,
     "💬": TokenType.PRINT,
     "🐍": TokenType.PYTHON,

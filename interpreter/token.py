@@ -27,8 +27,6 @@ class TokenType(Enum):
     TRUE = 19
     FALSE = 20
     VAR = 21
-    LABEL = 22
-    JUMP = 23
     IMPORT = 33
     PYTHON = 34
     OR = 36
