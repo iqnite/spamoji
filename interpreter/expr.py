@@ -18,6 +18,8 @@ class Visitor(ABC):
         pass
     def visit_binary_expr(self, expr: "Binary") -> object:
         pass
+    def visit_call_expr(self, expr: "Call") -> object:
+        pass
     def visit_logical_expr(self, expr: "Logical") -> object:
         pass
     def visit_if_expr(self, expr: "If") -> object:
@@ -53,6 +55,18 @@ class Binary(Expr):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_binary_expr(self)
+
+
+class Call(Expr):
+    """Represents a call expression."""
+
+    def __init__(self, callee: Expr, paren: Token, arguments: list[Expr]):
+        self.callee = callee
+        self.paren = paren
+        self.arguments = arguments
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_call_expr(self)
 
 
 class Logical(Expr):
