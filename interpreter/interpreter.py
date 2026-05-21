@@ -253,7 +253,10 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             raise SpamojiRuntimeError(
                 expr.paren, f"Expected {expected_args} arguments but got {got_args}."
             )
-        return func.call(self, arguments)
+        try:
+            return func.call(self, arguments)
+        except (TypeError, ValueError, OverflowError) as e:
+            raise SpamojiRuntimeError(expr.paren, e.args[0]) from e
 
     def visit_logical_expr(self, expr: expr.Logical) -> object:
         left = self.evaluate(expr.left)
