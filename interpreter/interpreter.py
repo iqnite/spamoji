@@ -52,6 +52,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         self.globals.define("💬", Print())
         self.globals.define("💭", PrintNoNewline())
         self.globals.define("⌨️", GetUserInput())
+        self.globals.define("🔢", ConvertToNumber())
         self.globals.define("🕰️", Clock())
 
     def visit_literal_expr(self, expr: Literal) -> object:

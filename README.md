@@ -13,10 +13,10 @@ A programming language that only uses emojis as syntax and encourages writing sp
         🔰 🫴 🔰 ➖ 1
     ↩️ 🏁
 
-💭 🔤Enter a number to calculate the factorial: 🔤
+💭🫸🔤Enter a number to calculate the factorial: 🔤🫷
 👋 😀 🫴 🔢🫸⌨️❗🫷
 🤔 😀 🟰 ⚠️
-👍️
+👍
     💬🫸🔤Invalid input.🔤🫷
 👎
     💬🫸🔤The factorial of 🔤😀🔤 is 🔤🫸🔢❕🫸😀🫷🫷🫷
