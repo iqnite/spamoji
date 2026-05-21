@@ -105,6 +105,7 @@ Values directly before or after a string will also be concatenated with that str
 The language includes several built-in functions and values for common operations, such as:
 
 - 💬: Print output to a new line in the console
+- 💭: Print output to the console
 - ⌨️: Read input from the user
 - 🔢: Convert input to a number
 - ✅: A special value representing true

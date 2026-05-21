@@ -50,6 +50,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         self.globals.define("⚠️", spamojiValueError)
         self.globals.define("🐍", PythonCall())
         self.globals.define("💬", Print())
+        self.globals.define("💭", PrintNoNewline())
         self.globals.define("⌨️", GetUserInput())
         self.globals.define("🕰️", Clock())
 
@@ -259,6 +260,12 @@ class Print(SpamojiCallable):
 
     def arity(self) -> int:
         return 1
+
+
+class PrintNoNewline(Print):
+    def call(self, interpreter: Interpreter, arguments: list[object]) -> object:
+        print(interpreter.stringify(arguments[0]), end="")
+        return arguments[0]
 
 
 class GetUserInput(SpamojiCallable):
