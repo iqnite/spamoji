@@ -1,48 +1,48 @@
 🗒️ This code should run without errors.
 👋 😀 🫴 🔤This shouldn't get printed🔤
 😀 🫴 🔤A 🔤 ➕ 🔤variable🔤
-🐍 🔤print("🔤😀🔤")🔤  🗒️ Basic Python evaluation.
-🐍 🔤print("🔤🫸😀 🫴 1🫷🔤")🔤
-🐍 🔤print("🔤🫸➖ 1🫷🔤")🔤
-🐍 🔤print("🗒️🔤🫸✅ 🤝 ❌ 🤲 🙅 ❌🫷🔤")🔤
-🐍 🔤print("1 + 1 is", 🔤🫸1 ➕ 1🫷🔤)🔤
-🐍 🔤print("Implicit concatenation (should be 0_0): 🔤 ➕ 0🔤_🔤0 ➕ 🔤")🔤
+🐍🫸🔤print("🔤😀🔤")🔤🫷  🗒️ Basic Python evaluation.
+💬🫸😀 🫴 1🫷
+💬🫸➖ 1🫷
+💬🫸✅ 🤝 ❌ 🤲 🙅 ❌🫷
+🐍🫸🔤print("🗒️ 1 + 1 is", 🔤🫸1 ➕ 1🫷🔤)🔤🫷
+💬🫸🔤Implicit concatenation (should be 0_0): 🔤 ➕ 0🔤_🔤0🫷
 
 👋 😎 🫴 1
-    🐍 🔤print("🔤😎🔤", end="")🔤
+    🐍🫸🔤print("🔤😎🔤", end="")🔤🫷
     😎 🫴 2
-    🐍 🔤print("🔤😎🔤", end="")🔤
+    🐍🫸🔤print("🔤😎🔤", end="")🔤🫷
     👋 😎 🫴 3
-    🐍 🔤print("🔤😎🔤", end="")🔤
-🐍 🔤print("🔤😎🔤", end="")🔤
+    🐍🫸🔤print("🔤😎🔤", end="")🔤🫷
+🐍🫸🔤print("🔤😎🔤", end="")🔤🫷
 😎 🫴 1
-🐍 🔤print("🔤😎🔤")🔤
+🐍🫸🔤print("🔤😎🔤")🔤🫷
 
 👋 😂 🫴 2
     👋 😂 🫴 😂 ✖️ 2
-    🐍 🔤print("Should be 4: 🔤😂🔤")🔤
+    🐍🫸🔤print("Should be 4: 🔤😂🔤")🔤🫷
 
 👋 🥸 🫴 ✅
 🤔 🥸
 👍
-    🐍 🔤print("If works")🔤
+    🐍🫸🔤print("If works")🔤🫷
 
 🤔 🥸  🗒️ Comment
 👍  🗒️ Comment
-    🐍 🔤print("If/else works")🔤  🗒️ Comment
+    🐍🫸🔤print("If/else works")🔤🫷  🗒️ Comment
 👎  🗒️ Comment
-    🐍 🔤print("If/else doesn't work")🔤  🗒️ Comment
+    🐍🫸🔤print("If/else doesn't work")🔤🫷  🗒️ Comment
 
 🤔 🙅 🥸
 👍
-    🐍 🔤print("If doesn't work")🔤
+    🐍🫸🔤print("If doesn't work")🔤🫷
 👎
-    🐍 🔤print("Else/if works")🔤
+    🐍🫸🔤print("Else/if works")🔤🫷
 
 🤔 🙅 🥸
 👎
-    🐍 🔤print("Else works")🔤
+    🐍🫸🔤print("Else works")🔤🫷
 
 🤔 🙅 🥸  🗒️ Skip
 
-🐍 🔤print("🔤🫸🤔 🥸 👍 🔤Yep!🔤 👎 🔤Nope🔤🫷🔤")🔤
+🐍🫸🔤print("🔤🫸🤔 🥸 👍 🔤Yep!🔤 👎 🔤Nope🔤🫷🔤")🔤🫷

@@ -194,7 +194,6 @@ KEYWORDS = {
     "❌": TokenType.FALSE,
     "👋": TokenType.VAR,
     "🧩": TokenType.IMPORT,
-    "🐍": TokenType.PYTHON,
     "🫴": TokenType.ASSIGNMENT,
     "🤝": TokenType.AND,
     "🤲": TokenType.OR,

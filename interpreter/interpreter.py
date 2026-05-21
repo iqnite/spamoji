@@ -43,6 +43,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
                 error_handler(exc)
 
     def define_natives(self):
+        self.globals.define("🐍", PythonCall())
         self.globals.define("💬", Print())
         self.globals.define("🕰️", Clock())
 
@@ -141,10 +142,6 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             case TokenType.CONTINUE:
                 self.continue_loop = True
 
-    def visit_python_stmt(self, stmt: stmt.Python) -> object:
-        value = self.evaluate(stmt.expression)
-        return eval(typing.cast(str, value))
-
     def visit_variable_stmt(self, stmt: stmt.Variable) -> object:
         value = None
         if stmt.initializer is not None:
@@ -235,6 +232,14 @@ class Interpreter(expr.Visitor, stmt.Visitor):
 class SpamojiCallable:
     def call(self, interpreter: Interpreter, arguments: list[object]) -> object: ...
     def arity(self) -> int: ...
+
+
+class PythonCall(SpamojiCallable):
+    def call(self, interpreter: Interpreter, arguments: list[object]) -> object:
+        return eval(str(arguments[0]))
+
+    def arity(self) -> int:
+        return 1
 
 
 class Print(SpamojiCallable):

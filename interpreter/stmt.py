@@ -25,8 +25,6 @@ class Visitor(ABC):
         pass
     def visit_loopctrl_stmt(self, stmt: "LoopCtrl") -> object:
         pass
-    def visit_python_stmt(self, stmt: "Python") -> object:
-        pass
     def visit_variable_stmt(self, stmt: "Variable") -> object:
         pass
 
@@ -82,16 +80,6 @@ class LoopCtrl(Stmt):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_loopctrl_stmt(self)
-
-
-class Python(Stmt):
-    """Represents a python expression."""
-
-    def __init__(self, expression: Expr):
-        self.expression = expression
-
-    def accept(self, visitor: Visitor) -> object:
-        return visitor.visit_python_stmt(self)
 
 
 class Variable(Stmt):

@@ -88,8 +88,6 @@ class Parser:
             return self.loop_control_statement()
         if self.match(TokenType.INDENT):
             return Block(self.block())
-        if self.match(TokenType.PYTHON):
-            return self.python_statement()
         return self.expression_statement()
 
     def if_statement(self) -> Stmt:
@@ -129,11 +127,6 @@ class Parser:
 
     def loop_control_statement(self):
         return stmt.LoopCtrl(self.previous())
-
-    def python_statement(self) -> Stmt:
-        value = self.expression()
-        self.consume("Expect 1 statement per line", TokenType.NEWLINE, TokenType.EOF)
-        return stmt.Python(value)
 
     def var_declaration(self) -> Stmt:
         name = self.consume("Except variable name.", TokenType.IDENTIFIER)
