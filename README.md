@@ -57,7 +57,7 @@ Each line of code starts with an emoji that indicates the type of statement. Eac
   - ⤴️ Continue statement: Used to skip to the next iteration of the loop
 - ⚙️ Function definition: Followed by the function name and parameters
   - ↩️ Return statement: Followed by the value to return
-- 🧩 Import statement: Followed by a file name, it gets replaced by the contents of that file before execution
+<!-- - 🧩 Import statement: Followed by a file name, it gets replaced by the contents of that file before execution -->
 
 Some statements can be nested, such as if statements and loops. Indentation is used to indicate the scope of these statements. Indented blocks are considered part of the previous statement until the indentation level decreases. Variables declared inside of a block are only accessible inside of that block and any nested blocks.
 

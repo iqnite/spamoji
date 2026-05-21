@@ -26,7 +26,7 @@ class TokenType(Enum):
     TRUE = 19
     FALSE = 20
     VAR = 21
-    IMPORT = 33
+    # IMPORT = 33
     OR = 36
     NOT = 37
     PLUS = 38
