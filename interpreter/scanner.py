@@ -202,6 +202,5 @@ KEYWORDS = {
     "➖": TokenType.MINUS,
     "✖️": TokenType.MULTIPLY,
     "➗": TokenType.DIVIDE,
-    "🛑": TokenType.STOP,
     "🫥": TokenType.NULL,
 }

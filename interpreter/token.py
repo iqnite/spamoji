@@ -33,7 +33,6 @@ class TokenType(Enum):
     MINUS = 39
     MULTIPLY = 40
     DIVIDE = 41
-    STOP = 42
     EOF = 44
     NULL = 45
     NEWLINE = 46

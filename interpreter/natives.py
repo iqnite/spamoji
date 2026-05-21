@@ -2,6 +2,7 @@
 Contains native functions.
 """
 
+import sys
 import time
 import typing
 
@@ -59,6 +60,14 @@ class ConvertToNumber(SpamojiCallable):
 class Clock(SpamojiCallable):
     def call(self, interpreter: "Interpreter", arguments: list[object]) -> float:
         return time.time()
+
+    def arity(self) -> int:
+        return 0
+
+
+class StopProgram(SpamojiCallable):
+    def call(self, interpreter: "Interpreter", arguments: list[object]) -> float:
+        sys.exit()
 
     def arity(self) -> int:
         return 0
