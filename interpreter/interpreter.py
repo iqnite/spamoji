@@ -26,6 +26,7 @@ from interpreter.natives import (
     PrintNoNewline,
     PythonCall,
     StopProgram,
+    Randint,
 )
 from interpreter.token import Token, TokenType
 
@@ -67,6 +68,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         self.globals.define("🔢", ConvertToNumber())
         self.globals.define("🕰️", Clock())
         self.globals.define("🛑", StopProgram())
+        self.globals.define("🎲", Randint())
 
     def visit_literal_expr(self, expr: Literal) -> object:
         return expr.value

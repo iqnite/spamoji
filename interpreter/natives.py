@@ -2,6 +2,7 @@
 Contains native functions.
 """
 
+import random
 import sys
 import time
 import typing
@@ -71,3 +72,13 @@ class StopProgram(SpamojiCallable):
 
     def arity(self) -> int:
         return 0
+
+
+class Randint(SpamojiCallable):
+    def call(self, interpreter: "Interpreter", arguments: list[object]) -> object:
+        return random.randint(
+            int(typing.cast(int, arguments[0])), int(typing.cast(int, arguments[1]))
+        )
+
+    def arity(self) -> int:
+        return 2

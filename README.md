@@ -107,6 +107,7 @@ The language includes several built-in functions and values for common operation
 - 💭: Print output to the console
 - ⌨️: Read input from the user
 - 🔢: Convert input to a number
+- 🎲: Get a random number between 2 integers
 - 🛑: Stop the program
 - ✅: A special value representing true
 - ❌: A special value representing false
