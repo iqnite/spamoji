@@ -14,12 +14,12 @@ A programming language that only uses emojis as syntax and encourages writing sp
     ↩️ 🏁
 
 💭 🔤Enter a number to calculate the factorial: 🔤
-👋 😀 🫴 🔢 ⌨️ ❗
+👋 😀 🫴 🔢 ⌨️❗❗
 🤔 😀 🟰 ⚠️
 👍️
-    💬 🔤Invalid input.🔤 ❗
+    💬 🔤Invalid input.🔤❗
 👎
-    💬 🔤The factorial of 🔤😀🔤 is 🔤🫸🔢❕ 😀 ❗🫷 ❗
+    💬 🔤The factorial of 🔤😀🔤 is 🔤🫸🔢❕ 😀❗🫷❗
 ```
 
 ## What's this all about?
