@@ -159,7 +159,7 @@ class Scanner:
 
     def identifier(self):
         """Scans an identifier."""
-        while self.peek() not in " \r\t\n🫸🫷🔤.,;" and not self.is_at_end():
+        while self.peek() not in " \r\t\n🫸🫷🔤🔸.,;" and not self.is_at_end():
             self.advance()
 
         text = self.source[self.start : self.current]
