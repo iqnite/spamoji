@@ -6,7 +6,7 @@ A programming language that only uses emojis as syntax and encourages writing sp
 
 ```spamoji
 🗒️ A function to calculate factorial
-⚙️ 🔢❗ 🔰
+⚙️ 🔢❕ 🔰
     👋 🏁 🫴 1
     🔃 🔰 🤜 1
         🏁 🫴 🏁 ✖️ 🔰
@@ -14,12 +14,12 @@ A programming language that only uses emojis as syntax and encourages writing sp
     ↩️ 🏁
 
 💭 🔤Enter a number to calculate the factorial: 🔤
-👋 😀 🫴 🔢 ⌨️
+👋 😀 🫴 🔢 ⌨️ ❗
 🤔 😀 🟰 ⚠️
 👍️
-    💬 🔤Invalid input.🔤
+    💬 🔤Invalid input.🔤 ❗
 👎
-    💬 🔤The factorial of 🔤😀🔤 is 🔤🫸🔢❗ 😀🫷
+    💬 🔤The factorial of 🔤😀🔤 is 🔤🫸🔢❕ 😀 ❗🫷 ❗
 ```
 
 ## What's this all about?
@@ -67,7 +67,7 @@ Some statements can be nested, such as if statements and loops. Indentation is u
 
 Functions are defined using the ⚙️ emoji, followed by the function name and parameters. The function body is indented and can contain any valid statements. The function can return a value using the ↪️ emoji.
 
-Functions can be called by using their name followed by the arguments, separated by spaces.
+Functions can be called by using their name followed by the arguments, separated by spaces, followed by the ❗ emoji.
 
 ### Variables
 
