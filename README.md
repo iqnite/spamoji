@@ -40,6 +40,9 @@ If no file is supplied, the interactive REPL will start, which allows to enter a
 
 ## Syntax
 
+> [!IMPORTANT]
+> The emojis used in the syntax were entered on a Windows machine. While they should work on other platforms, some emojis might not render correctly or might be replaced with different emojis. If you encounter any issues, please try copying and pasting the emojis from this documentation into your code.
+
 ### Statements
 
 Each line of code starts with an emoji that indicates the type of statement. Each statement is followed by the relevant information, separated by spaces. Statements include:
