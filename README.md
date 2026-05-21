@@ -24,10 +24,7 @@ A programming language that only uses emojis as syntax and encourages writing sp
 
 ## What's this all about?
 
-This language is a learning project. I have written this documentation before writing the interpreter, so I might need to make adjustments to the language design as I implement it. If this experiment is successful, I might move on and begin working on Esore, a more serious language I've been designing in the past 2 years.
-
-> [!CAUTION]
-> The spamoji language is intended for educational purposes only and should not be used for production code.
+This language is a learning project. Since it lacks many features of a typical programming language, it is not recommended for production use. If this experiment is successful, I might move on and begin working on Esore, a more serious language I've been designing in the past 2 years.
 
 ## Usage
 
@@ -57,7 +54,7 @@ Each line of code starts with an emoji that indicates the type of statement. Eac
   - ⤴️ Continue statement: Used to skip to the next iteration of the loop
 - ⚙️ Function definition: Followed by the function name and parameters
   - ↩️ Return statement: Followed by the value to return
-<!-- - 🧩 Import statement: Followed by a file name, it gets replaced by the contents of that file before execution -->
+  <!-- - 🧩 Import statement: Followed by a file name, it gets replaced by the contents of that file before execution -->
 
 Some statements can be nested, such as if statements and loops. Indentation is used to indicate the scope of these statements. Indented blocks are considered part of the previous statement until the indentation level decreases. Variables declared inside of a block are only accessible inside of that block and any nested blocks.
 
@@ -66,6 +63,16 @@ Some statements can be nested, such as if statements and loops. Indentation is u
 Functions are defined using the ⚙️ emoji, followed by the function name and parameters. The function body is indented and can contain any valid statements. The function can return a value using the ↩️ emoji.
 
 Functions can be called by using their name followed by the arguments, separated by 🔸, between 🫸 and 🫷. Functions with no arguments can also be called with the ❗ emoji.
+
+Here's an example of a function definition and call:
+
+```spamoji
+⚙️ greetAndAsk 🫸firstName 🔸 lastName🫷
+    💬🫸🔤Hello, 🔤firstName🔤 🔤lastName🔤! Please enter a number...🔤🫷
+    ↩️ ⌨️❗  🗒️ Return the user input
+
+greetAndAsk🫸🔤John🔤 🔸 🔤Doe🔤🫷
+```
 
 ### Variables
 
@@ -105,9 +112,10 @@ The language includes several built-in functions and values for common operation
 
 - 💬: Print output to a new line in the console
 - 💭: Print output to the console
-- ⌨️: Read input from the user
-- 🔢: Convert input to a number
-- 🎲: Get a random number between 2 integers
+- ⌨️: Get user input from the console
+- ⏳: Wait for a specified number of seconds
+- 🔢: Convert input to a number, return ⚠️ if the conversion fails
+- 🎲: Get a random integer between 2 numbers
 - 🛑: Stop the program
 - ✅: A special value representing true
 - ❌: A special value representing false
