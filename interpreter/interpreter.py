@@ -8,7 +8,11 @@ import typing
 from interpreter import expr, stmt
 from interpreter.environment import Environment
 from interpreter.expr import Binary, Expr, Grouping, Literal, Unary
-from interpreter.helpers import SpamojiRuntimeError
+from interpreter.helpers import (
+    SpamojiRuntimeError,
+    SpamojiValueError,
+    spamojiValueError,
+)
 from interpreter.token import Token, TokenType
 
 
@@ -43,8 +47,10 @@ class Interpreter(expr.Visitor, stmt.Visitor):
                 error_handler(exc)
 
     def define_natives(self):
+        self.globals.define("⚠️", spamojiValueError)
         self.globals.define("🐍", PythonCall())
         self.globals.define("💬", Print())
+        self.globals.define("⌨️", GetUserInput())
         self.globals.define("🕰️", Clock())
 
     def visit_literal_expr(self, expr: Literal) -> object:
@@ -72,6 +78,8 @@ class Interpreter(expr.Visitor, stmt.Visitor):
     def is_truthy(self, obj: object) -> bool:
         if obj is None:
             return False
+        if obj is spamojiValueError:
+            return False
         if isinstance(obj, bool):
             return obj
         return True
@@ -85,6 +93,8 @@ class Interpreter(expr.Visitor, stmt.Visitor):
                 return text[:-2]
         if isinstance(obj, bool):
             return "✅" if obj else "❌"
+        if obj is spamojiValueError:
+            return "⚠️"
         return text
 
     def visit_grouping_expr(self, expr: Grouping) -> object:
@@ -178,7 +188,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
                 try:
                     return left_f / right_f
                 except ZeroDivisionError:
-                    return "⚠️"
+                    return spamojiValueError
             case TokenType.PLUS:
                 if isinstance(left, float) and isinstance(right, float):
                     return left + right
@@ -246,6 +256,27 @@ class Print(SpamojiCallable):
     def call(self, interpreter: Interpreter, arguments: list[object]) -> object:
         print(interpreter.stringify(arguments[0]))
         return arguments[0]
+
+    def arity(self) -> int:
+        return 1
+
+
+class GetUserInput(SpamojiCallable):
+    def call(self, interpreter: Interpreter, arguments: list[object]) -> str:
+        return input()
+
+    def arity(self) -> int:
+        return 0
+
+
+class ConvertToNumber(SpamojiCallable):
+    def call(
+        self, interpreter: Interpreter, arguments: list[object]
+    ) -> float | SpamojiValueError:
+        try:
+            return float(typing.cast(float, arguments[0]))
+        except ValueError:
+            return spamojiValueError
 
     def arity(self) -> int:
         return 1
