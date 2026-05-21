@@ -5,7 +5,13 @@ Contains the actual interpreter.
 import typing
 
 from interpreter import expr, stmt
-from interpreter.functions import Return, SpamojiCallable, SpamojiFunction
+from interpreter.functions import (
+    BreakLoop,
+    ContinueLoop,
+    Return,
+    SpamojiCallable,
+    SpamojiFunction,
+)
 from interpreter.environment import Environment
 from interpreter.expr import Binary, Expr, Grouping, Literal, Unary
 from interpreter.helpers import (
@@ -32,8 +38,6 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         self.environment = self.globals
         self.print_expressions = False
         self.prints = []
-        self.break_loop = False
-        self.continue_loop = False
         self.define_natives()
 
     def interpret(
@@ -123,11 +127,10 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         try:
             self.environment = environment
             for statement in statements:
-                self.execute(statement)
-                if self.break_loop:
-                    break
-                if self.continue_loop:
-                    break
+                try:
+                    self.execute(statement)
+                except (BreakLoop, ContinueLoop) as e:
+                    raise e
         finally:
             self.environment = previous_environment
 
@@ -149,18 +152,15 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             return self.execute(stmt.else_branch)
 
     def visit_while_stmt(self, stmt: stmt.While) -> object:
-        self.break_loop = False
-        self.continue_loop = False
         while self.is_truthy(self.evaluate(stmt.condition)):
-            self.execute(stmt.body)
-            if self.break_loop:
+            try:
+                self.execute(stmt.body)
+            except BreakLoop:
                 break
-            if self.continue_loop:
-                self.continue_loop = False
+            except ContinueLoop:
+                continue
 
     def visit_return_stmt(self, stmt: stmt.Return) -> object:
-        self.break_loop = False
-        self.continue_loop = False
         value = None
         if stmt.value is not None:
             value = self.evaluate(stmt.value)
@@ -169,9 +169,9 @@ class Interpreter(expr.Visitor, stmt.Visitor):
     def visit_loopctrl_stmt(self, stmt: stmt.LoopCtrl) -> object:
         match stmt.type.token_type:
             case TokenType.BREAK:
-                self.break_loop = True
+                raise BreakLoop
             case TokenType.CONTINUE:
-                self.continue_loop = True
+                raise ContinueLoop
 
     def visit_variable_stmt(self, stmt: stmt.Variable) -> object:
         value = None

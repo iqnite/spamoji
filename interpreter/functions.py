@@ -40,3 +40,11 @@ class Return(RuntimeError):
     def __init__(self, value: object, *_):
         super().__init__()
         self.value = value
+
+
+class BreakLoop(RuntimeError):
+    pass
+
+
+class ContinueLoop(RuntimeError):
+    pass
