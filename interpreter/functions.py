@@ -22,8 +22,8 @@ class SpamojiFunction(SpamojiCallable):
 
     def call(self, interpreter: "Interpreter", arguments: list[object]) -> object:
         environment = Environment(interpreter.globals)
-        for arg in self.declaration.arguments:
-            environment.define(arg.lexeme, arg)
+        for i, arg in enumerate(self.declaration.arguments):
+            environment.define(arg.lexeme, arguments[i])
         try:
             interpreter.execute_block(self.declaration.body, environment)
         except Return as return_value:

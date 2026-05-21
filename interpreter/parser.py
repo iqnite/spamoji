@@ -86,6 +86,8 @@ class Parser:
             return self.if_statement()
         if self.match(TokenType.WHILE):
             return self.while_statement()
+        if self.match(TokenType.RETURN):
+            return self.return_statement()
         if self.match(TokenType.BREAK, TokenType.CONTINUE):
             return self.loop_control_statement()
         if self.match(TokenType.INDENT):
@@ -152,7 +154,7 @@ class Parser:
 
     def function(self, kind: str):
         name = self.consume(f"Expect {kind} name.", TokenType.IDENTIFIER)
-        self.consume(f"Expect '🫸' or '❗' after {kind} name.")
+        self.consume(f"Expect '🫸' or '❗' after {kind} name.", TokenType.LEFT_PAREN)
         arguments = []
         if not self.check(TokenType.RIGHT_PAREN):
             while True:
@@ -163,6 +165,7 @@ class Parser:
                     break
         self.consume("Expect '🫷' after arguments.", TokenType.RIGHT_PAREN)
         self.consume(f"Expect newline before {kind} body.", TokenType.NEWLINE)
+        self.consume(f"Expect indented block for {kind} body.", TokenType.INDENT)
         body = self.block()
         return stmt.Function(name, arguments, body)
 

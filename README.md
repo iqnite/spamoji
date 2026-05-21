@@ -64,7 +64,7 @@ Some statements can be nested, such as if statements and loops. Indentation is u
 
 ### Functions
 
-Functions are defined using the ⚙️ emoji, followed by the function name and parameters. The function body is indented and can contain any valid statements. The function can return a value using the ↪️ emoji.
+Functions are defined using the ⚙️ emoji, followed by the function name and parameters. The function body is indented and can contain any valid statements. The function can return a value using the ↩️ emoji.
 
 Functions can be called by using their name followed by the arguments, separated by 🔸, between 🫸 and 🫷. Functions with no arguments can also be called with the ❗ emoji.
 

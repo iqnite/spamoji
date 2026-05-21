@@ -182,7 +182,7 @@ KEYWORDS = {
     "🔃": TokenType.WHILE,
     "⛔": TokenType.BREAK,
     "⤴️": TokenType.CONTINUE,
-    "↪️": TokenType.RETURN,
+    "↩️": TokenType.RETURN,
     "🟰": TokenType.EQUALS,
     "🆚": TokenType.NOT_EQUALS,
     "🤜": TokenType.GREATER_THAN,

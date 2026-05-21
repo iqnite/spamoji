@@ -159,6 +159,8 @@ class Interpreter(expr.Visitor, stmt.Visitor):
                 self.continue_loop = False
 
     def visit_return_stmt(self, stmt: stmt.Return) -> object:
+        self.break_loop = False
+        self.continue_loop = False
         value = None
         if stmt.value is not None:
             value = self.evaluate(stmt.value)
