@@ -65,10 +65,10 @@ class Scanner:
                 self.add_token(TokenType.RIGHT_PAREN)
                 self.is_line_start = False
             case "🗒️" | "🗒":
-                self.add_token(TokenType.COMMENT)
                 while self.peek() != "\n" and not self.is_at_end():
                     self.advance()
                 self.is_line_start = False
+                self.add_token(TokenType.NEWLINE)
             case "🔤":
                 self.string()
                 self.is_line_start = False

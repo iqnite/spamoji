@@ -11,7 +11,6 @@ class TokenType(Enum):
     IDENTIFIER = 3
     STRING = 4
     NUMBER = 5
-    COMMENT = 6
     FUNCTION = 7
     WHILE = 8
     BREAK = 9

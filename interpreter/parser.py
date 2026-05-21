@@ -37,10 +37,7 @@ class Parser:
         """Parses the tokens and returns the resulting AST."""
         statements = []
         while not self.is_at_end():
-            while (
-                self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT)
-                and not self.is_at_end()
-            ):
+            while self.peek().token_type == TokenType.NEWLINE and not self.is_at_end():
                 self.advance()
             if self.is_at_end():
                 break
@@ -55,7 +52,7 @@ class Parser:
         statements = []
         block_indent = typing.cast(int, self.previous().literal)
         while not self.is_at_end():
-            while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
+            while self.peek().token_type == TokenType.NEWLINE:
                 self.advance()
             if self.is_at_end():
                 return statements
@@ -100,30 +97,24 @@ class Parser:
     def if_statement(self) -> Stmt:
         then_branch = else_branch = None
         condition = self.expression()
-        self.consume(
-            "Expect newline after if condition.", TokenType.NEWLINE, TokenType.COMMENT
-        )
-        while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
+        self.consume("Expect newline after if condition.", TokenType.NEWLINE)
+        while self.peek().token_type == TokenType.NEWLINE:
             self.advance()
         if self.match_indented(TokenType.IFTRUE):
-            while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
+            while self.peek().token_type == TokenType.NEWLINE:
                 self.advance()
             then_branch = self.statement()
-        while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
+        while self.peek().token_type == TokenType.NEWLINE:
             self.advance()
         if self.match_indented(TokenType.ELSE):
-            while self.peek().token_type in (TokenType.NEWLINE, TokenType.COMMENT):
+            while self.peek().token_type == TokenType.NEWLINE:
                 self.advance()
             else_branch = self.statement()
         return stmt.If(condition, then_branch, else_branch)
 
     def while_statement(self) -> Stmt:
         condition = self.expression()
-        self.consume(
-            "Expect newline after while condition.",
-            TokenType.NEWLINE,
-            TokenType.COMMENT,
-        )
+        self.consume("Expect newline after while condition.", TokenType.NEWLINE)
         body = self.statement()
         return stmt.While(condition, body)
 
@@ -143,22 +134,12 @@ class Parser:
 
     def python_statement(self) -> Stmt:
         value = self.expression()
-        self.consume(
-            "Expect 1 statement per line",
-            TokenType.NEWLINE,
-            TokenType.EOF,
-            TokenType.COMMENT,
-        )
+        self.consume("Expect 1 statement per line", TokenType.NEWLINE, TokenType.EOF)
         return stmt.Python(value)
 
     def print_statement(self) -> Stmt:
         value = self.expression()
-        self.consume(
-            "Expect 1 statement per line",
-            TokenType.NEWLINE,
-            TokenType.EOF,
-            TokenType.COMMENT,
-        )
+        self.consume("Expect 1 statement per line", TokenType.NEWLINE, TokenType.EOF)
         return stmt.Print(value)
 
     def var_declaration(self) -> Stmt:
@@ -170,12 +151,7 @@ class Parser:
 
     def expression_statement(self) -> Stmt:
         expr = self.expression()
-        self.consume(
-            "Expect 1 statement per line",
-            TokenType.NEWLINE,
-            TokenType.EOF,
-            TokenType.COMMENT,
-        )
+        self.consume("Expect 1 statement per line", TokenType.NEWLINE, TokenType.EOF)
         return stmt.Expression(expr)
 
     def assignment(self) -> Expr:
