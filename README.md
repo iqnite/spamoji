@@ -75,7 +75,96 @@ Each line of code starts with an emoji that indicates the type of statement. Eac
   - ↩️ Return statement: Followed by the value to return
   <!-- - 🧩 Import statement: Followed by a file name, it gets replaced by the contents of that file before execution -->
 
-Some statements can be nested, such as if statements and loops. Indentation is used to indicate the scope of these statements. Indented blocks are considered part of the previous statement until the indentation level decreases. Variables declared inside of a block are only accessible inside of that block and any nested blocks.
+Statements starting with any other character are going to be considered as expressions and be evaluated directly.
+
+Some statements can be nested, such as if statements and loops. Indentation is used to indicate the scope of these statements. Indented blocks are considered part of the previous statement until the indentation level decreases.
+
+### Expressions
+
+An expression is a piece of code that produces a value and/or executes actions. Function calls, variables, and operations are all expressions and can be used on their own or inside of other expressions or statements.
+
+🫸 and 🫷 can be used to group expressions and control the order of evaluation.
+
+### Operators
+
+The language supports basic operators for logical and arithmetic operations. These can be used between two values to perform calculations.
+
+- ➕: Addition
+- ➖: Subtraction or negation
+- ✖️: Multiplication
+- ➗: Division
+- 🟰: Equal
+- 🆚: Not equal
+- 🤜: Greater than
+- 🤛: Less than
+- 🤝: Logical AND
+- 🤲: Logical OR
+- 🙅: Logical NOT
+
+### Strings
+
+Strings are sequences of characters enclosed in 🔤 on each side. They can contain any characters, including emojis. Strings can be used in variable assignments, printed to the console, and concatenated using the ➕ operator.
+
+Values directly before or after a string will also be concatenated with that string:
+
+```spamoji
+🔤Hello 🔤0🔤 world🔤  🗒️ -> Hello 0 world
+```
+
+### Conditions
+
+The 🤔 statement allows to run different code depending on a certain condition:
+
+```spamoji
+🤔 condition
+👍
+    this line runs if condition is true
+👎
+    this line runs if condition is false
+```
+
+Both the 👍 and 👎 branches are optional. If a branch has only 1 statement, it can be written in the same line as the 👍/👎. Conditions can also be nested inside of other conditions:
+
+```spamoji
+🤔 condition 1
+👍
+    this line runs if condition 1 is true
+👎 🤔 condition 2
+    👍 this line runs if condition 1 is false and condition 2 is true
+```
+
+Conditions can also be used inside of other expressions:
+
+```spamoji
+🫸🤔 condition 👍 a 👎 b 🫷
+```
+
+Here, if condition is true, `a` will be returned, otherwise `b`. It is important to note that inline conditions like this require both a 👍 and a 👎, otherwise an error will be raised.
+
+### Loops
+
+The 🔃 statement can be used to run code repeatedly while a certain condition is true.
+
+```spamoji
+🔃 condition
+    this code runs while condition is true
+```
+
+Additionally, the ⛔ and ⤴️ statements can be used to control the loop execution. ⛔ stops the loop immediately, regardless of the condition. ⤴️ jumps back to the beginning of the loop.
+
+### Variables
+
+Variables are declared using the 👋 emoji, followed by the variable assignment expression. An assignment expression starts with the variable name, followed by 🫴 and a value. For example:
+
+```spamoji
+👋 x 🫴 1
+```
+
+The declaration and assignment can also be on separate lines. Any unassigned variables will start with value 🫥.
+
+Variable names can be any combination of letters, numbers, and emojis, but must start with a letter or emoji and cannot contain [statement characters](#statements).
+
+Variables declared inside of a block are only accessible inside of that block and any nested blocks.
 
 ### Functions
 
@@ -90,58 +179,42 @@ Here's an example of a function definition and call:
     💬🫸🔤Hello, 🔤firstName🔤 🔤lastName🔤! Please enter a number...🔤🫷
     ↩️ ⌨️❗  🗒️ Return the user input
 
-greetAndAsk🫸🔤John🔤 🔸 🔤Doe🔤🫷
+👋 x 🫴 greetAndAsk🫸🔤John🔤🔸🔤Doe🔤🫷
+💬🫸🔤You entered: 🔤 x🫷
 ```
 
-### Variables
+## Built-ins
 
-Variables are declared using the 👋 emoji, followed by the variable assignment expression. An assinment expression starts with the variable name, followed by 🫴 and a value. Variable names can be any combination of letters, numbers, and emojis, but must start with a letter or emoji. Variables can be used in expressions and statements after they have been assigned.
+The language includes several built-in functions and values for common operations.
 
-### Expressions
+### Built-in functions
 
-Many statements can be used as expressions within other statements. 🫸 and 🫷 can be used to group expressions and control the order of evaluation. For example, you can use a function call as part of an if statement condition or as part of a variable assignment.
+- 💬🫸string🫷: Print string to a new line in the console
+- 💭🫸string🫷: Print string to the console without creating a new line
+- ⌨️❗: Get user input from the console
+- ⏳🫸time🫷: Wait for a specified number of seconds
+- 🔢🫸value🫷: Convert value to a number, return ⚠️ if the conversion fails
+- 🎲🫸min🔸max🫷: Get a random integer from min to max
+- 🕰️❗: Get time since epoch in seconds
+- 🛑❗: Stop the program
 
-### Operators
+### Built-in values
 
-The language supports basic operators for logical and arithmetic operations. These can be used between two values to perform calculations.
+- ✅: true
+- ❌: false
+- 🫥: unassigned/null/no value
+- ⚠️: error/invalid value
 
-- ➕: Addition
-- ➖: Subtraction
-- ✖️: Multiplication
-- ➗: Division
-- 🟰: Equal
-- 🆚: Not equal
-- 🤜: Greater than
-- 🤛: Less than
-- 🤝: Logical AND
-- 🤲: Logical OR
-- 🙅: Logical NOT
+### Python interoperability
 
-<!-- Operators can be used directly after 👋 in variable assignments to perform operations on the variable. For example, `👋➕ x 1` will increment the variable `x` by 1. -->
+The 🐍 function allows to directly evaluate Python expressions within Spamoji code. The results of these evaluations can be stored in variables and used in Spamoji. For example, the following code prints the modulo of `x` and `y`:
 
-### Strings
-
-Strings are sequences of characters enclosed in 🔤 on each side. They can contain any characters, including emojis. Strings can be used in variable assignments, printed to the console, and concatenated using the ➕ operator.
-
-Values directly before or after a string will also be concatenated with that string.
-
-### Built-ins
-
-The language includes several built-in functions and values for common operations, such as:
-
-- 💬: Print output to a new line in the console
-- 💭: Print output to the console
-- ⌨️: Get user input from the console
-- ⏳: Wait for a specified number of seconds
-- 🔢: Convert input to a number, return ⚠️ if the conversion fails
-- 🎲: Get a random integer between 2 numbers
-- 🕰️: Get time since epoch in seconds
-- 🛑: Stop the program
-- ✅: A special value representing true
-- ❌: A special value representing false
-- 🫥: A special value representing null
-- ⚠️: A special value representing an error or undefined value
-- 🐍: Evaluate a Python expression
+```spamoji
+👋 x 🫴 10
+👋 y 🫴 2
+👋 z 🫴 🐍🫸x🔤%🔤y🫷
+💬🫸z🫷
+```
 
 ## Credits
 
