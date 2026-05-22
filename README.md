@@ -26,6 +26,16 @@ A programming language that only uses emojis as syntax and encourages writing sp
 
 This language is a learning project. Since it lacks many features of a typical programming language, it is not recommended for production use. If this experiment is successful, I might move on and begin working on Esore, a more serious language I've been designing in the past 2 years.
 
+## Installation
+
+To install the spamoji interpreter, you will need to have Python 3.10 or higher installed on your machine. You can download Python from the [official website](https://www.python.org/downloads/).
+
+Once you have Python installed, you can install the spamoji interpreter using pip:
+
+```bash
+pip install spamoji
+```
+
 ## Usage
 
 To run a spamoji program, you will need to use the spamoji interpreter.
@@ -37,6 +47,12 @@ spamoji my_program.🍝
 ```
 
 If no file is supplied, the interactive REPL will start, which allows to enter and evaluate expressions directly.
+
+If the above command doesn't work, you can also run the interpreter using Python's -m flag:
+
+```bash
+python -m spamoji my_program.🍝
+```
 
 ## Syntax
 
@@ -132,4 +148,4 @@ Thanks to Robert Nystrom for his book "Crafting Interpreters" which inspired the
 
 Also thanks to Hack Club for providing a supportive community and motivating me to work on this project.
 
-This documentation was entirely written by hand. I might use AI tools for assistance while writing the interpreter.
+This documentation was entirely written by hand. AI tools were used for assistance while writing the interpreter.
