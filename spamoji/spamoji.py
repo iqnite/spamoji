@@ -26,6 +26,8 @@ class Spamoji:
 
     def run_file(self, filename):
         """Runs a script file."""
+        self.had_error = False
+        self.had_runtime_error = False
         with open(filename, "r", encoding="utf-8") as f:
             self.run(f.read())
         if self.had_error:
@@ -41,6 +43,8 @@ class Spamoji:
         )
         try:
             while True:
+                self.had_error = False
+                self.had_runtime_error = False
                 line = input("> ") + "\n"
                 self.run(line, print_expressions=True)
         except KeyboardInterrupt:
