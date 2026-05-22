@@ -207,10 +207,9 @@ class Parser:
 
     def match(self, *types: TokenType) -> bool:
         """Checks if the current token matches any of the given types."""
-        for type in types:
-            if self.check(type):
-                self.advance()
-                return True
+        if self.check(*types):
+            self.advance()
+            return True
         return False
 
     def check(self, *token_types: TokenType) -> bool:
