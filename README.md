@@ -19,7 +19,7 @@ A programming language that only uses emojis as syntax and encourages writing sp
 👍
     💬🫸🔤Invalid input.🔤🫷
 👎
-    💬🫸🔤The factorial of 🔤😀🔤 is 🔤🫸🔢❕🫸😀🫷🫷🫷
+    💬🫸🔤The factorial of 🔤😀🔤 is 🔤🔢❕🫸😀🫷🫷
 ```
 
 ## What's this all about?
@@ -135,6 +135,7 @@ The language includes several built-in functions and values for common operation
 - ⏳: Wait for a specified number of seconds
 - 🔢: Convert input to a number, return ⚠️ if the conversion fails
 - 🎲: Get a random integer between 2 numbers
+- 🕰️: Get time since epoch in seconds
 - 🛑: Stop the program
 - ✅: A special value representing true
 - ❌: A special value representing false
