@@ -12,10 +12,11 @@
     💭🫸🔤Enter a number to calculate the factorial: 🔤🫷
     😀 🫴 🔢🫸⌨️❗🫷
     🤔 😀 🟰 ⚠️
+    👍 💬🫸🔤Invalid input. Please enter a number.🔤🫷
+    👎 🤔 🐍🫸🔤int(🔤😀🔤)🔤🫷 🆚 😀
     👍
-        💬🫸🔤Invalid input.🔤🫷
-    👎
-        ⛔
+        💬🫸🔤Cannot calculate for floating point numbers. Please enter an integer.🔤🫷
+    👎 ⛔
 
 👋 😀❕ 🫴 🔢❕🫸😀🫷
 
