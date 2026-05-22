@@ -36,7 +36,9 @@ class Spamoji:
     def repl(self):
         """Allows to enter commands and evaluate them interactively."""
         print("🍝 Spamoji REPL v0.1.0")
-        print("Visit https://github.com/iqnite/spamoji for help. Press Ctrl+C to exit.")
+        print(
+            "Visit https://github.com/iqnite/spamoji#readme-ov-file for help. Press Ctrl+C to exit."
+        )
         try:
             while True:
                 line = input("> ") + "\n"
