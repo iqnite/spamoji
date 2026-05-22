@@ -98,16 +98,16 @@ class Parser:
         then_branch = else_branch = None
         condition = self.expression()
         self.consume("Expect newline after if condition.", TokenType.NEWLINE)
-        while self.peek().token_type == TokenType.NEWLINE:
+        while self.check(TokenType.NEWLINE):
             self.advance()
         if self.match_indented(TokenType.IFTRUE):
-            while self.peek().token_type == TokenType.NEWLINE:
+            while self.check(TokenType.NEWLINE):
                 self.advance()
             then_branch = self.statement()
-        while self.peek().token_type == TokenType.NEWLINE:
+        while self.check(TokenType.NEWLINE):
             self.advance()
         if self.match_indented(TokenType.ELSE):
-            while self.peek().token_type == TokenType.NEWLINE:
+            while self.check(TokenType.NEWLINE):
                 self.advance()
             else_branch = self.statement()
         return stmt.If(condition, then_branch, else_branch)
