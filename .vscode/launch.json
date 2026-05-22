@@ -12,12 +12,20 @@
       "console": "integratedTerminal"
     },
     {
-      "name": "Example file",
+      "name": "Factorial example",
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/interpreter.py",
       "console": "integratedTerminal",
       "args": "${workspaceFolder}/examples/factorial.🍝"
+    },
+    {
+      "name": "Flowcontrol example",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/interpreter.py",
+      "console": "integratedTerminal",
+      "args": "${workspaceFolder}/examples/flowcontrol.🍝"
     },
     {
       "name": "Custom file",
