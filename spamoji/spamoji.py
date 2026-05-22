@@ -35,7 +35,7 @@ class Spamoji:
 
     def repl(self):
         """Allows to enter commands and evaluate them interactively."""
-        print("🍝 Spamoji REPL v1.0")
+        print("🍝 Spamoji REPL v0.1.0")
         try:
             while True:
                 line = input("> ") + "\n"
