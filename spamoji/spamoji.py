@@ -4,10 +4,10 @@ Entry point for the Spamoji interpreter.
 
 import sys
 
-from interpreter.helpers import SpamojiRuntimeError
-from interpreter.interpreter import Interpreter
-from interpreter.parser import Parser
-from interpreter.scanner import Scanner
+from spamoji.helpers import SpamojiRuntimeError
+from spamoji.interpreter import Interpreter
+from spamoji.parser import Parser
+from spamoji.scanner import Scanner
 
 
 class Spamoji:

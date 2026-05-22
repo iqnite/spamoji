@@ -5,9 +5,9 @@ Tests for the Parser class.
 from pathlib import Path
 import unittest
 
-from interpreter import stmt
-from interpreter.parser import Parser
-from interpreter.scanner import Scanner
+from spamoji import stmt
+from spamoji.parser import Parser
+from spamoji.scanner import Scanner
 
 
 class TestParser(unittest.TestCase):

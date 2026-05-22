@@ -4,8 +4,8 @@ Tests for the Scanner class.
 
 import unittest
 
-from interpreter.scanner import Scanner
-from interpreter.token import TokenType
+from spamoji.scanner import Scanner
+from spamoji.token import TokenType
 
 
 class TestScanner(unittest.TestCase):

@@ -7,11 +7,11 @@ import sys
 import time
 import typing
 
-from interpreter.functions import SpamojiCallable
-from interpreter.helpers import SpamojiValueError, spamojiValueError
+from spamoji.functions import SpamojiCallable
+from spamoji.helpers import SpamojiValueError, spamojiValueError
 
 if typing.TYPE_CHECKING:
-    from interpreter.interpreter import Interpreter
+    from spamoji.interpreter import Interpreter
 
 
 class PythonCall(SpamojiCallable):

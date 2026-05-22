@@ -4,7 +4,7 @@ This module contains the Scanner class for the Spamoji programming language.
 
 import typing
 
-from interpreter.token import Token, TokenType
+from spamoji.token import Token, TokenType
 
 
 class Scanner:

@@ -25,7 +25,7 @@ def main():
             "Unary    @ operator: Token, right: Expr",
             "Variable @ name: Token",
         ],
-        imports=["from interpreter.token import Token"],
+        imports=["from spamoji.token import Token"],
     )
     define_ast(
         output_dir,
@@ -41,8 +41,8 @@ def main():
             "Variable   @ name: Token, initializer: Expr | None",
         ],
         imports=[
-            "from interpreter.expr import Expr",
-            "from interpreter.token import Token",
+            "from spamoji.expr import Expr",
+            "from spamoji.token import Token",
         ],
     )
 

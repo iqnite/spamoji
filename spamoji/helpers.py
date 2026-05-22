@@ -4,8 +4,8 @@ Contains helper functions and classes for the Spamoji interpreter.
 
 import typing
 
-from interpreter.expr import Binary, Expr, Grouping, Literal, Unary, Visitor
-from interpreter.token import Token, TokenType
+from spamoji.expr import Binary, Expr, Grouping, Literal, Unary, Visitor
+from spamoji.token import Token, TokenType
 
 
 def error_token(

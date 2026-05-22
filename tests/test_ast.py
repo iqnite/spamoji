@@ -3,9 +3,9 @@ Test functions for the Spamoji interpreter.
 """
 
 import unittest
-from interpreter.expr import Binary, Expr, Grouping, Literal, Unary, Visitor
-from interpreter.helpers import ASTPrinter
-from interpreter.token import Token, TokenType
+from spamoji.expr import Binary, Expr, Grouping, Literal, Unary, Visitor
+from spamoji.helpers import ASTPrinter
+from spamoji.token import Token, TokenType
 
 
 class TestASTPrinter(unittest.TestCase):

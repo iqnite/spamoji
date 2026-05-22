@@ -4,11 +4,11 @@ Parser for the Spamoji language. Converts a list of tokens into an abstract synt
 
 import typing
 
-from interpreter import expr, stmt
-from interpreter.expr import Binary, Expr, Grouping, Literal, Logical, Unary
-from interpreter.stmt import Block, Stmt
-from interpreter.helpers import error_token
-from interpreter.token import Token, TokenType
+from spamoji import expr, stmt
+from spamoji.expr import Binary, Expr, Grouping, Literal, Logical, Unary
+from spamoji.stmt import Block, Stmt
+from spamoji.helpers import error_token
+from spamoji.token import Token, TokenType
 
 
 class ParseError(Exception):

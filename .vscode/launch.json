@@ -8,14 +8,14 @@
       "name": "REPL",
       "type": "debugpy",
       "request": "launch",
-      "program": "${workspaceFolder}/interpreter.py",
+      "program": "${workspaceFolder}/main.py",
       "console": "integratedTerminal"
     },
     {
       "name": "Factorial example",
       "type": "debugpy",
       "request": "launch",
-      "program": "${workspaceFolder}/interpreter.py",
+      "program": "${workspaceFolder}/main.py",
       "console": "integratedTerminal",
       "args": "${workspaceFolder}/examples/factorial.🍝"
     },
@@ -23,7 +23,7 @@
       "name": "Flowcontrol example",
       "type": "debugpy",
       "request": "launch",
-      "program": "${workspaceFolder}/interpreter.py",
+      "program": "${workspaceFolder}/main.py",
       "console": "integratedTerminal",
       "args": "${workspaceFolder}/examples/flowcontrol.🍝"
     },
@@ -31,7 +31,7 @@
       "name": "Recursion example",
       "type": "debugpy",
       "request": "launch",
-      "program": "${workspaceFolder}/interpreter.py",
+      "program": "${workspaceFolder}/main.py",
       "console": "integratedTerminal",
       "args": "${workspaceFolder}/examples/recursion.🍝"
     },
@@ -39,7 +39,7 @@
       "name": "Custom file",
       "type": "debugpy",
       "request": "launch",
-      "program": "${workspaceFolder}/interpreter.py",
+      "program": "${workspaceFolder}/main.py",
       "console": "integratedTerminal",
       "args": "${command:pickArgs}"
     },

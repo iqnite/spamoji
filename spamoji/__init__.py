@@ -2,4 +2,4 @@
 Interface for the Spamoji interpreter.
 """
 
-from interpreter.spamoji import Spamoji, main
+from spamoji.spamoji import Spamoji, main

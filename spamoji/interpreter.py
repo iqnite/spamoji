@@ -4,21 +4,21 @@ Contains the actual interpreter.
 
 import typing
 
-from interpreter import expr, stmt
-from interpreter.functions import (
+from spamoji import expr, stmt
+from spamoji.functions import (
     BreakLoop,
     ContinueLoop,
     Return,
     SpamojiCallable,
     SpamojiFunction,
 )
-from interpreter.environment import Environment
-from interpreter.expr import Binary, Expr, Grouping, Literal, Unary
-from interpreter.helpers import (
+from spamoji.environment import Environment
+from spamoji.expr import Binary, Expr, Grouping, Literal, Unary
+from spamoji.helpers import (
     SpamojiRuntimeError,
     spamojiValueError,
 )
-from interpreter.natives import (
+from spamoji.natives import (
     Clock,
     ConvertToNumber,
     GetUserInput,
@@ -29,7 +29,7 @@ from interpreter.natives import (
     StopProgram,
     Randint,
 )
-from interpreter.token import Token, TokenType
+from spamoji.token import Token, TokenType
 
 
 class Interpreter(expr.Visitor, stmt.Visitor):

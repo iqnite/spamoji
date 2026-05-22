@@ -4,11 +4,11 @@ Contains classes for functions and callables.
 
 from typing import TYPE_CHECKING
 
-from interpreter import stmt
-from interpreter.environment import Environment
+from spamoji import stmt
+from spamoji.environment import Environment
 
 if TYPE_CHECKING:
-    from interpreter.interpreter import Interpreter
+    from spamoji.interpreter import Interpreter
 
 
 class SpamojiCallable:

@@ -2,8 +2,8 @@
 Contains classes and functions for variable environments.
 """
 
-from interpreter.helpers import SpamojiRuntimeError
-from interpreter.token import Token
+from spamoji.helpers import SpamojiRuntimeError
+from spamoji.token import Token
 
 
 class Environment:
