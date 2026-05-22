@@ -327,6 +327,9 @@ class Parser:
     def call(self) -> Expr:
         expression = self.primary()
         while True:
+            if self.is_string_expr(expression) and self.check(TokenType.LEFT_PAREN):
+                # Ignore implicit concatenation
+                break
             if self.match(TokenType.LEFT_PAREN):
                 expression = self.finish_call(expression)
             else:

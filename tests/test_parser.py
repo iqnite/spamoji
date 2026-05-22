@@ -5,6 +5,7 @@ Tests for the Parser class.
 from pathlib import Path
 import unittest
 
+from spamoji import expr
 from spamoji import stmt
 from spamoji.parser import Parser
 from spamoji.scanner import Scanner
@@ -39,6 +40,20 @@ class TestParser(unittest.TestCase):
         self.assertIsInstance(ast[1].body.statements[2], stmt.Expression)
         assert isinstance(ast[1].body.statements[2], stmt.Expression)
         self.assertIsInstance(ast[2], stmt.Expression)
+
+    def test_string_followed_by_parenthesized_expression_concatenates(self):
+        source = "🔤hello🔤🫸1🫷\n"
+        tokens = Scanner(source).scan_tokens()
+
+        ast = Parser(tokens).parse()
+
+        self.assertEqual(len(ast), 1)
+        self.assertIsInstance(ast[0], stmt.Expression)
+        assert isinstance(ast[0], stmt.Expression)
+        self.assertIsInstance(ast[0].expression, expr.Binary)
+        assert isinstance(ast[0].expression, expr.Binary)
+        self.assertIsInstance(ast[0].expression.left, expr.Literal)
+        self.assertIsInstance(ast[0].expression.right, expr.Grouping)
 
 
 if __name__ == "__main__":
