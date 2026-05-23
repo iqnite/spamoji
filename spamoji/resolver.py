@@ -87,7 +87,7 @@ class Resolver(expr.Visitor, stmt.Visitor):
     def visit_if_expr(self, expr: expr.If) -> object:
         self.resolve(expr.condition)
         self.resolve(expr.then_branch)
-        self.resolve(expr.then_branch)
+        self.resolve(expr.else_branch)
 
     def visit_binary_expr(self, expr: expr.Binary) -> object:
         self.resolve(expr.left)
