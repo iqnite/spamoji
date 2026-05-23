@@ -17,12 +17,17 @@ class FunctionType(Enum):
     FUNCTION = 1
 
 
+class LoopType(Enum):
+    NONE = 0
+    WHILE = 1
+
+
 class Resolver(expr.Visitor, stmt.Visitor):
     def __init__(self, interpreter: "Interpreter", error_handler: Callable) -> None:
         self.interpreter = interpreter
         self.scopes: list[dict[str, bool]] = []
         self.current_function = FunctionType.NONE
-        self.is_in_loop = False
+        self.current_loop = LoopType.NONE
         self.error_handler = error_handler
 
     def visit_block_stmt(self, stmt: stmt.Block) -> object:
@@ -48,13 +53,14 @@ class Resolver(expr.Visitor, stmt.Visitor):
 
     def visit_while_stmt(self, stmt: stmt.While) -> object:
         self.resolve(stmt.condition)
-        self.is_in_loop = True
+        enclosing_loop = self.current_loop
+        self.current_loop = LoopType.WHILE
         self.resolve(stmt.body)
-        self.is_in_loop = False
+        self.current_loop = enclosing_loop
 
     def visit_loopctrl_stmt(self, stmt: stmt.LoopCtrl) -> object:
-        if not self.is_in_loop:
-            self.error_handler(stmt, "Can't break or continue from outside a loop.")
+        if self.current_loop == LoopType.NONE:
+            self.error_handler(stmt.type, "Can't break or continue from outside a loop.")
 
     def visit_function_stmt(self, stmt: stmt.Function) -> object:
         self.declare(stmt.name)
