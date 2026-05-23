@@ -147,7 +147,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         return self.evaluate(stmt.expression)
 
     def visit_function_stmt(self, stmt: stmt.Function) -> object:
-        func = SpamojiFunction(stmt)
+        func = SpamojiFunction(stmt, self.environment)
         self.environment.define(stmt.name.lexeme, func)
 
     def visit_if_stmt(self, stmt: stmt.If) -> object:
