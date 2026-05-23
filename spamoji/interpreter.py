@@ -38,6 +38,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
     def __init__(self):
         super().__init__()
         self.globals = Environment()
+        self.locals: dict[Expr, int] = {}
         self.environment = self.globals
         self.print_expressions = False
         self.prints = []
@@ -87,7 +88,13 @@ class Interpreter(expr.Visitor, stmt.Visitor):
                 return None
 
     def visit_variable_expr(self, expr: expr.Variable) -> object:
-        return self.environment.get(expr.name)
+        return self.look_up_variable(expr.name, expr)
+    
+    def look_up_variable(self, name: Token, expression: Expr):
+        distance = self.locals.get(expression)
+        if distance is not None:
+            return self.environment.get_at(distance, name.lexeme)
+        return self.globals.get(name)
 
     def check_number_operands(self, operator: Token, *operands: object):
         for operand in operands:
@@ -127,6 +134,9 @@ class Interpreter(expr.Visitor, stmt.Visitor):
 
     def execute(self, stmt: stmt.Stmt) -> object:
         return stmt.accept(self)
+
+    def resolve(self, expr: Expr, depth: int):
+        self.locals[expr] = depth
 
     def execute_block(self, statements: list[stmt.Stmt], environment: Environment):
         previous_environment = self.environment
@@ -188,7 +198,11 @@ class Interpreter(expr.Visitor, stmt.Visitor):
 
     def visit_assign_expr(self, expr: expr.Assign) -> object:
         value = self.evaluate(expr.value)
-        self.environment.assign(expr.name, value)
+        distance = self.locals.get(expr)
+        if distance is not None:
+            self.environment.assign_at(distance, expr.name, value)
+        else:
+            self.globals.assign(expr.name, value)
         return value
 
     def visit_if_expr(self, expr: expr.If) -> object:

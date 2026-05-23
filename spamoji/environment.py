@@ -32,3 +32,17 @@ class Environment:
         if self.enclosing is not None:
             return self.enclosing.get(name)
         raise SpamojiRuntimeError(name, f"Undefined variable '{name.lexeme}'.")
+
+    def get_at(self, distance: int, name: str) -> object:
+        return self.ancestor(distance).values.get(name)
+
+    def assign_at(self, distance: int, name: Token, value: object):
+        self.ancestor(distance).values[name.lexeme] = value
+
+    def ancestor(self, distance: int) -> "Environment":
+        environment = self
+        for _ in range(distance):
+            if environment is None or environment.enclosing is None:
+                raise ValueError("environment is None")
+            environment = environment.enclosing
+        return environment
