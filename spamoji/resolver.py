@@ -126,6 +126,8 @@ class Resolver(expr.Visitor, stmt.Visitor):
         if not self.scopes:
             return
         scope = self.scopes[-1]
+        if name.lexeme in scope:
+            self.error_handler(name, "Already a variable with this name in this scope.")
         scope[name.lexeme] = False
 
     def define(self, name: Token):
