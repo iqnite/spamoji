@@ -42,7 +42,7 @@ class Environment:
     def ancestor(self, distance: int) -> "Environment":
         environment = self
         for _ in range(distance):
-            if environment is None or environment.enclosing is None:
-                raise ValueError("environment is None")
+            if environment.enclosing is None:
+                raise ValueError("Environment chain is shorter than expected")
             environment = environment.enclosing
         return environment
