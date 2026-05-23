@@ -7,6 +7,7 @@ import sys
 from spamoji.helpers import SpamojiRuntimeError
 from spamoji.interpreter import Interpreter
 from spamoji.parser import Parser
+from spamoji.resolver import Resolver
 from spamoji.scanner import Scanner
 
 
@@ -56,6 +57,10 @@ class Spamoji:
         tokens = scanner.scan_tokens()
         parser = Parser(tokens, self.report)
         statements = parser.parse()
+        if self.had_error:
+            return
+        resolver = Resolver(self.interpreter, self.error)
+        resolver.resolve(statements)
         if self.had_error:
             return
         self.interpreter.interpret(

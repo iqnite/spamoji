@@ -17,11 +17,12 @@ class SpamojiCallable:
 
 
 class SpamojiFunction(SpamojiCallable):
-    def __init__(self, declaration: stmt.Function):
+    def __init__(self, declaration: stmt.Function, closure: Environment):
         self.declaration = declaration
+        self.closure = closure
 
     def call(self, interpreter: "Interpreter", arguments: list[object]) -> object:
-        environment = Environment(interpreter.globals)
+        environment = Environment(self.closure)
         for i, arg in enumerate(self.declaration.arguments):
             environment.define(arg.lexeme, arguments[i])
         try:
