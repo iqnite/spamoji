@@ -2,6 +2,7 @@
 Contains the variable resolution pass for spamoji.
 """
 
+from enum import Enum
 from typing import Callable, TYPE_CHECKING
 
 from spamoji import expr, stmt
@@ -11,10 +12,16 @@ if TYPE_CHECKING:
     from spamoji.interpreter import Interpreter
 
 
+class FunctionType(Enum):
+    NONE = 0
+    FUNCTION = 1
+
+
 class Resolver(expr.Visitor, stmt.Visitor):
     def __init__(self, interpreter: "Interpreter", error_handler: Callable) -> None:
         self.interpreter = interpreter
         self.scopes: list[dict[str, bool]] = []
+        self.current_function = FunctionType.NONE
         self.error_handler = error_handler
 
     def visit_block_stmt(self, stmt: stmt.Block) -> object:
@@ -33,6 +40,8 @@ class Resolver(expr.Visitor, stmt.Visitor):
             self.resolve(stmt.else_branch)
 
     def visit_return_stmt(self, stmt: stmt.Return) -> object:
+        if self.current_function == FunctionType.NONE:
+            self.error_handler(stmt.keyword, "Can't return from top-level code.")
         if stmt.value is not None:
             self.resolve(stmt.value)
 
@@ -43,7 +52,7 @@ class Resolver(expr.Visitor, stmt.Visitor):
     def visit_function_stmt(self, stmt: stmt.Function) -> object:
         self.declare(stmt.name)
         self.define(stmt.name)
-        self.resolve_function(stmt)
+        self.resolve_function(stmt, FunctionType.FUNCTION)
 
     def visit_variable_stmt(self, stmt: stmt.Variable) -> object:
         self.declare(stmt.name)
@@ -70,11 +79,11 @@ class Resolver(expr.Visitor, stmt.Visitor):
     def visit_binary_expr(self, expr: expr.Binary) -> object:
         self.resolve(expr.left)
         self.resolve(expr.right)
-    
+
     def visit_call_expr(self, expr: expr.Call) -> object:
         for arg in expr.arguments:
             self.resolve(arg)
-    
+
     def visit_grouping_expr(self, expr: expr.Grouping) -> object:
         self.resolve(expr.expression)
 
@@ -108,13 +117,16 @@ class Resolver(expr.Visitor, stmt.Visitor):
                 self.interpreter.resolve(expression, len(self.scopes) - 1 - i)
                 return
 
-    def resolve_function(self, func: stmt.Function):
+    def resolve_function(self, func: stmt.Function, type: FunctionType):
+        enclosing_function = self.current_function
+        self.current_function = type
         self.begin_scope()
         for arg in func.arguments:
             self.declare(arg)
             self.define(arg)
         self.resolve(func.body)
         self.end_scope()
+        self.current_function = enclosing_function
 
     def begin_scope(self):
         self.scopes.append({})
