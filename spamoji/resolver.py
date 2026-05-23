@@ -60,7 +60,9 @@ class Resolver(expr.Visitor, stmt.Visitor):
 
     def visit_loopctrl_stmt(self, stmt: stmt.LoopCtrl) -> object:
         if self.current_loop == LoopType.NONE:
-            self.error_handler(stmt.type, "Can't break or continue from outside a loop.")
+            self.error_handler(
+                stmt.type.line, "Can't break or continue from outside a loop."
+            )
 
     def visit_function_stmt(self, stmt: stmt.Function) -> object:
         self.declare(stmt.name)
@@ -80,7 +82,7 @@ class Resolver(expr.Visitor, stmt.Visitor):
     def visit_variable_expr(self, expr: expr.Variable) -> object:
         if self.scopes and self.scopes[-1].get(expr.name.lexeme) == False:
             self.error_handler(
-                expr.name, "Can't read local variable in its own initializer."
+                expr.name.line, "Can't read local variable in its own initializer."
             )
         self.resolve_local(expr, expr.name)
 
@@ -97,6 +99,7 @@ class Resolver(expr.Visitor, stmt.Visitor):
         self.resolve(expr.callee)
         for arg in expr.arguments:
             self.resolve(arg)
+
     def visit_grouping_expr(self, expr: expr.Grouping) -> object:
         self.resolve(expr.expression)
 
@@ -152,7 +155,9 @@ class Resolver(expr.Visitor, stmt.Visitor):
             return
         scope = self.scopes[-1]
         if name.lexeme in scope:
-            self.error_handler(name, "Already a variable with this name in this scope.")
+            self.error_handler(
+                name.line, "Already a variable with this name in this scope."
+            )
         scope[name.lexeme] = False
 
     def define(self, name: Token):
