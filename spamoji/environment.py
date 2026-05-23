@@ -34,7 +34,7 @@ class Environment:
         raise SpamojiRuntimeError(name, f"Undefined variable '{name.lexeme}'.")
 
     def get_at(self, distance: int, name: str) -> object:
-        return self.ancestor(distance).values.get(name)
+        return self.ancestor(distance).values[name]
 
     def assign_at(self, distance: int, name: Token, value: object):
         self.ancestor(distance).values[name.lexeme] = value
