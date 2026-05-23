@@ -61,6 +61,8 @@ class Spamoji:
             return
         resolver = Resolver(self.interpreter, self.error)
         resolver.resolve(statements)
+        if self.had_error:
+            return
         self.interpreter.interpret(
             statements,
             print_expressions=print_expressions,

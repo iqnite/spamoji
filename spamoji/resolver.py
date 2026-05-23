@@ -22,6 +22,7 @@ class Resolver(expr.Visitor, stmt.Visitor):
         self.interpreter = interpreter
         self.scopes: list[dict[str, bool]] = []
         self.current_function = FunctionType.NONE
+        self.is_in_loop = False
         self.error_handler = error_handler
 
     def visit_block_stmt(self, stmt: stmt.Block) -> object:
@@ -41,13 +42,19 @@ class Resolver(expr.Visitor, stmt.Visitor):
 
     def visit_return_stmt(self, stmt: stmt.Return) -> object:
         if self.current_function == FunctionType.NONE:
-            self.error_handler(stmt.keyword, "Can't return from top-level code.")
+            self.error_handler(stmt.keyword.line, "Can't return from top-level code.")
         if stmt.value is not None:
             self.resolve(stmt.value)
 
     def visit_while_stmt(self, stmt: stmt.While) -> object:
         self.resolve(stmt.condition)
+        self.is_in_loop = True
         self.resolve(stmt.body)
+        self.is_in_loop = False
+
+    def visit_loopctrl_stmt(self, stmt: stmt.LoopCtrl) -> object:
+        if not self.is_in_loop:
+            self.error_handler(stmt, "Can't break or continue from outside a loop.")
 
     def visit_function_stmt(self, stmt: stmt.Function) -> object:
         self.declare(stmt.name)
