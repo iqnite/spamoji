@@ -94,9 +94,9 @@ class Resolver(expr.Visitor, stmt.Visitor):
         self.resolve(expr.right)
 
     def visit_call_expr(self, expr: expr.Call) -> object:
+        self.resolve(expr.callee)
         for arg in expr.arguments:
             self.resolve(arg)
-
     def visit_grouping_expr(self, expr: expr.Grouping) -> object:
         self.resolve(expr.expression)
 
