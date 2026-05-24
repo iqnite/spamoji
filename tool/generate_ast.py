@@ -33,6 +33,7 @@ def main():
         [
             "Block      @ statements: list[Stmt]",
             "Expression @ expression: Expr",
+            "Class      @ name: Token, methods: list[stmt.Function]",
             "Function   @ name: Token, arguments: list[Token], body: list[Stmt]",
             "Return     @ keyword: Token, value: Expr | None",
             "If         @ condition: Expr, then_branch: Stmt | None, else_branch: Stmt | None",

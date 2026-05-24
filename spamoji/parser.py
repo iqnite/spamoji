@@ -71,6 +71,8 @@ class Parser:
 
     def declaration(self) -> Stmt | None:
         try:
+            if self.match(TokenType.CLASS):
+                return self.class_declaration()
             if self.match(TokenType.FUNCTION):
                 return self.function("function")
             if self.match(TokenType.VAR):
@@ -79,6 +81,13 @@ class Parser:
         except ParseError:
             self.synchronize()
             return None
+
+    def class_declaration(self) -> Stmt:
+        name = self.consume("Expect class name.", TokenType.IDENTIFIER)
+        self.consume("Expect newline before class body.", TokenType.NEWLINE)
+        methods = []
+        if self.check(TokenType.INDENT):
+            # TODO: Add actual methods
 
     def statement(self) -> Stmt:
         """Parses a statement."""

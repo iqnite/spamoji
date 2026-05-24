@@ -203,4 +203,5 @@ KEYWORDS = {
     "✖️": TokenType.MULTIPLY,
     "➗": TokenType.DIVIDE,
     "🫥": TokenType.NULL,
+    "📜": TokenType.CLASS,
 }
