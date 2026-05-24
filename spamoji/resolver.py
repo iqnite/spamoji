@@ -55,7 +55,8 @@ class Resolver(expr.Visitor, stmt.Visitor):
         self.resolve(stmt.condition)
         enclosing_loop = self.current_loop
         self.current_loop = LoopType.WHILE
-        self.resolve(stmt.body)
+        if stmt.body is not None:
+            self.resolve(stmt.body)
         self.current_loop = enclosing_loop
 
     def visit_loopctrl_stmt(self, stmt: stmt.LoopCtrl) -> object:
