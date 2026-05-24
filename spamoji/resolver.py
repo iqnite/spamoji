@@ -15,6 +15,7 @@ if TYPE_CHECKING:
 class FunctionType(Enum):
     NONE = 0
     FUNCTION = 1
+    METHOD = 2
 
 
 class LoopType(Enum):
@@ -38,6 +39,9 @@ class Resolver(expr.Visitor, stmt.Visitor):
     def visit_class_stmt(self, stmt: stmt.Class) -> object:
         self.declare(stmt.name)
         self.define(stmt.name)
+        for method in stmt.methods:
+            declaration = FunctionType.METHOD
+            self.resolve_function(method, declaration)
 
     def visit_expression_stmt(self, stmt: stmt.Expression) -> object:
         self.resolve(stmt.expression)

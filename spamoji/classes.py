@@ -4,7 +4,7 @@ Contains the base construct for Spamoji classes
 
 from typing import TYPE_CHECKING
 
-from spamoji.functions import SpamojiCallable
+from spamoji.functions import SpamojiCallable, SpamojiFunction
 from spamoji.helpers import SpamojiRuntimeError
 from spamoji.token import Token
 
@@ -13,8 +13,12 @@ if TYPE_CHECKING:
 
 
 class SpamojiClass(SpamojiCallable):
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str, methods: dict[str, SpamojiFunction]) -> None:
         self.name = name
+        self.methods = methods
+
+    def find_method(self, name: str) -> SpamojiFunction | None:
+        return self.methods.get(name)
 
     def call(self, interpreter: "Interpreter", arguments: list[object]) -> object:
         instance = SpamojiInstance(self)
@@ -35,6 +39,9 @@ class SpamojiInstance:
     def get(self, name: Token) -> object:
         if name.lexeme in self.fields:
             return self.fields.get(name.lexeme)
+        method = self.my_class.find_method(name.lexeme)
+        if method is not None:
+            return method
         raise SpamojiRuntimeError(name, f"Undefined property '{name.lexeme}'.")
 
     def set(self, name: Token, value: object):

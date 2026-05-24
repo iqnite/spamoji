@@ -156,7 +156,11 @@ class Interpreter(expr.Visitor, stmt.Visitor):
 
     def visit_class_stmt(self, stmt: stmt.Class) -> object:
         self.environment.define(stmt.name.lexeme, None)
-        new_class = SpamojiClass(stmt.name.lexeme)
+        methods = {}
+        for method in stmt.methods:
+            func = SpamojiFunction(method, self.environment)
+            methods[method.name.lexeme] = func
+        new_class = SpamojiClass(stmt.name.lexeme, methods)
         self.environment.assign(stmt.name, new_class)
 
     def visit_expression_stmt(self, stmt: stmt.Expression) -> object:
