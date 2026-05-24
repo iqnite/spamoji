@@ -207,4 +207,5 @@ KEYWORDS = {
     "➗": TokenType.DIVIDE,
     "🫥": TokenType.NULL,
     "📜": TokenType.CLASS,
+    "🤖": TokenType.THIS,
 }
