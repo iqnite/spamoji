@@ -158,7 +158,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         self.environment.define(stmt.name.lexeme, None)
         methods = {}
         for method in stmt.methods:
-            func = SpamojiFunction(method, self.environment)
+            func = SpamojiFunction(method, self.environment, method.name.lexeme == "✨")
             methods[method.name.lexeme] = func
         new_class = SpamojiClass(stmt.name.lexeme, methods)
         self.environment.assign(stmt.name, new_class)
@@ -167,7 +167,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         return self.evaluate(stmt.expression)
 
     def visit_function_stmt(self, stmt: stmt.Function) -> object:
-        func = SpamojiFunction(stmt, self.environment)
+        func = SpamojiFunction(stmt, self.environment, False)
         self.environment.define(stmt.name.lexeme, func)
 
     def visit_if_stmt(self, stmt: stmt.If) -> object:
@@ -296,7 +296,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         value = self.evaluate(expr.value)
         typing.cast(SpamojiInstance, obj).set(expr.name, value)
         return value
-    
+
     def visit_this_expr(self, expr: expr.This) -> object:
         return self.look_up_variable(expr.keyword, expr)
 

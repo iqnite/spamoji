@@ -16,6 +16,7 @@ class FunctionType(Enum):
     NONE = 0
     FUNCTION = 1
     METHOD = 2
+    INITIALIZER = 3
 
 
 class ClassType(Enum):
@@ -48,9 +49,12 @@ class Resolver(expr.Visitor, stmt.Visitor):
         self.declare(stmt.name)
         self.define(stmt.name)
         self.begin_scope()
-        self.scopes[-1]["this"] = True
+        self.scopes[-1]["🤖"] = True
         for method in stmt.methods:
-            declaration = FunctionType.METHOD
+            if method.name.lexeme == "✨":
+                declaration = FunctionType.INITIALIZER
+            else:
+                declaration = FunctionType.METHOD
             self.resolve_function(method, declaration)
         self.end_scope()
         self.current_class = enclosing_class
@@ -70,6 +74,10 @@ class Resolver(expr.Visitor, stmt.Visitor):
             self.error_handler(stmt.keyword.line, "Can't return from top-level code.")
             return
         if stmt.value is not None:
+            if self.current_function == FunctionType.INITIALIZER:
+                self.error_handler(
+                    stmt.keyword, "Can't return a value from an initializer."
+                )
             self.resolve(stmt.value)
 
     def visit_while_stmt(self, stmt: stmt.While) -> object:

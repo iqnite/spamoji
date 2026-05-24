@@ -22,10 +22,16 @@ class SpamojiClass(SpamojiCallable):
 
     def call(self, interpreter: "Interpreter", arguments: list[object]) -> object:
         instance = SpamojiInstance(self)
+        initializer = self.find_method("✨")
+        if initializer is not None:
+            initializer.bind(instance).call(interpreter, arguments)
         return instance
 
     def arity(self) -> int:
-        return 0
+        initializer = self.find_method("✨")
+        if initializer is None:
+            return 0
+        return initializer.arity()
 
     def __str__(self) -> str:
         return f"<📜 {self.name}>"
