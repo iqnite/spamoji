@@ -285,6 +285,14 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             return typing.cast(SpamojiInstance, obj).get(expr.name)
         raise SpamojiRuntimeError(expr.name, "Only instances have properties.")
 
+    def visit_set_expr(self, expr: expr.Set) -> object:
+        obj = self.evaluate(expr.obj)
+        if not isinstance(obj, SpamojiInstance):
+            raise SpamojiRuntimeError(expr.name, "Only instances have fields.")
+        value = self.evaluate(expr.value)
+        typing.cast(SpamojiInstance, obj).set(expr.name, value)
+        return value
+
     def visit_logical_expr(self, expr: expr.Logical) -> object:
         left = self.evaluate(expr.left)
         if expr.operator.token_type == TokenType.OR:

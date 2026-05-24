@@ -37,5 +37,8 @@ class SpamojiInstance:
             return self.fields.get(name.lexeme)
         raise SpamojiRuntimeError(name, f"Undefined property '{name.lexeme}'.")
 
+    def set(self, name: Token, value: object):
+        self.fields[name.lexeme] = value
+
     def __str__(self) -> str:
         return f"<Instance of {self.my_class}>"

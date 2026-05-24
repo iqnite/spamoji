@@ -19,6 +19,7 @@ def main():
             "Binary   @ left: Expr, operator: Token, right: Expr",
             "Call     @ callee: Expr, paren: Token, arguments: list[Expr]",
             "Get      @ obj: Expr, name: Token",
+            "Set      @ obj: Expr, name: Token, value: Expr",
             "Logical  @ left: Expr, operator: Token, right: Expr",
             "If       @ condition: Expr, then_branch: Expr, else_branch: Expr",
             "Grouping @ expression: Expr",

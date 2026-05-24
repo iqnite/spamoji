@@ -22,6 +22,8 @@ class Visitor(ABC):
         pass
     def visit_get_expr(self, expr: "Get") -> object:
         pass
+    def visit_set_expr(self, expr: "Set") -> object:
+        pass
     def visit_logical_expr(self, expr: "Logical") -> object:
         pass
     def visit_if_expr(self, expr: "If") -> object:
@@ -80,6 +82,18 @@ class Get(Expr):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_get_expr(self)
+
+
+class Set(Expr):
+    """Represents a set expression."""
+
+    def __init__(self, obj: Expr, name: Token, value: Expr):
+        self.obj = obj
+        self.name = name
+        self.value = value
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_set_expr(self)
 
 
 class Logical(Expr):

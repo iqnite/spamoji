@@ -108,6 +108,10 @@ class Resolver(expr.Visitor, stmt.Visitor):
     def visit_get_expr(self, expr: expr.Get) -> object:
         self.resolve(expr.obj)
 
+    def visit_set_expr(self, expr: expr.Set) -> object:
+        self.resolve(expr.value)
+        self.resolve(expr.obj)
+
     def visit_grouping_expr(self, expr: expr.Grouping) -> object:
         self.resolve(expr.expression)
 

@@ -198,6 +198,9 @@ class Parser:
             if isinstance(expression, expr.Variable):
                 name = expression.name
                 return expr.Assign(name, value)
+            elif isinstance(expression, expr.Get):
+                get = typing.cast(expr.Get, expression)
+                return expr.Set(get.obj, get.name, value)
             self.error(assignment_operator, "Invalid assignment target.")
         return expression
 
