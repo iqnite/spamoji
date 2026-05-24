@@ -22,6 +22,7 @@ class FunctionType(Enum):
 class ClassType(Enum):
     NONE = 0
     CLASS = 1
+    SUBCLASS = 2
 
 
 class LoopType(Enum):
@@ -48,12 +49,18 @@ class Resolver(expr.Visitor, stmt.Visitor):
         self.current_class = ClassType.CLASS
         self.declare(stmt.name)
         self.define(stmt.name)
+        if stmt.superclasses:
+            self.current_class = ClassType.SUBCLASS
         for superclass in stmt.superclasses:
             if stmt.name.lexeme == superclass.name.lexeme:
                 self.error_handler(
                     superclass.name, "A class can't inherit from itself."
                 )
             self.resolve(superclass)
+            self.begin_scope()
+        if stmt.superclasses:
+            self.begin_scope()
+            self.scopes[-1]["👆"] = True
         self.begin_scope()
         self.scopes[-1]["🤖"] = True
         for method in stmt.methods:
@@ -63,6 +70,8 @@ class Resolver(expr.Visitor, stmt.Visitor):
                 declaration = FunctionType.METHOD
             self.resolve_function(method, declaration)
         self.end_scope()
+        if stmt.superclasses:
+            self.end_scope()
         self.current_class = enclosing_class
 
     def visit_expression_stmt(self, stmt: stmt.Expression) -> object:
@@ -142,6 +151,15 @@ class Resolver(expr.Visitor, stmt.Visitor):
     def visit_set_expr(self, expr: expr.Set) -> object:
         self.resolve(expr.value)
         self.resolve(expr.obj)
+
+    def visit_super_expr(self, expr: expr.Super) -> object:
+        if self.current_class == ClassType.NONE:
+            self.error_handler(expr.keyword, "Can't use '👆' outside of a class.")
+        elif self.current_class != ClassType.SUBCLASS:
+            self.error_handler(
+                expr.keyword, "Can't use '👆' in a class with no superclass."
+            )
+        self.resolve_local(expr, expr.keyword)
 
     def visit_this_expr(self, expr: expr.This) -> object:
         if self.current_class == ClassType.NONE:
