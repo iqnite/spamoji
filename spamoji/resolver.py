@@ -57,7 +57,6 @@ class Resolver(expr.Visitor, stmt.Visitor):
                     superclass.name, "A class can't inherit from itself."
                 )
             self.resolve(superclass)
-            self.begin_scope()
         if stmt.superclasses:
             self.begin_scope()
             self.scopes[-1]["👆"] = True
