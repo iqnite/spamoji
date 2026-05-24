@@ -90,7 +90,7 @@ class Resolver(expr.Visitor, stmt.Visitor):
         if stmt.value is not None:
             if self.current_function == FunctionType.INITIALIZER:
                 self.error_handler(
-                    stmt.keyword, "Can't return a value from an initializer."
+                    stmt.keyword.line, "Can't return a value from an initializer."
                 )
             self.resolve(stmt.value)
 
