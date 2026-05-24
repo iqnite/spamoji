@@ -41,6 +41,7 @@ class TokenType(Enum):
     ASSIGNMENT = 49
     COMMA = 51
     CLASS = 52
+    DOT = 53
 
 
 class Token:
