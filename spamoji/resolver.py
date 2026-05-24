@@ -153,16 +153,17 @@ class Resolver(expr.Visitor, stmt.Visitor):
 
     def visit_super_expr(self, expr: expr.Super) -> object:
         if self.current_class == ClassType.NONE:
-            self.error_handler(expr.keyword, "Can't use '👆' outside of a class.")
+            self.error_handler(expr.keyword.line, "Can't use '👆' outside of a class.")
         elif self.current_class != ClassType.SUBCLASS:
             self.error_handler(
-                expr.keyword, "Can't use '👆' in a class with no superclass."
+                expr.keyword.line,
+                "Can't use '👆' in a class with no superclass."
             )
         self.resolve_local(expr, expr.keyword)
 
     def visit_this_expr(self, expr: expr.This) -> object:
         if self.current_class == ClassType.NONE:
-            self.error_handler(expr.keyword, "Can't use '🤖' outside of a class.")
+            self.error_handler(expr.keyword.line, "Can't use '🤖' outside of a class.")
             return
         self.resolve_local(expr, expr.keyword)
 
