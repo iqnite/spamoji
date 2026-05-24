@@ -5,6 +5,7 @@ Contains the actual interpreter.
 import typing
 
 from spamoji import expr, stmt
+from spamoji.classes import SpamojiClass
 from spamoji.functions import (
     BreakLoop,
     ContinueLoop,
@@ -152,6 +153,11 @@ class Interpreter(expr.Visitor, stmt.Visitor):
 
     def visit_block_stmt(self, stmt: stmt.Block) -> object:
         self.execute_block(stmt.statements, Environment(self.environment))
+
+    def visit_class_stmt(self, stmt: stmt.Class) -> object:
+        self.environment.define(stmt.name.lexeme, None)
+        new_class = SpamojiClass(stmt.name.lexeme)
+        self.environment.assign(stmt.name, new_class)
 
     def visit_expression_stmt(self, stmt: stmt.Expression) -> object:
         return self.evaluate(stmt.expression)
