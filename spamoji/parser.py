@@ -87,7 +87,11 @@ class Parser:
         self.consume("Expect newline before class body.", TokenType.NEWLINE)
         methods = []
         if self.check(TokenType.INDENT):
-            # TODO: Add actual methods
+            block = self.block()
+            for statement in block:
+                if isinstance(statement, stmt.Function):
+                    methods.append(statement)
+        return stmt.Class(name, methods)
 
     def statement(self) -> Stmt:
         """Parses a statement."""
