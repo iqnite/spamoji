@@ -54,7 +54,7 @@ class Resolver(expr.Visitor, stmt.Visitor):
         for superclass in stmt.superclasses:
             if stmt.name.lexeme == superclass.name.lexeme:
                 self.error_handler(
-                    superclass.name, "A class can't inherit from itself."
+                    superclass.name.line, "A class can't inherit from itself."
                 )
             self.resolve(superclass)
         if stmt.superclasses:
