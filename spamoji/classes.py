@@ -13,12 +13,23 @@ if TYPE_CHECKING:
 
 
 class SpamojiClass(SpamojiCallable):
-    def __init__(self, name: str, methods: dict[str, SpamojiFunction]) -> None:
+    def __init__(
+        self,
+        name: str,
+        superclasses: list["SpamojiClass"],
+        methods: dict[str, SpamojiFunction],
+    ) -> None:
         self.name = name
+        self.superclasses = superclasses
         self.methods = methods
 
     def find_method(self, name: str) -> SpamojiFunction | None:
-        return self.methods.get(name)
+        if name in self.methods:
+            return self.methods.get(name)
+        for superclass in self.superclasses:
+            method = superclass.find_method(name)
+            if method is not None:
+                return method
 
     def call(self, interpreter: "Interpreter", arguments: list[object]) -> object:
         instance = SpamojiInstance(self)

@@ -37,7 +37,7 @@ def main():
             "Block      @ statements: list[Stmt]",
             "Expression @ expression: Expr",
             "Function   @ name: Token, arguments: list[Token], body: list[Stmt]",
-            "Class      @ name: Token, methods: list[Function]",
+            "Class      @ name: Token, superclasses: list[expr.Variable], methods: list[Function]",
             "Return     @ keyword: Token, value: Expr | None",
             "If         @ condition: Expr, then_branch: Stmt | None, else_branch: Stmt | None",
             "While      @ condition: Expr, body: Stmt | None",
@@ -45,6 +45,7 @@ def main():
             "Variable   @ name: Token, initializer: Expr | None",
         ],
         imports=[
+            "from spamoji import expr",
             "from spamoji.expr import Expr",
             "from spamoji.token import Token",
         ],

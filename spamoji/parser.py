@@ -84,6 +84,15 @@ class Parser:
 
     def class_declaration(self) -> Stmt:
         name = self.consume("Expect class name.", TokenType.IDENTIFIER)
+        superclasses = []
+        if self.match(TokenType.LEFT_PAREN):
+            if not self.check(TokenType.RIGHT_PAREN):
+                while True:
+                    self.consume("Expect superclass name.", TokenType.IDENTIFIER)
+                    superclasses.append(expr.Variable(self.previous()))
+                    if not self.match(TokenType.COMMA):
+                        break
+            self.consume("Expect '🫷' after arguments.", TokenType.RIGHT_PAREN)
         self.consume("Expect newline before class body.", TokenType.NEWLINE)
         methods = []
         if self.match(TokenType.INDENT):
@@ -91,7 +100,7 @@ class Parser:
             for statement in block:
                 if isinstance(statement, stmt.Function):
                     methods.append(statement)
-        return stmt.Class(name, methods)
+        return stmt.Class(name, superclasses, methods)
 
     def statement(self) -> Stmt:
         """Parses a statement."""

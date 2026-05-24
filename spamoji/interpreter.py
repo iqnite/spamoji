@@ -155,12 +155,20 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         self.execute_block(stmt.statements, Environment(self.environment))
 
     def visit_class_stmt(self, stmt: stmt.Class) -> object:
+        superclasses = []
+        for superclass in stmt.superclasses:
+            new_superclass = self.evaluate(superclass)
+            if not isinstance(new_superclass, SpamojiClass):
+                raise SpamojiRuntimeError(
+                    superclass.name, "Superclass must be a class."
+                )
+            superclasses.append(new_superclass)
         self.environment.define(stmt.name.lexeme, None)
         methods = {}
         for method in stmt.methods:
             func = SpamojiFunction(method, self.environment, method.name.lexeme == "✨")
             methods[method.name.lexeme] = func
-        new_class = SpamojiClass(stmt.name.lexeme, methods)
+        new_class = SpamojiClass(stmt.name.lexeme, superclasses, methods)
         self.environment.assign(stmt.name, new_class)
 
     def visit_expression_stmt(self, stmt: stmt.Expression) -> object:

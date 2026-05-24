@@ -48,6 +48,12 @@ class Resolver(expr.Visitor, stmt.Visitor):
         self.current_class = ClassType.CLASS
         self.declare(stmt.name)
         self.define(stmt.name)
+        for superclass in stmt.superclasses:
+            if stmt.name.lexeme == superclass.name.lexeme:
+                self.error_handler(
+                    superclass.name, "A class can't inherit from itself."
+                )
+            self.resolve(superclass)
         self.begin_scope()
         self.scopes[-1]["🤖"] = True
         for method in stmt.methods:
