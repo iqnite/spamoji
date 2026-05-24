@@ -208,4 +208,5 @@ KEYWORDS = {
     "🫥": TokenType.NULL,
     "📜": TokenType.CLASS,
     "🤖": TokenType.THIS,
+    "👆": TokenType.SUPER,
 }

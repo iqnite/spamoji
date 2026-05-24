@@ -43,6 +43,7 @@ class TokenType(Enum):
     CLASS = 52
     DOT = 53
     THIS = 54
+    SUPER = 55
 
 
 class Token:

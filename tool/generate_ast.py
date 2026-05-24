@@ -21,6 +21,7 @@ def main():
             "Get      @ obj: Expr, name: Token",
             "Set      @ obj: Expr, name: Token, value: Expr",
             "This     @ keyword: Token",
+            "Super    @ keyword: Token, method: Token",
             "Logical  @ left: Expr, operator: Token, right: Expr",
             "If       @ condition: Expr, then_branch: Expr, else_branch: Expr",
             "Grouping @ expression: Expr",

@@ -26,6 +26,8 @@ class Visitor(ABC):
         pass
     def visit_this_expr(self, expr: "This") -> object:
         pass
+    def visit_super_expr(self, expr: "Super") -> object:
+        pass
     def visit_logical_expr(self, expr: "Logical") -> object:
         pass
     def visit_if_expr(self, expr: "If") -> object:
@@ -106,6 +108,17 @@ class This(Expr):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_this_expr(self)
+
+
+class Super(Expr):
+    """Represents a super expression."""
+
+    def __init__(self, keyword: Token, method: Token):
+        self.keyword = keyword
+        self.method = method
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_super_expr(self)
 
 
 class Logical(Expr):
