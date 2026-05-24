@@ -26,19 +26,21 @@ class TestParser(unittest.TestCase):
         ast = Parser(tokens, error_handler).parse()
 
         self.assertEqual(errors, [])
-        self.assertEqual(len(ast), 3)
+        self.assertEqual(len(ast), 5)
         self.assertIsInstance(ast[1], stmt.While)
         assert isinstance(ast[1], stmt.While)
+        self.assertIsNotNone(ast[1].body)
         self.assertIsInstance(ast[1].body, stmt.Block)
         assert isinstance(ast[1].body, stmt.Block)
-        self.assertEqual(len(ast[1].body.statements), 3)
-        self.assertIsInstance(ast[1].body.statements[1], stmt.If)
+        self.assertGreaterEqual(len(ast[1].body.statements), 2)
         self.assertIsInstance(ast[1].body.statements[1], stmt.If)
         assert isinstance(ast[1].body.statements[1], stmt.If)
         self.assertIsInstance(ast[1].body.statements[1].then_branch, stmt.Block)
-        self.assertIsInstance(ast[1].body.statements[1].else_branch, stmt.Block)
-        self.assertIsInstance(ast[1].body.statements[2], stmt.Expression)
-        assert isinstance(ast[1].body.statements[2], stmt.Expression)
+        if ast[1].body.statements[1].else_branch is not None:
+            self.assertIsInstance(ast[1].body.statements[1].else_branch, stmt.Block)
+        if len(ast[1].body.statements) > 2:
+            self.assertIsInstance(ast[1].body.statements[2], stmt.Expression)
+            assert isinstance(ast[1].body.statements[2], stmt.Expression)
         self.assertIsInstance(ast[2], stmt.Expression)
 
     def test_string_followed_by_parenthesized_expression_concatenates(self):

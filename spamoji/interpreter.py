@@ -89,7 +89,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
 
     def visit_variable_expr(self, expr: expr.Variable) -> object:
         return self.look_up_variable(expr.name, expr)
-    
+
     def look_up_variable(self, name: Token, expression: Expr):
         distance = self.locals.get(expression)
         if distance is not None:
@@ -170,7 +170,8 @@ class Interpreter(expr.Visitor, stmt.Visitor):
     def visit_while_stmt(self, stmt: stmt.While) -> object:
         while self.is_truthy(self.evaluate(stmt.condition)):
             try:
-                self.execute(stmt.body)
+                if stmt.body is not None:
+                    self.execute(stmt.body)
             except BreakLoop:
                 break
             except ContinueLoop:

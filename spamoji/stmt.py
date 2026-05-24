@@ -91,7 +91,7 @@ class If(Stmt):
 class While(Stmt):
     """Represents a while expression."""
 
-    def __init__(self, condition: Expr, body: Stmt):
+    def __init__(self, condition: Expr, body: Stmt | None):
         self.condition = condition
         self.body = body
 

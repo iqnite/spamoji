@@ -120,8 +120,10 @@ class Parser:
 
     def while_statement(self) -> Stmt:
         condition = self.expression()
+        body = None
         self.consume("Expect newline after while condition.", TokenType.NEWLINE)
-        body = self.statement()
+        if self.check(TokenType.INDENT):
+            body = self.statement()
         return stmt.While(condition, body)
 
     def match_indented(self, token_type: TokenType) -> bool:

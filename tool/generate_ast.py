@@ -36,7 +36,7 @@ def main():
             "Function   @ name: Token, arguments: list[Token], body: list[Stmt]",
             "Return     @ keyword: Token, value: Expr | None",
             "If         @ condition: Expr, then_branch: Stmt | None, else_branch: Stmt | None",
-            "While      @ condition: Expr, body: Stmt",
+            "While      @ condition: Expr, body: Stmt | None",
             "LoopCtrl   @ type: Token",
             "Variable   @ name: Token, initializer: Expr | None",
         ],
