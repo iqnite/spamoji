@@ -5,7 +5,7 @@ Contains the actual interpreter.
 import typing
 
 from spamoji import expr, stmt
-from spamoji.classes import SpamojiClass
+from spamoji.classes import SpamojiClass, SpamojiInstance
 from spamoji.functions import (
     BreakLoop,
     ContinueLoop,
@@ -278,6 +278,12 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             return func.call(self, arguments)
         except (TypeError, ValueError, OverflowError) as e:
             raise SpamojiRuntimeError(expr.paren, e.args[0]) from e
+
+    def visit_get_expr(self, expr: expr.Get) -> object:
+        obj = self.evaluate(expr.obj)
+        if isinstance(obj, SpamojiInstance):
+            return typing.cast(SpamojiInstance, obj).get(expr.name)
+        raise SpamojiRuntimeError(expr.name, "Only instances have properties.")
 
     def visit_logical_expr(self, expr: expr.Logical) -> object:
         left = self.evaluate(expr.left)
