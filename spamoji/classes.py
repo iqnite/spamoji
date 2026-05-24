@@ -41,7 +41,7 @@ class SpamojiInstance:
             return self.fields.get(name.lexeme)
         method = self.my_class.find_method(name.lexeme)
         if method is not None:
-            return method
+            return method.bind(self)
         raise SpamojiRuntimeError(name, f"Undefined property '{name.lexeme}'.")
 
     def set(self, name: Token, value: object):

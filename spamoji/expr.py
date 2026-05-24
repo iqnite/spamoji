@@ -24,6 +24,8 @@ class Visitor(ABC):
         pass
     def visit_set_expr(self, expr: "Set") -> object:
         pass
+    def visit_this_expr(self, expr: "This") -> object:
+        pass
     def visit_logical_expr(self, expr: "Logical") -> object:
         pass
     def visit_if_expr(self, expr: "If") -> object:
@@ -94,6 +96,16 @@ class Set(Expr):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_set_expr(self)
+
+
+class This(Expr):
+    """Represents a this expression."""
+
+    def __init__(self, keyword: Token):
+        self.keyword = keyword
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_this_expr(self)
 
 
 class Logical(Expr):

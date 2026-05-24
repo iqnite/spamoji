@@ -8,6 +8,7 @@ from spamoji import stmt
 from spamoji.environment import Environment
 
 if TYPE_CHECKING:
+    from spamoji.classes import SpamojiInstance
     from spamoji.interpreter import Interpreter
 
 
@@ -20,6 +21,11 @@ class SpamojiFunction(SpamojiCallable):
     def __init__(self, declaration: stmt.Function, closure: Environment):
         self.declaration = declaration
         self.closure = closure
+
+    def bind(self, instance: "SpamojiInstance") -> "SpamojiFunction":
+        environment = Environment(self.closure)
+        environment.define("this", instance)
+        return SpamojiFunction(self.declaration, environment)
 
     def call(self, interpreter: "Interpreter", arguments: list[object]) -> object:
         environment = Environment(self.closure)

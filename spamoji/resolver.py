@@ -39,9 +39,12 @@ class Resolver(expr.Visitor, stmt.Visitor):
     def visit_class_stmt(self, stmt: stmt.Class) -> object:
         self.declare(stmt.name)
         self.define(stmt.name)
+        self.begin_scope()
+        self.scopes[-1]["this"] = True
         for method in stmt.methods:
             declaration = FunctionType.METHOD
             self.resolve_function(method, declaration)
+        self.end_scope()
 
     def visit_expression_stmt(self, stmt: stmt.Expression) -> object:
         self.resolve(stmt.expression)
@@ -115,6 +118,9 @@ class Resolver(expr.Visitor, stmt.Visitor):
     def visit_set_expr(self, expr: expr.Set) -> object:
         self.resolve(expr.value)
         self.resolve(expr.obj)
+
+    def visit_this_expr(self, expr: expr.This) -> object:
+        self.resolve_local(expr, expr.keyword)
 
     def visit_grouping_expr(self, expr: expr.Grouping) -> object:
         self.resolve(expr.expression)

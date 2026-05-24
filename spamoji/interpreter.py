@@ -296,6 +296,9 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         value = self.evaluate(expr.value)
         typing.cast(SpamojiInstance, obj).set(expr.name, value)
         return value
+    
+    def visit_this_expr(self, expr: expr.This) -> object:
+        return self.look_up_variable(expr.keyword, expr)
 
     def visit_logical_expr(self, expr: expr.Logical) -> object:
         left = self.evaluate(expr.left)
