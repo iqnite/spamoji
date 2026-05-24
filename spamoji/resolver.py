@@ -18,6 +18,11 @@ class FunctionType(Enum):
     METHOD = 2
 
 
+class ClassType(Enum):
+    NONE = 0
+    CLASS = 1
+
+
 class LoopType(Enum):
     NONE = 0
     WHILE = 1
@@ -28,6 +33,7 @@ class Resolver(expr.Visitor, stmt.Visitor):
         self.interpreter = interpreter
         self.scopes: list[dict[str, bool]] = []
         self.current_function = FunctionType.NONE
+        self.current_class = ClassType.NONE
         self.current_loop = LoopType.NONE
         self.error_handler = error_handler
 
@@ -37,6 +43,8 @@ class Resolver(expr.Visitor, stmt.Visitor):
         self.end_scope()
 
     def visit_class_stmt(self, stmt: stmt.Class) -> object:
+        enclosing_class = self.current_class
+        self.current_class = ClassType.CLASS
         self.declare(stmt.name)
         self.define(stmt.name)
         self.begin_scope()
@@ -45,6 +53,7 @@ class Resolver(expr.Visitor, stmt.Visitor):
             declaration = FunctionType.METHOD
             self.resolve_function(method, declaration)
         self.end_scope()
+        self.current_class = enclosing_class
 
     def visit_expression_stmt(self, stmt: stmt.Expression) -> object:
         self.resolve(stmt.expression)
@@ -59,6 +68,7 @@ class Resolver(expr.Visitor, stmt.Visitor):
     def visit_return_stmt(self, stmt: stmt.Return) -> object:
         if self.current_function == FunctionType.NONE:
             self.error_handler(stmt.keyword.line, "Can't return from top-level code.")
+            return
         if stmt.value is not None:
             self.resolve(stmt.value)
 
@@ -120,6 +130,9 @@ class Resolver(expr.Visitor, stmt.Visitor):
         self.resolve(expr.obj)
 
     def visit_this_expr(self, expr: expr.This) -> object:
+        if self.current_class == ClassType.NONE:
+            self.error_handler(expr.keyword, "Can't use '🤖' outside of a class.")
+            return
         self.resolve_local(expr, expr.keyword)
 
     def visit_grouping_expr(self, expr: expr.Grouping) -> object:
