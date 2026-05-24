@@ -166,7 +166,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         self.environment.define(stmt.name.lexeme, None)
         if stmt.superclasses:
             self.environment = Environment(self.environment)
-            self.environment.define("👆", stmt.superclasses[0])
+            self.environment.define("👆", superclasses[0])
         methods = {}
         for method in stmt.methods:
             func = SpamojiFunction(method, self.environment, method.name.lexeme == "✨")
