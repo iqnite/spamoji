@@ -86,7 +86,7 @@ class Parser:
         name = self.consume("Expect class name.", TokenType.IDENTIFIER)
         self.consume("Expect newline before class body.", TokenType.NEWLINE)
         methods = []
-        if self.check(TokenType.INDENT):
+        if self.match(TokenType.INDENT):
             block = self.block()
             for statement in block:
                 if isinstance(statement, stmt.Function):

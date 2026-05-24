@@ -19,9 +19,9 @@ class Visitor(ABC):
         pass
     def visit_expression_stmt(self, stmt: "Expression") -> object:
         pass
-    def visit_class_stmt(self, stmt: "Class") -> object:
-        pass
     def visit_function_stmt(self, stmt: "Function") -> object:
+        pass
+    def visit_class_stmt(self, stmt: "Class") -> object:
         pass
     def visit_return_stmt(self, stmt: "Return") -> object:
         pass
@@ -55,17 +55,6 @@ class Expression(Stmt):
         return visitor.visit_expression_stmt(self)
 
 
-class Class(Stmt):
-    """Represents a class expression."""
-
-    def __init__(self, name: Token, methods: list[stmt.Function]):
-        self.name = name
-        self.methods = methods
-
-    def accept(self, visitor: Visitor) -> object:
-        return visitor.visit_class_stmt(self)
-
-
 class Function(Stmt):
     """Represents a function expression."""
 
@@ -76,6 +65,17 @@ class Function(Stmt):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_function_stmt(self)
+
+
+class Class(Stmt):
+    """Represents a class expression."""
+
+    def __init__(self, name: Token, methods: list[Function]):
+        self.name = name
+        self.methods = methods
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_class_stmt(self)
 
 
 class Return(Stmt):
