@@ -21,7 +21,13 @@ class SpamojiClass(SpamojiCallable):
     def arity(self) -> int:
         return 0
 
+    def __str__(self) -> str:
+        return f"<📜 {self.name}>"
+
 
 class SpamojiInstance:
     def __init__(self, my_class: SpamojiClass):
         self.my_class = my_class
+
+    def __str__(self) -> str:
+        return f"<Instance of {self.my_class}>"
