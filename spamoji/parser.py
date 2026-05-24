@@ -347,6 +347,11 @@ class Parser:
                 break
             if self.match(TokenType.LEFT_PAREN):
                 expression = self.finish_call(expression)
+            elif self.match(TokenType.DOT):
+                name = self.consume(
+                    "Expect property name after '👉'.", TokenType.IDENTIFIER
+                )
+                expression = expr.Get(expression, name)
             else:
                 break
         return expression
