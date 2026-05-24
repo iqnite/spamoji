@@ -92,7 +92,7 @@ class Parser:
                     superclasses.append(expr.Variable(self.previous()))
                     if not self.match(TokenType.COMMA):
                         break
-            self.consume("Expect '🫷' after arguments.", TokenType.RIGHT_PAREN)
+            self.consume("Expect '🫷' after superclass list.", TokenType.RIGHT_PAREN)
         self.consume("Expect newline before class body.", TokenType.NEWLINE)
         methods = []
         if self.match(TokenType.INDENT):
