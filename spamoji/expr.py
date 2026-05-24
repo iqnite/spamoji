@@ -20,6 +20,8 @@ class Visitor(ABC):
         pass
     def visit_call_expr(self, expr: "Call") -> object:
         pass
+    def visit_get_expr(self, expr: "Get") -> object:
+        pass
     def visit_logical_expr(self, expr: "Logical") -> object:
         pass
     def visit_if_expr(self, expr: "If") -> object:
@@ -67,6 +69,17 @@ class Call(Expr):
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_call_expr(self)
+
+
+class Get(Expr):
+    """Represents a get expression."""
+
+    def __init__(self, obj: Expr, name: Token):
+        self.obj = obj
+        self.name = name
+
+    def accept(self, visitor: Visitor) -> object:
+        return visitor.visit_get_expr(self)
 
 
 class Logical(Expr):
