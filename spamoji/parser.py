@@ -389,7 +389,7 @@ class Parser:
             return Literal(self.previous().literal)
         if self.match(TokenType.SUPER):
             keyword = self.previous()
-            self.consume("Expect '👆' after 'super'.", TokenType.DOT)
+            self.consume("Expect '👉' after 'super'.", TokenType.DOT)
             method = self.consume(
                 "Expect superclass method name.", TokenType.IDENTIFIER
             )
