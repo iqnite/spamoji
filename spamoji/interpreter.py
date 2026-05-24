@@ -319,7 +319,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
                 expr.keyword, "No distance found for super expression."
             )
         superclass = typing.cast(SpamojiClass, self.environment.get_at(distance, "👆"))
-        obj = typing.cast(SpamojiInstance, self.environment.get_at(distance - 1, "👆"))
+        obj = typing.cast(SpamojiInstance, self.environment.get_at(distance - 1, "🤖"))
         method = superclass.find_method(expr.method.lexeme)
         if method is None:
             raise SpamojiRuntimeError(
