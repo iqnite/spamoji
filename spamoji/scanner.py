@@ -61,6 +61,9 @@ class Scanner:
             case "🔸":
                 self.add_token(TokenType.COMMA)
                 self.is_line_start = False
+            case "👉":
+                self.add_token(TokenType.DOT)
+                self.is_line_start = False
             case "🫸":
                 self.add_token(TokenType.LEFT_PAREN)
                 self.is_line_start = False
@@ -166,7 +169,7 @@ class Scanner:
 
     def identifier(self):
         """Scans an identifier."""
-        while self.peek() not in " \r\t\n🫸🫷🔤🔸❗" and not self.is_at_end():
+        while self.peek() not in " \r\t\n🫸🫷🔤🔸❗👉" and not self.is_at_end():
             self.advance()
 
         text = self.source[self.start : self.current]
@@ -203,4 +206,7 @@ KEYWORDS = {
     "✖️": TokenType.MULTIPLY,
     "➗": TokenType.DIVIDE,
     "🫥": TokenType.NULL,
+    "📜": TokenType.CLASS,
+    "🤖": TokenType.THIS,
+    "👆": TokenType.SUPER,
 }

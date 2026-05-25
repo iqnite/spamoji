@@ -40,6 +40,10 @@ class TokenType(Enum):
     INDENT = 48
     ASSIGNMENT = 49
     COMMA = 51
+    CLASS = 52
+    DOT = 53
+    THIS = 54
+    SUPER = 55
 
 
 class Token:

@@ -5,6 +5,7 @@ Contains the actual interpreter.
 import typing
 
 from spamoji import expr, stmt
+from spamoji.classes import SpamojiClass, SpamojiInstance
 from spamoji.functions import (
     BreakLoop,
     ContinueLoop,
@@ -153,11 +154,35 @@ class Interpreter(expr.Visitor, stmt.Visitor):
     def visit_block_stmt(self, stmt: stmt.Block) -> object:
         self.execute_block(stmt.statements, Environment(self.environment))
 
+    def visit_class_stmt(self, stmt: stmt.Class) -> object:
+        superclasses = []
+        for superclass in stmt.superclasses:
+            new_superclass = self.evaluate(superclass)
+            if not isinstance(new_superclass, SpamojiClass):
+                raise SpamojiRuntimeError(
+                    superclass.name, "Superclass must be a class."
+                )
+            superclasses.append(new_superclass)
+        self.environment.define(stmt.name.lexeme, None)
+        if stmt.superclasses:
+            self.environment = Environment(self.environment)
+            self.environment.define("👆", superclasses[0])
+        methods = {}
+        for method in stmt.methods:
+            func = SpamojiFunction(method, self.environment, method.name.lexeme == "✨")
+            methods[method.name.lexeme] = func
+        new_class = SpamojiClass(stmt.name.lexeme, superclasses, methods)
+        if superclasses:
+            if self.environment.enclosing is None:
+                raise ValueError("Current environment has no enclosing environment")
+            self.environment = self.environment.enclosing
+        self.environment.assign(stmt.name, new_class)
+
     def visit_expression_stmt(self, stmt: stmt.Expression) -> object:
         return self.evaluate(stmt.expression)
 
     def visit_function_stmt(self, stmt: stmt.Function) -> object:
-        func = SpamojiFunction(stmt, self.environment)
+        func = SpamojiFunction(stmt, self.environment, False)
         self.environment.define(stmt.name.lexeme, func)
 
     def visit_if_stmt(self, stmt: stmt.If) -> object:
@@ -272,6 +297,38 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             return func.call(self, arguments)
         except (TypeError, ValueError, OverflowError) as e:
             raise SpamojiRuntimeError(expr.paren, e.args[0]) from e
+
+    def visit_get_expr(self, expr: expr.Get) -> object:
+        obj = self.evaluate(expr.obj)
+        if isinstance(obj, SpamojiInstance):
+            return typing.cast(SpamojiInstance, obj).get(expr.name)
+        raise SpamojiRuntimeError(expr.name, "Only instances have properties.")
+
+    def visit_set_expr(self, expr: expr.Set) -> object:
+        obj = self.evaluate(expr.obj)
+        if not isinstance(obj, SpamojiInstance):
+            raise SpamojiRuntimeError(expr.name, "Only instances have fields.")
+        value = self.evaluate(expr.value)
+        typing.cast(SpamojiInstance, obj).set(expr.name, value)
+        return value
+
+    def visit_super_expr(self, expr: expr.Super) -> object:
+        distance = self.locals.get(expr)
+        if distance is None:
+            raise SpamojiRuntimeError(
+                expr.keyword, "No distance found for super expression."
+            )
+        superclass = typing.cast(SpamojiClass, self.environment.get_at(distance, "👆"))
+        obj = typing.cast(SpamojiInstance, self.environment.get_at(distance - 1, "🤖"))
+        method = superclass.find_method(expr.method.lexeme)
+        if method is None:
+            raise SpamojiRuntimeError(
+                expr.keyword, f"Undefined property '{expr.method.lexeme}'."
+            )
+        return method.bind(obj)
+
+    def visit_this_expr(self, expr: expr.This) -> object:
+        return self.look_up_variable(expr.keyword, expr)
 
     def visit_logical_expr(self, expr: expr.Logical) -> object:
         left = self.evaluate(expr.left)

@@ -15,6 +15,14 @@ if TYPE_CHECKING:
 class FunctionType(Enum):
     NONE = 0
     FUNCTION = 1
+    METHOD = 2
+    INITIALIZER = 3
+
+
+class ClassType(Enum):
+    NONE = 0
+    CLASS = 1
+    SUBCLASS = 2
 
 
 class LoopType(Enum):
@@ -27,6 +35,7 @@ class Resolver(expr.Visitor, stmt.Visitor):
         self.interpreter = interpreter
         self.scopes: list[dict[str, bool]] = []
         self.current_function = FunctionType.NONE
+        self.current_class = ClassType.NONE
         self.current_loop = LoopType.NONE
         self.error_handler = error_handler
 
@@ -34,6 +43,35 @@ class Resolver(expr.Visitor, stmt.Visitor):
         self.begin_scope()
         self.resolve(stmt.statements)
         self.end_scope()
+
+    def visit_class_stmt(self, stmt: stmt.Class) -> object:
+        enclosing_class = self.current_class
+        self.current_class = ClassType.CLASS
+        self.declare(stmt.name)
+        self.define(stmt.name)
+        if stmt.superclasses:
+            self.current_class = ClassType.SUBCLASS
+        for superclass in stmt.superclasses:
+            if stmt.name.lexeme == superclass.name.lexeme:
+                self.error_handler(
+                    superclass.name.line, "A class can't inherit from itself."
+                )
+            self.resolve(superclass)
+        if stmt.superclasses:
+            self.begin_scope()
+            self.scopes[-1]["👆"] = True
+        self.begin_scope()
+        self.scopes[-1]["🤖"] = True
+        for method in stmt.methods:
+            if method.name.lexeme == "✨":
+                declaration = FunctionType.INITIALIZER
+            else:
+                declaration = FunctionType.METHOD
+            self.resolve_function(method, declaration)
+        self.end_scope()
+        if stmt.superclasses:
+            self.end_scope()
+        self.current_class = enclosing_class
 
     def visit_expression_stmt(self, stmt: stmt.Expression) -> object:
         self.resolve(stmt.expression)
@@ -48,7 +86,12 @@ class Resolver(expr.Visitor, stmt.Visitor):
     def visit_return_stmt(self, stmt: stmt.Return) -> object:
         if self.current_function == FunctionType.NONE:
             self.error_handler(stmt.keyword.line, "Can't return from top-level code.")
+            return
         if stmt.value is not None:
+            if self.current_function == FunctionType.INITIALIZER:
+                self.error_handler(
+                    stmt.keyword.line, "Can't return a value from an initializer."
+                )
             self.resolve(stmt.value)
 
     def visit_while_stmt(self, stmt: stmt.While) -> object:
@@ -100,6 +143,29 @@ class Resolver(expr.Visitor, stmt.Visitor):
         self.resolve(expr.callee)
         for arg in expr.arguments:
             self.resolve(arg)
+
+    def visit_get_expr(self, expr: expr.Get) -> object:
+        self.resolve(expr.obj)
+
+    def visit_set_expr(self, expr: expr.Set) -> object:
+        self.resolve(expr.value)
+        self.resolve(expr.obj)
+
+    def visit_super_expr(self, expr: expr.Super) -> object:
+        if self.current_class == ClassType.NONE:
+            self.error_handler(expr.keyword.line, "Can't use '👆' outside of a class.")
+        elif self.current_class != ClassType.SUBCLASS:
+            self.error_handler(
+                expr.keyword.line,
+                "Can't use '👆' in a class with no superclass."
+            )
+        self.resolve_local(expr, expr.keyword)
+
+    def visit_this_expr(self, expr: expr.This) -> object:
+        if self.current_class == ClassType.NONE:
+            self.error_handler(expr.keyword.line, "Can't use '🤖' outside of a class.")
+            return
+        self.resolve_local(expr, expr.keyword)
 
     def visit_grouping_expr(self, expr: expr.Grouping) -> object:
         self.resolve(expr.expression)

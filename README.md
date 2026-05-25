@@ -73,6 +73,7 @@ Each line of code starts with an emoji that indicates the type of statement. Eac
   - ⤴️ Continue statement: Used to skip to the next iteration of the loop
 - ⚙️ Function definition: Followed by the function name and parameters
   - ↩️ Return statement: Followed by the value to return
+- 📜 Class definition: Followed by the class name and members
   <!-- - 🧩 Import statement: Followed by a file name, it gets replaced by the contents of that file before execution -->
 
 Statements starting with any other character are going to be considered as expressions and be evaluated directly.
@@ -181,6 +182,22 @@ Here's an example of a function definition and call:
 
 👋 x 🫴 greetAndAsk🫸🔤John🔤🔸🔤Doe🔤🫷
 💬🫸🔤You entered: 🔤 x🫷
+```
+
+### Classes
+
+Classes are defined using the 📜 emoji. The class body is indented and can contain any valid statements. Any function statements directly in the class body will be added to the class as methods.
+
+Class instances are created by calling the class name, like a function. When an instance is created, the special method ✨ will be called.
+
+Inside of methods, the 🤖 emoji can be used to refer to the current instance.
+
+Classes can inherit methods from other classes (superclasses). Superclass names can be written between 🫸 and 🫷, separated by 🔸, after the class name in the definition. The first superclass can be accessed with the 👆 emoji in methods.
+
+```spamoji
+📜 MyClass 🫸superclass1🔸superclass2🫷
+    ⚙️ superclassName❗
+        ↩️ 👆👉name
 ```
 
 ## Built-ins

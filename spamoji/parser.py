@@ -71,6 +71,8 @@ class Parser:
 
     def declaration(self) -> Stmt | None:
         try:
+            if self.match(TokenType.CLASS):
+                return self.class_declaration()
             if self.match(TokenType.FUNCTION):
                 return self.function("function")
             if self.match(TokenType.VAR):
@@ -79,6 +81,28 @@ class Parser:
         except ParseError:
             self.synchronize()
             return None
+
+    def class_declaration(self) -> Stmt:
+        name = self.consume("Expect class name.", TokenType.IDENTIFIER)
+        superclasses = []
+        if self.match(TokenType.LEFT_PAREN):
+            if not self.check(TokenType.RIGHT_PAREN):
+                while True:
+                    self.consume("Expect superclass name.", TokenType.IDENTIFIER)
+                    superclasses.append(expr.Variable(self.previous()))
+                    if not self.match(TokenType.COMMA):
+                        break
+            self.consume("Expect '🫷' after superclass list.", TokenType.RIGHT_PAREN)
+        self.consume("Expect newline before class body.", TokenType.NEWLINE)
+        methods = []
+        if self.match(TokenType.INDENT):
+            block = self.block()
+            for statement in block:
+                if isinstance(statement, stmt.Function):
+                    methods.append(statement)
+                else:
+                    raise self.error(self.previous(), "Expect method in class body.")
+        return stmt.Class(name, superclasses, methods)
 
     def statement(self) -> Stmt:
         """Parses a statement."""
@@ -185,6 +209,9 @@ class Parser:
             if isinstance(expression, expr.Variable):
                 name = expression.name
                 return expr.Assign(name, value)
+            elif isinstance(expression, expr.Get):
+                get = typing.cast(expr.Get, expression)
+                return expr.Set(get.obj, get.name, value)
             self.error(assignment_operator, "Invalid assignment target.")
         return expression
 
@@ -334,6 +361,11 @@ class Parser:
                 break
             if self.match(TokenType.LEFT_PAREN):
                 expression = self.finish_call(expression)
+            elif self.match(TokenType.DOT):
+                name = self.consume(
+                    "Expect property name after '👉'.", TokenType.IDENTIFIER
+                )
+                expression = expr.Get(expression, name)
             else:
                 break
         return expression
@@ -357,6 +389,15 @@ class Parser:
             return Literal(None)
         if self.match(TokenType.NUMBER, TokenType.STRING):
             return Literal(self.previous().literal)
+        if self.match(TokenType.SUPER):
+            keyword = self.previous()
+            self.consume("Expect '👉' after 'super'.", TokenType.DOT)
+            method = self.consume(
+                "Expect superclass method name.", TokenType.IDENTIFIER
+            )
+            return expr.Super(keyword, method)
+        if self.match(TokenType.THIS):
+            return expr.This(self.previous())
         if self.match(TokenType.IDENTIFIER):
             return expr.Variable(self.previous())
         if self.match(TokenType.LEFT_PAREN):
