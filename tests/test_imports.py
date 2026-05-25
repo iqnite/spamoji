@@ -36,6 +36,21 @@ class TestImports(unittest.TestCase):
 
             self.assertEqual(imported_symbol, 1.0)
 
+    def test_imported_module_example_without_trailing_newline(self):
+        with TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            imported_file = temp_path / "lib.🍝"
+            main_file = temp_path / "main.🍝"
+
+            imported_file.write_text("👋 x 🫴 1\n", encoding="utf-8")
+            main_file.write_text("🧩 lib.🍝\n👋 y 🫴 lib👉x", encoding="utf-8")
+
+            app = Spamoji()
+            app.run(main_file.read_text(encoding="utf-8"), filename=str(main_file))
+
+            self.assertFalse(app.had_error)
+            self.assertFalse(app.had_runtime_error)
+
 
 if __name__ == "__main__":
     unittest.main()
