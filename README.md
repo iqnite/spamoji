@@ -192,6 +192,15 @@ Class instances are created by calling the class name, like a function. When an 
 
 Inside of methods, the 🤖 emoji can be used to refer to the current instance.
 
+```spamoji
+📜 MyClass
+    ⚙️ ✨🫸name🫷
+        🤖👉name 🫴 name
+
+    ⚙️ greet❗
+        💬🫸🔤Hello, I am 🔤🫸🤖👉name🫷🔤!🔤🫷
+```
+
 Classes can inherit methods from other classes (superclasses). Superclass names can be written between 🫸 and 🫷, separated by 🔸, after the class name in the definition. The first superclass can be accessed with the 👆 emoji in methods.
 
 ```spamoji
