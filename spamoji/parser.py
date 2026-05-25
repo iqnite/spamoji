@@ -100,6 +100,8 @@ class Parser:
             for statement in block:
                 if isinstance(statement, stmt.Function):
                     methods.append(statement)
+                else:
+                    raise self.error(self.previous(), "Expect method in class body.")
         return stmt.Class(name, superclasses, methods)
 
     def statement(self) -> Stmt:
