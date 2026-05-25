@@ -5,7 +5,7 @@ Contains the actual interpreter.
 import typing
 
 from spamoji import expr, stmt
-from spamoji.classes import SpamojiClass, SpamojiInstance
+from spamoji.classes import SpamojiClass, SpamojiInstance, SpamojiModule
 from spamoji.functions import (
     BreakLoop,
     ContinueLoop,
@@ -302,15 +302,22 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         obj = self.evaluate(expr.obj)
         if isinstance(obj, SpamojiInstance):
             return typing.cast(SpamojiInstance, obj).get(expr.name)
-        raise SpamojiRuntimeError(expr.name, "Only instances have properties.")
+        if isinstance(obj, SpamojiModule):
+            return typing.cast(SpamojiModule, obj).get(expr.name)
+        raise SpamojiRuntimeError(
+            expr.name, "Only instances and modules have properties."
+        )
 
     def visit_set_expr(self, expr: expr.Set) -> object:
         obj = self.evaluate(expr.obj)
-        if not isinstance(obj, SpamojiInstance):
-            raise SpamojiRuntimeError(expr.name, "Only instances have fields.")
         value = self.evaluate(expr.value)
-        typing.cast(SpamojiInstance, obj).set(expr.name, value)
-        return value
+        if isinstance(obj, SpamojiInstance):
+            typing.cast(SpamojiInstance, obj).set(expr.name, value)
+            return value
+        if isinstance(obj, SpamojiModule):
+            typing.cast(SpamojiModule, obj).set(expr.name, value)
+            return value
+        raise SpamojiRuntimeError(expr.name, "Only instances and modules have fields.")
 
     def visit_super_expr(self, expr: expr.Super) -> object:
         distance = self.locals.get(expr)
