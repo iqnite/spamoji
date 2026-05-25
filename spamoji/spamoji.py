@@ -97,6 +97,7 @@ class Spamoji:
                 module = self.load_module(import_target, current_file, loaded_modules)
                 if module is not None:
                     self.interpreter.globals.define(module.name, module)
+                    self.interpreter.locals.update(module.locals)
             else:
                 out_lines.append(raw_line)
 
@@ -167,7 +168,11 @@ class Spamoji:
             return None
 
         module_name = Path(real).stem
-        module = SpamojiModule(module_name, module_interpreter.globals)
+        module = SpamojiModule(
+            module_name,
+            module_interpreter.globals,
+            dict(module_interpreter.locals),
+        )
         loaded_modules[real] = module
         return module
 
