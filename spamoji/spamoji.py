@@ -41,7 +41,7 @@ class Spamoji:
 
     def repl(self):
         """Allows to enter commands and evaluate them interactively."""
-        print("🍝 Spamoji REPL v0.2.0-development")
+        print("🍝 Spamoji REPL v0.2.0")
         print(
             "Visit https://github.com/iqnite/spamoji#readme-ov-file for help. Press Ctrl+C to exit."
         )
