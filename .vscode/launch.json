@@ -36,12 +36,12 @@
       "args": "${workspaceFolder}/examples/recursion.🍝"
     },
     {
-      "name": "Classes example",
+      "name": "Imports and classes example",
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/main.py",
       "console": "integratedTerminal",
-      "args": "${workspaceFolder}/examples/classes.🍝"
+      "args": "${workspaceFolder}/examples/imports.🍝"
     },
     {
       "name": "Custom file",

@@ -250,7 +250,7 @@ class Parser:
     def check(self, *token_types: TokenType) -> bool:
         """Checks if the current token is of any of the given types."""
         if self.is_at_end():
-            return False
+            return TokenType.EOF in token_types
         return self.peek().token_type in token_types
 
     def advance(self) -> Token:

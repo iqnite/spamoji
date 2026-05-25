@@ -4,6 +4,8 @@ Contains the base construct for Spamoji classes
 
 from typing import TYPE_CHECKING
 
+from spamoji.environment import Environment
+from spamoji.expr import Expr
 from spamoji.functions import SpamojiCallable, SpamojiFunction
 from spamoji.helpers import SpamojiRuntimeError
 from spamoji.token import Token
@@ -66,3 +68,27 @@ class SpamojiInstance:
 
     def __str__(self) -> str:
         return f"<Instance of {self.my_class}>"
+
+
+class SpamojiModule:
+    def __init__(
+        self,
+        name: str,
+        environment: Environment,
+        locals: dict[Expr, int] | None = None,
+    ):
+        self.name = name
+        self.environment = environment
+        self.locals: dict[Expr, int] = locals or {}
+
+    def get(self, name: Token) -> object:
+        return self.environment.get(name)
+
+    def set(self, name: Token, value: object):
+        try:
+            self.environment.assign(name, value)
+        except SpamojiRuntimeError:
+            self.environment.define(name.lexeme, value)
+
+    def __str__(self) -> str:
+        return f"<🧩 {self.name}>"

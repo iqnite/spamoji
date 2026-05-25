@@ -74,7 +74,7 @@ Each line of code starts with an emoji that indicates the type of statement. Eac
 - ⚙️ Function definition: Followed by the function name and parameters
   - ↩️ Return statement: Followed by the value to return
 - 📜 Class definition: Followed by the class name and members
-  <!-- - 🧩 Import statement: Followed by a file name, it gets replaced by the contents of that file before execution -->
+- 🧩 Import statement: Followed by a file name, it loads that file as a module
 
 Statements starting with any other character are going to be considered as expressions and be evaluated directly.
 
@@ -207,6 +207,15 @@ Classes can inherit methods from other classes (superclasses). Superclass names 
 📜 MyClass 🫸superclass1🔸superclass2🫷
     ⚙️ superclassName❗
         ↩️ 👆👉name
+```
+
+### Imports
+
+The 🧩 emoji can be used to include code from another file in the current code:
+
+```spamoji
+🧩 robots.🍝
+👋 bot 🫴 robots👉Robot🫸name🫷
 ```
 
 ## Built-ins
