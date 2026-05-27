@@ -12,6 +12,7 @@ from spamoji.interpreter import Interpreter
 from spamoji.parser import Parser
 from spamoji.resolver import Resolver
 from spamoji.scanner import Scanner
+from spamoji.metadata import __version__
 
 
 class Spamoji:
@@ -41,7 +42,7 @@ class Spamoji:
 
     def repl(self):
         """Allows to enter commands and evaluate them interactively."""
-        print("🍝 Spamoji REPL v0.2.0")
+        print(f"🍝 Spamoji REPL v{__version__}")
         print(
             "Visit https://github.com/iqnite/spamoji#readme-ov-file for help. Press Ctrl+C to exit."
         )
