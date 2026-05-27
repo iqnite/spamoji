@@ -46,6 +46,7 @@ class TokenType(Enum):
     DOT = 53
     THIS = 54
     SUPER = 55
+    STRING_ESCAPE = 58
 
 
 class Token:

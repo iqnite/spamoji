@@ -129,9 +129,16 @@ class Scanner:
 
     def string(self):
         """Scans a string literal."""
-        while self.peek() != "🔤" and not self.is_at_end():
+        while not self.is_at_end():
             if self.peek() == "\n":
                 self.line += 1
+            if self.peek() == TokenType.STRING_ESCAPE and self.peek_next() in "🚧🔤":
+                # Skip 🔤s and 🚧s after escape characters (they'll be re-added later)
+                self.advance()
+                self.advance()
+                continue
+            if self.peek() == "🔤":
+                break
             self.advance()
 
         if self.is_at_end():
@@ -142,8 +149,12 @@ class Scanner:
         # The closing 🔤
         self.advance()
 
-        # Trim the surrounding 🔤s
-        value = self.source[self.start + 1 : self.current - 1]
+        # Trim the surrounding 🔤s and any double 🚧s
+        value = (
+            self.source[self.start + 1 : self.current - 1]
+            .replace("🚧🚧", "🚧")
+            .replace("🚧🔤", "🔤")
+        )
         self.add_token(TokenType.STRING, value)
 
     def number(self):
@@ -210,4 +221,5 @@ KEYWORDS = {
     "📜": TokenType.CLASS,
     "🤖": TokenType.THIS,
     "👆": TokenType.SUPER,
+    "🚧": TokenType.STRING_ESCAPE,
 }
