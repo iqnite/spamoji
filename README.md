@@ -104,6 +104,13 @@ The language supports basic operators for logical and arithmetic operations. The
 - 🤲: Logical OR
 - 🙅: Logical NOT
 
+Operators can also be combined with variable assignment to perform an operation and assign the result to the variable in one step:
+
+```spamoji
+👋 x 🫴 5
+x ➕🫴 3  🗒️ -> x is 8 now
+```
+
 ### Strings
 
 Strings are sequences of characters enclosed in 🔤 on each side. They can contain any characters, including emojis. Strings can be used in variable assignments, printed to the console, and concatenated using the ➕ operator.
