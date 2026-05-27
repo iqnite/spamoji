@@ -289,7 +289,12 @@ class Parser:
 
     def comparison(self) -> Expr:
         expr = self.term()
-        while self.match(TokenType.GREATER_THAN, TokenType.LESS_THAN):
+        while self.match(
+            TokenType.GREATER_THAN,
+            TokenType.LESS_THAN,
+            TokenType.GREATER_THAN_OR_EQUAL,
+            TokenType.LESS_THAN_OR_EQUAL,
+        ):
             operator = self.previous()
             right = self.term()
             expr = Binary(expr, operator, right)

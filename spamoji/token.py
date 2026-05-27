@@ -19,6 +19,8 @@ class TokenType(Enum):
     EQUALS = 12
     NOT_EQUALS = 13
     GREATER_THAN = 14
+    GREATER_THAN_OR_EQUAL = 56
+    LESS_THAN_OR_EQUAL = 57
     LESS_THAN = 15
     IF = 16
     IFTRUE = 17
