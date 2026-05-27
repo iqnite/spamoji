@@ -9,6 +9,7 @@ from spamoji import expr
 from spamoji import stmt
 from spamoji.parser import Parser
 from spamoji.scanner import Scanner
+from spamoji.token import TokenType
 
 
 class TestParser(unittest.TestCase):
@@ -56,6 +57,24 @@ class TestParser(unittest.TestCase):
         assert isinstance(ast[0].expression, expr.Binary)
         self.assertIsInstance(ast[0].expression.left, expr.Literal)
         self.assertIsInstance(ast[0].expression.right, expr.Grouping)
+
+    def test_compound_assignment_parses_with_operator(self):
+        source = "x 🫴➕ 1\n"
+        tokens = Scanner(source).scan_tokens()
+
+        ast = Parser(tokens).parse()
+
+        self.assertEqual(len(ast), 1)
+        self.assertIsInstance(ast[0], stmt.Expression)
+        assert isinstance(ast[0], stmt.Expression)
+        self.assertIsInstance(ast[0].expression, expr.Assign)
+        assert isinstance(ast[0].expression, expr.Assign)
+        self.assertEqual(ast[0].expression.name.lexeme, "x")
+        self.assertIsNotNone(ast[0].expression.operator)
+        assert ast[0].expression.operator is not None
+        self.assertEqual(ast[0].expression.operator.token_type, TokenType.PLUS)
+
+        self.assertIsInstance(ast[0].expression.value, expr.Literal)
 
 
 if __name__ == "__main__":

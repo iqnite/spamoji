@@ -45,9 +45,10 @@ class Visitor(ABC):
 class Assign(Expr):
     """Represents a assign expression."""
 
-    def __init__(self, name: Token, value: Expr):
+    def __init__(self, name: Token, value: Expr, operator: Token | None = None):
         self.name = name
         self.value = value
+        self.operator = operator
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_assign_expr(self)
@@ -91,10 +92,11 @@ class Get(Expr):
 class Set(Expr):
     """Represents a set expression."""
 
-    def __init__(self, obj: Expr, name: Token, value: Expr):
+    def __init__(self, obj: Expr, name: Token, value: Expr, operator: Token | None = None):
         self.obj = obj
         self.name = name
         self.value = value
+        self.operator = operator
 
     def accept(self, visitor: Visitor) -> object:
         return visitor.visit_set_expr(self)

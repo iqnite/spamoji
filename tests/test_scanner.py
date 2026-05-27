@@ -19,6 +19,17 @@ class TestScanner(unittest.TestCase):
 
         self.assertIn(TokenType.INDENT, token_types)
 
+    def test_compound_assignment_tokens_are_scanned(self):
+        source = "👋 x 🫴➕ 1\n👋 y 🫴➖ 2\n👋 z 🫴✖️ 3\n👋 w 🫴➗ 4\n"
+        tokens = Scanner(source).scan_tokens()
+
+        token_types = [token.token_type for token in tokens]
+
+        self.assertIn(TokenType.PLUS_ASSIGNMENT, token_types)
+        self.assertIn(TokenType.MINUS_ASSIGNMENT, token_types)
+        self.assertIn(TokenType.MULTIPLY_ASSIGNMENT, token_types)
+        self.assertIn(TokenType.DIVIDE_ASSIGNMENT, token_types)
+
 
 if __name__ == "__main__":
     unittest.main()
