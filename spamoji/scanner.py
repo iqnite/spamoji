@@ -190,6 +190,8 @@ KEYWORDS = {
     "🆚": TokenType.NOT_EQUALS,
     "🤜": TokenType.GREATER_THAN,
     "🤛": TokenType.LESS_THAN,
+    "🤜🟰": TokenType.GREATER_THAN_OR_EQUAL,
+    "🤛🟰": TokenType.LESS_THAN_OR_EQUAL,
     "🤔": TokenType.IF,
     "👍": TokenType.IFTRUE,
     "👎": TokenType.ELSE,

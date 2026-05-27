@@ -98,6 +98,8 @@ The language supports basic operators for logical and arithmetic operations. The
 - 🆚: Not equal
 - 🤜: Greater than
 - 🤛: Less than
+- 🤜🟰: Greater than or equal
+- 🤛🟰: Less than or equal
 - 🤝: Logical AND
 - 🤲: Logical OR
 - 🙅: Logical NOT
