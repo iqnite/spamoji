@@ -132,8 +132,8 @@ class Scanner:
         while not self.is_at_end():
             if self.peek() == "\n":
                 self.line += 1
-            if self.peek() == TokenType.STRING_ESCAPE and self.peek_next() in "🚧🔤":
-                # Skip 🔤s and 🚧s after escape characters (they'll be re-added later)
+            if self.peek() == "🚧" and self.peek_next() in "🚧🔤":
+                # Skip 🔤s and 🚧s after escape characters (they'll be handled later)
                 self.advance()
                 self.advance()
                 continue
@@ -221,5 +221,4 @@ KEYWORDS = {
     "📜": TokenType.CLASS,
     "🤖": TokenType.THIS,
     "👆": TokenType.SUPER,
-    "🚧": TokenType.STRING_ESCAPE,
 }
