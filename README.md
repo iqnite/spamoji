@@ -114,6 +114,8 @@ Values directly before or after a string will also be concatenated with that str
 🔤Hello 🔤0🔤 world🔤  🗒️ -> Hello 0 world
 ```
 
+To use the `🔤` character in a string, write `🚧🔤` instead. To use the `🚧` character, write `🚧🚧` instead.
+
 ### Conditions
 
 The 🤔 statement allows to run different code depending on a certain condition:
