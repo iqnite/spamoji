@@ -271,8 +271,10 @@ class Interpreter(expr.Visitor, stmt.Visitor):
                 self.check_number_operands(expr.operator, left, right)
                 return left_f < right_f
             case TokenType.GREATER_THAN_OR_EQUAL:
+                self.check_number_operands(expr.operator, left, right)
                 return left_f >= right_f
             case TokenType.LESS_THAN_OR_EQUAL:
+                self.check_number_operands(expr.operator, left, right)
                 return left_f <= right_f
             case TokenType.EQUALS:
                 return left == right
