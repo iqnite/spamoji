@@ -198,7 +198,6 @@ KEYWORDS = {
     "✅": TokenType.TRUE,
     "❌": TokenType.FALSE,
     "👋": TokenType.VAR,
-    # "🧩": TokenType.IMPORT,
     "🫴": TokenType.ASSIGNMENT,
     "🤝": TokenType.AND,
     "🤲": TokenType.OR,
