@@ -104,11 +104,11 @@ The language supports basic operators for logical and arithmetic operations. The
 - 🤲: Logical OR
 - 🙅: Logical NOT
 
-Operators can also be combined with variable assignment to perform an operation and assign the result to the variable in one step:
+Operators can also be combined with variable assignment to perform an operation and assign the result to the variable in one step. Supported compound forms are `🫴➕`, `🫴➖`, `🫴✖️`, and `🫴➗`:
 
 ```spamoji
 👋 x 🫴 5
-x ➕🫴 3  🗒️ -> x is 8 now
+x 🫴➕ 3  🗒️ -> x is 8 now
 ```
 
 ### Strings
