@@ -223,13 +223,24 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         return value
 
     def visit_assign_expr(self, expr: expr.Assign) -> object:
-        value = self.evaluate(expr.value)
+        if expr.operator is None:
+            value = self.evaluate(expr.value)
+        else:
+            current_value = self.look_up_variable(expr.name, expr)
+            value = self.apply_assignment_operator(
+                expr.operator, current_value, self.evaluate(expr.value)
+            )
         distance = self.locals.get(expr)
         if distance is not None:
             self.environment.assign_at(distance, expr.name, value)
         else:
             self.globals.assign(expr.name, value)
         return value
+
+    def apply_assignment_operator(
+        self, operator: Token, left: object, right: object
+    ) -> object:
+        return self.visit_binary_expr(Binary(Literal(left), operator, Literal(right)))
 
     def visit_if_expr(self, expr: expr.If) -> object:
         return (
@@ -316,11 +327,24 @@ class Interpreter(expr.Visitor, stmt.Visitor):
 
     def visit_set_expr(self, expr: expr.Set) -> object:
         obj = self.evaluate(expr.obj)
-        value = self.evaluate(expr.value)
         if isinstance(obj, SpamojiInstance):
+            if expr.operator is None:
+                value = self.evaluate(expr.value)
+            else:
+                current_value = typing.cast(SpamojiInstance, obj).get(expr.name)
+                value = self.apply_assignment_operator(
+                    expr.operator, current_value, self.evaluate(expr.value)
+                )
             typing.cast(SpamojiInstance, obj).set(expr.name, value)
             return value
         if isinstance(obj, SpamojiModule):
+            if expr.operator is None:
+                value = self.evaluate(expr.value)
+            else:
+                current_value = typing.cast(SpamojiModule, obj).get(expr.name)
+                value = self.apply_assignment_operator(
+                    expr.operator, current_value, self.evaluate(expr.value)
+                )
             typing.cast(SpamojiModule, obj).set(expr.name, value)
             return value
         raise SpamojiRuntimeError(expr.name, "Only instances and modules have fields.")

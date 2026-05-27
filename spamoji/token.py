@@ -41,11 +41,15 @@ class TokenType(Enum):
     AND = 47
     INDENT = 48
     ASSIGNMENT = 49
+    PLUS_ASSIGNMENT = 50
     COMMA = 51
     CLASS = 52
     DOT = 53
     THIS = 54
     SUPER = 55
+    MINUS_ASSIGNMENT = 58
+    MULTIPLY_ASSIGNMENT = 59
+    DIVIDE_ASSIGNMENT = 60
 
 
 class Token:

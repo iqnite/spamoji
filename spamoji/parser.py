@@ -203,17 +203,37 @@ class Parser:
 
     def assignment(self) -> Expr:
         expression = self.ternary()
-        if self.match(TokenType.ASSIGNMENT):
+        if self.match(
+            TokenType.ASSIGNMENT,
+            TokenType.PLUS_ASSIGNMENT,
+            TokenType.MINUS_ASSIGNMENT,
+            TokenType.MULTIPLY_ASSIGNMENT,
+            TokenType.DIVIDE_ASSIGNMENT,
+        ):
             assignment_operator = self.previous()
             value = self.assignment()
+            compound_operator = self.compound_assignment_operator(assignment_operator)
             if isinstance(expression, expr.Variable):
                 name = expression.name
-                return expr.Assign(name, value)
+                return expr.Assign(name, value, compound_operator)
             elif isinstance(expression, expr.Get):
                 get = typing.cast(expr.Get, expression)
-                return expr.Set(get.obj, get.name, value)
+                return expr.Set(get.obj, get.name, value, compound_operator)
             self.error(assignment_operator, "Invalid assignment target.")
         return expression
+
+    def compound_assignment_operator(self, token: Token) -> Token | None:
+        match token.token_type:
+            case TokenType.PLUS_ASSIGNMENT:
+                return Token(TokenType.PLUS, "➕", None, token.line)
+            case TokenType.MINUS_ASSIGNMENT:
+                return Token(TokenType.MINUS, "➖", None, token.line)
+            case TokenType.MULTIPLY_ASSIGNMENT:
+                return Token(TokenType.MULTIPLY, "✖️", None, token.line)
+            case TokenType.DIVIDE_ASSIGNMENT:
+                return Token(TokenType.DIVIDE, "➗", None, token.line)
+            case _:
+                return None
 
     def ternary(self) -> Expr:
         if self.match(TokenType.IF):

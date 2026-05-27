@@ -15,11 +15,11 @@ def main():
         output_dir,
         "Expr",
         [
-            "Assign   @ name: Token, value: Expr",
+            "Assign   @ name: Token, value: Expr, operator: Token | None = None",
             "Binary   @ left: Expr, operator: Token, right: Expr",
             "Call     @ callee: Expr, paren: Token, arguments: list[Expr]",
             "Get      @ obj: Expr, name: Token",
-            "Set      @ obj: Expr, name: Token, value: Expr",
+            "Set      @ obj: Expr, name: Token, value: Expr, operator: Token | None = None",
             "This     @ keyword: Token",
             "Super    @ keyword: Token, method: Token",
             "Logical  @ left: Expr, operator: Token, right: Expr",
