@@ -53,7 +53,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         for func in module.__dict__.values():
             if not hasattr(func, "_spamoji_callable"):
                 continue
-            self.globals.define(
+            self.environment.define(
                 getattr(func, "_spamoji_emoji"), getattr(func, "_spamoji_callable")
             )
 
