@@ -16,6 +16,8 @@ from spamoji.metadata import __version__
 
 
 class Spamoji:
+    """Main class for the Spamoji interpreter."""
+
     def __init__(self):
         self.interpreter = Interpreter()
         self.had_error = False
@@ -192,6 +194,9 @@ class Spamoji:
 
 
 def main():
+    """Run the spamoji interpreter.
+    If called as a script, it will run the REPL or a file passed as an argument
+    """
     Spamoji().main()
 
 

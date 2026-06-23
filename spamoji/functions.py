@@ -66,12 +66,27 @@ class ContinueLoop(RuntimeError):
 
 
 def spamoji_function(emoji: str | None = None) -> typing.Callable:
+    """
+    Decorator to mark a function as a Spamoji native function.
+    The function will be registered as a native function in the Spamoji interpreter.
+    If the emoji parameter is provided, it will be used as the function's emoji name.
+
+    If the function has a parameter named "_interpreter",
+    it will be passed the current interpreter instance when called.
+
+    Example usage:
+    @spamoji_function("💬")
+    def print_function(interpreter, arguments):
+        pass
+    """
+
     def decorator(func: typing.Callable) -> typing.Callable:
         parameters = inspect.signature(func).parameters
 
         def call(interpreter: "Interpreter", arguments: list[object]) -> object:
             if "_interpreter" in parameters:
-                arguments.insert(0, interpreter)
+                interpreter_arg_index = list(parameters).index("_interpreter")
+                arguments.insert(interpreter_arg_index, interpreter)
             return func(*arguments)
 
         spamoji_callable = SpamojiCallable()
