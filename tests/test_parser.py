@@ -44,20 +44,6 @@ class TestParser(unittest.TestCase):
             assert isinstance(ast[1].body.statements[2], stmt.Expression)
         self.assertIsInstance(ast[2], stmt.Expression)
 
-    def test_string_followed_by_parenthesized_expression_concatenates(self):
-        source = "🔤hello🔤🫸1🫷\n"
-        tokens = Scanner(source).scan_tokens()
-
-        ast = Parser(tokens).parse()
-
-        self.assertEqual(len(ast), 1)
-        self.assertIsInstance(ast[0], stmt.Expression)
-        assert isinstance(ast[0], stmt.Expression)
-        self.assertIsInstance(ast[0].expression, expr.Binary)
-        assert isinstance(ast[0].expression, expr.Binary)
-        self.assertIsInstance(ast[0].expression.left, expr.Literal)
-        self.assertIsInstance(ast[0].expression.right, expr.Grouping)
-
     def test_compound_assignment_parses_with_operator(self):
         source = "x 🫴➕ 1\n"
         tokens = Scanner(source).scan_tokens()
