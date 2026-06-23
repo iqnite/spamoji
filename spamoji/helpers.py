@@ -58,4 +58,4 @@ class SpamojiRuntimeError(RuntimeError):
 class SpamojiValueError: ...
 
 
-spamojiValueError = SpamojiValueError()
+spamoji_value_error = SpamojiValueError()

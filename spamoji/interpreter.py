@@ -4,8 +4,10 @@ Contains the actual interpreter.
 
 import typing
 
-from spamoji import expr, stmt
+from spamoji import expr, natives, stmt
 from spamoji.classes import SpamojiClass, SpamojiInstance, SpamojiModule
+from spamoji.environment import Environment
+from spamoji.expr import Binary, Expr, Grouping, Literal, Unary
 from spamoji.functions import (
     BreakLoop,
     ContinueLoop,
@@ -13,23 +15,7 @@ from spamoji.functions import (
     SpamojiCallable,
     SpamojiFunction,
 )
-from spamoji.environment import Environment
-from spamoji.expr import Binary, Expr, Grouping, Literal, Unary
-from spamoji.helpers import (
-    SpamojiRuntimeError,
-    spamojiValueError,
-)
-from spamoji.natives import (
-    Clock,
-    ConvertToNumber,
-    GetUserInput,
-    Print,
-    PrintNoNewline,
-    PythonCall,
-    Sleep,
-    StopProgram,
-    Randint,
-)
+from spamoji.helpers import SpamojiRuntimeError, spamoji_value_error
 from spamoji.token import Token, TokenType
 
 
@@ -43,7 +29,8 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         self.environment = self.globals
         self.print_expressions = False
         self.prints = []
-        self.define_natives()
+        self.define_natives(natives)
+        self.globals.define("⚠️", spamoji_value_error)
 
     def interpret(
         self,
@@ -62,17 +49,13 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             if error_handler:
                 error_handler(exc)
 
-    def define_natives(self):
-        self.globals.define("⚠️", spamojiValueError)
-        self.globals.define("🐍", PythonCall())
-        self.globals.define("💬", Print())
-        self.globals.define("💭", PrintNoNewline())
-        self.globals.define("⌨️", GetUserInput())
-        self.globals.define("🔢", ConvertToNumber())
-        self.globals.define("🕰️", Clock())
-        self.globals.define("⏳", Sleep())
-        self.globals.define("🛑", StopProgram())
-        self.globals.define("🎲", Randint())
+    def define_natives(self, module):
+        for func in module.__dict__.values():
+            if not hasattr(func, "_spamoji_callable"):
+                continue
+            self.globals.define(
+                getattr(func, "_spamoji_emoji"), getattr(func, "_spamoji_callable")
+            )
 
     def visit_literal_expr(self, expr: Literal) -> object:
         return expr.value
@@ -105,7 +88,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
     def is_truthy(self, obj: object) -> bool:
         if obj is None:
             return False
-        if obj is spamojiValueError:
+        if obj is spamoji_value_error:
             return False
         if isinstance(obj, bool):
             return obj
@@ -120,7 +103,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
                 return text[:-2]
         if isinstance(obj, bool):
             return "✅" if obj else "❌"
-        if obj is spamojiValueError:
+        if obj is spamoji_value_error:
             return "⚠️"
         return text
 
@@ -266,7 +249,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
                 try:
                     return left_f / right_f
                 except ZeroDivisionError:
-                    return spamojiValueError
+                    return spamoji_value_error
             case TokenType.PLUS:
                 if isinstance(left, float) and isinstance(right, float):
                     return left + right

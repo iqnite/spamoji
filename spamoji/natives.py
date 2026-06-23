@@ -7,86 +7,58 @@ import sys
 import time
 import typing
 
-from spamoji.functions import SpamojiCallable
-from spamoji.helpers import SpamojiValueError, spamojiValueError
+from spamoji.functions import spamoji_function
+from spamoji.helpers import SpamojiValueError, spamoji_value_error
 
 if typing.TYPE_CHECKING:
     from spamoji.interpreter import Interpreter
 
 
-class PythonCall(SpamojiCallable):
-    def call(self, interpreter: "Interpreter", arguments: list[object]) -> object:
-        return eval(str(arguments[0]))
-
-    def arity(self) -> int:
-        return 1
+@spamoji_function("🐍")
+def python_eval(code: str) -> object:
+    return eval(code)
 
 
-class Print(SpamojiCallable):
-    def call(self, interpreter: "Interpreter", arguments: list[object]) -> object:
-        print(interpreter.stringify(arguments[0]))
-        return arguments[0]
-
-    def arity(self) -> int:
-        return 1
+@spamoji_function("💬")
+def spamoji_print(_interpreter: "Interpreter", obj: object) -> object:
+    print(_interpreter.stringify(obj))
+    return obj
 
 
-class PrintNoNewline(Print):
-    def call(self, interpreter: "Interpreter", arguments: list[object]) -> object:
-        print(interpreter.stringify(arguments[0]), end="")
-        return arguments[0]
+@spamoji_function("💭")
+def spamoji_print_no_newline(_interpreter: "Interpreter", obj: object) -> object:
+    print(_interpreter.stringify(obj), end="")
+    return obj
 
 
-class GetUserInput(SpamojiCallable):
-    def call(self, interpreter: "Interpreter", arguments: list[object]) -> str:
-        return input()
-
-    def arity(self) -> int:
-        return 0
+@spamoji_function("⌨️")
+def get_user_input() -> str:
+    return input()
 
 
-class ConvertToNumber(SpamojiCallable):
-    def call(
-        self, interpreter: "Interpreter", arguments: list[object]
-    ) -> float | SpamojiValueError:
-        try:
-            return float(typing.cast(float, arguments[0]))
-        except ValueError:
-            return spamojiValueError
-
-    def arity(self) -> int:
-        return 1
+@spamoji_function("🔢")
+def convert_to_float(obj: object) -> float | SpamojiValueError:
+    try:
+        return float(typing.cast(float, obj))
+    except ValueError:
+        return spamoji_value_error
 
 
-class Clock(SpamojiCallable):
-    def call(self, interpreter: "Interpreter", arguments: list[object]) -> float:
-        return time.time()
-
-    def arity(self) -> int:
-        return 0
+@spamoji_function("🕰️")
+def get_time() -> float:
+    return time.time()
 
 
-class Sleep(SpamojiCallable):
-    def call(self, interpreter: "Interpreter", arguments: list[object]) -> None:
-        time.sleep(float(typing.cast(float, arguments[0])))
-
-    def arity(self) -> int:
-        return 1
+@spamoji_function("⏳")
+def sleep(seconds: float) -> None:
+    time.sleep(seconds)
 
 
-class StopProgram(SpamojiCallable):
-    def call(self, interpreter: "Interpreter", arguments: list[object]) -> float:
-        sys.exit()
-
-    def arity(self) -> int:
-        return 0
+@spamoji_function("🛑")
+def stop_program() -> float:
+    sys.exit()
 
 
-class Randint(SpamojiCallable):
-    def call(self, interpreter: "Interpreter", arguments: list[object]) -> object:
-        return random.randint(
-            int(typing.cast(int, arguments[0])), int(typing.cast(int, arguments[1]))
-        )
-
-    def arity(self) -> int:
-        return 2
+@spamoji_function("🎲")
+def random_int(min: int, max: int) -> int:
+    return random.randint(min, max)
