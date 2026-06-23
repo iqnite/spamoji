@@ -189,6 +189,13 @@ Here's an example of a function definition and call:
 💬🫸🔤You entered: 🔤 ➕ x🫷
 ```
 
+In some cases, functions can be called without parentheses:
+
+```spamoji
+💬 🔤Hello!🔤
+💬 1 ➕ 2
+```
+
 ### Classes
 
 Classes are defined using the 📜 emoji. The class body is indented and can contain any valid statements. Any function statements directly in the class body will be added to the class as methods.
