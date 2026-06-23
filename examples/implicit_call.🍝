@@ -1,0 +1,35 @@
+📜 Robot
+    ⚙️ ✨🫸name🫷
+        🤖👉name 🫴 name
+
+    ⚙️ greet❗
+        💬 🔤Beep boop! I am 🔤 ➕ 🤖👉name ➕ 🔤!🔤
+    
+    ⚙️ greetOther🫸other🫷
+        💬 🔤Hello 🔤 ➕ other👉name ➕ 🔤! I am 🔤 ➕ 🤖👉name ➕ 🔤!🔤
+
+
+📜 ShootingRobot 🫸Robot🫷
+    ⚙️ ✨🫸name🔸maxPower🫷
+        👆👉✨ name
+        🤖👉maxPower 🫴 maxPower
+
+    ⚙️ shoot🫸power🫷
+        🤔 power 🤜 🤖👉maxPower
+        👍
+            💬 🔤Cannot shoot more than 🔤 ➕ power ➕ 🔤 times!🔤
+            ↩️
+        👋 i 🫴 0
+        🔃 i 🤛 power
+            💭🫸🔤PEW 🔤🫷
+            ⏳🫸0.1🫷
+            i 🫴 i ➕ 1
+        💬 🔤🔤
+
+👋 clanker 🫴 Robot🫸🔤Clanker🔤🫷
+👋 terminator 🫴 ShootingRobot🫸🔤💀 Terminator🔤🔸10🫷
+
+clanker👉greet❗
+terminator👉greetOther🫸clanker🫷
+terminator👉shoot🫸3🫷
+terminator👉shoot🫸100🫷
