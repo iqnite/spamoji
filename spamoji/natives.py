@@ -86,5 +86,5 @@ def stop_program() -> float:
 
 
 @spamoji_function("🎲")
-def random_int(min: int, max: int) -> int:
-    return random.randint(min, max)
+def random_int(min: int | float, max: int | float) -> int:
+    return random.randint(int(min), int(max))
