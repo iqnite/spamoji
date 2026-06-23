@@ -44,6 +44,14 @@
       "args": "${workspaceFolder}/examples/imports.🍝"
     },
     {
+      "name": "Sine function example",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": "${workspaceFolder}/examples/sine.🍝"
+    },
+    {
       "name": "Custom file",
       "type": "debugpy",
       "request": "launch",
@@ -51,7 +59,7 @@
       "console": "integratedTerminal",
       "args": "${command:pickArgs}"
     },
-        {
+    {
       "name": "Generate AST",
       "type": "debugpy",
       "request": "launch",
