@@ -181,7 +181,9 @@ class Parser:
 
     def expression_statement(self) -> Stmt:
         expr = self.expression()
-        self.consume("Expect 1 statement per line", TokenType.NEWLINE, TokenType.EOF)
+        if not self.match(TokenType.NEWLINE, TokenType.EOF):
+            # If there are still tokens left, attempt to call the expression as a function
+            expr = self.finish_call(expr, implicit=True)
         return stmt.Expression(expr)
 
     def function(self, kind: str):
@@ -328,18 +330,8 @@ class Parser:
                 right = self.factor()
                 expr = Binary(expr, operator, right)
                 continue
-            if self.can_implicitly_concatenate(expr):
-                operator = Token(TokenType.PLUS, "➕", None, self.peek().line)
-                right = self.factor()
-                expr = Binary(expr, operator, right)
-                continue
             break
         return expr
-
-    def can_implicitly_concatenate(self, expr: Expr) -> bool:
-        if self.is_string_expr(expr):
-            return self.starts_value(self.peek().token_type)
-        return self.peek().token_type == TokenType.STRING
 
     def is_string_expr(self, expr: Expr) -> bool:
         if isinstance(expr, Literal):
@@ -381,9 +373,6 @@ class Parser:
     def call(self) -> Expr:
         expression = self.primary()
         while True:
-            if self.is_string_expr(expression) and self.check(TokenType.LEFT_PAREN):
-                # Ignore implicit concatenation
-                break
             if self.match(TokenType.LEFT_PAREN):
                 expression = self.finish_call(expression)
             elif self.match(TokenType.DOT):
@@ -395,14 +384,17 @@ class Parser:
                 break
         return expression
 
-    def finish_call(self, callee: Expr) -> Expr:
+    def finish_call(self, callee: Expr, implicit: bool = False) -> Expr:
         arguments = []
         if not self.check(TokenType.RIGHT_PAREN):
             while True:
                 arguments.append(self.expression())
-                if not self.match(TokenType.COMMA):
+                if implicit or not self.match(TokenType.COMMA):
                     break
-        paren = self.consume("Expect '🫷' after arguments.", TokenType.RIGHT_PAREN)
+        if implicit:
+            paren = self.previous()
+        else:
+            paren = self.consume("Expect '🫷' after arguments.", TokenType.RIGHT_PAREN)
         return expr.Call(callee, paren, arguments)
 
     def primary(self) -> Expr:

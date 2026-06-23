@@ -44,6 +44,14 @@
       "args": "${workspaceFolder}/examples/imports.🍝"
     },
     {
+      "name": "Implicit call example",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": "${workspaceFolder}/examples/implicit_call.🍝"
+    },
+    {
       "name": "Sine function example",
       "type": "debugpy",
       "request": "launch",

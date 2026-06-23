@@ -13,12 +13,12 @@
     😀 🫴 🔢🫸⌨️❗🫷
     🤔 😀 🟰 ⚠️
     👍 💬🫸🔤Invalid input. Please enter a number.🔤🫷
-    👎 🤔 🐍🫸🔤int(🔤😀🔤)🔤🫷 🆚 😀
+    👎 🤔 🐍🫸🔤int(🔤 ➕ 😀 ➕ 🔤)🔤🫷 🆚 😀
     👍
         💬🫸🔤Cannot calculate for floating point numbers. Please enter an integer.🔤🫷
     👎 ⛔
 
 👋 😀❕ 🫴 🔢❕🫸😀🫷
 
-💬🫸🔤The factorial of 🔤😀🔤 is 🔤😀❕🫷
+💬🫸🔤The factorial of 🔤 ➕ 😀 ➕ 🔤 is 🔤 ➕ 😀❕🫷
 💬🫸🤔 😀❕ 🤜 1000 👍 🔤That's a very large number!🔤 👎 🔤🔤🫷
