@@ -3,6 +3,8 @@ Contains native functions.
 """
 
 import importlib
+import importlib.util
+import pathlib
 import random
 import sys
 import time
@@ -21,9 +23,26 @@ def python_eval(code: str) -> object:
 
 
 @spamoji_function("🐍🧩")
-def python_import(_interpreter: "Interpreter", module_name: str) -> object:
-    module = importlib.import_module(module_name)
-    _interpreter.define_natives(module)
+def python_import(_interpreter: "Interpreter", module_path: str) -> object:
+    path = pathlib.Path(module_path).resolve()
+    added_to_sys_path = False
+    module_name = path.stem
+    cwd = str(pathlib.Path.cwd())
+    if cwd not in sys.path:
+        sys.path.insert(0, cwd)
+        added_to_sys_path = True
+    try:
+        spec = importlib.util.spec_from_file_location(module_name, str(path))
+        if spec is None or spec.loader is None:
+            raise ImportError(f"Could not load the module from {path}")
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[module_name] = module
+        spec.loader.exec_module(module)
+        _interpreter.define_natives(module)
+        return module
+    finally:
+        if added_to_sys_path:
+            sys.path.remove(cwd)
 
 
 @spamoji_function("💬")
