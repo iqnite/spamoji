@@ -2,12 +2,13 @@
 Contains classes for functions and callables.
 """
 
-from typing import TYPE_CHECKING
+import inspect
+import typing
 
 from spamoji import stmt
 from spamoji.environment import Environment
 
-if TYPE_CHECKING:
+if typing.TYPE_CHECKING:
     from spamoji.classes import SpamojiInstance
     from spamoji.interpreter import Interpreter
 
@@ -62,3 +63,39 @@ class BreakLoop(RuntimeError):
 
 class ContinueLoop(RuntimeError):
     pass
+
+
+def spamoji_function(emoji: str | None = None) -> typing.Callable:
+    """
+    Decorator to mark a function as a Spamoji native function.
+    The function will be registered as a native function in the Spamoji interpreter.
+    If the emoji parameter is provided, it will be used as the function's emoji name.
+
+    If the function has a parameter named "_interpreter",
+    it will be passed the current interpreter instance when called.
+
+    Example usage:
+    @spamoji_function("💬")
+    def print_function(interpreter, arguments):
+        pass
+    """
+
+    def decorator(func: typing.Callable) -> typing.Callable:
+        parameters = inspect.signature(func).parameters
+
+        def call(interpreter: "Interpreter", arguments: list[object]) -> object:
+            if "_interpreter" in parameters:
+                interpreter_arg_index = list(parameters).index("_interpreter")
+                arguments.insert(interpreter_arg_index, interpreter)
+            return func(*arguments)
+
+        spamoji_callable = SpamojiCallable()
+        spamoji_callable.call = call
+        spamoji_callable.arity = lambda: len(parameters) - int(
+            "_interpreter" in parameters
+        )
+        setattr(func, "_spamoji_emoji", func.__name__ if emoji is None else emoji)
+        setattr(func, "_spamoji_callable", spamoji_callable)
+        return func
+
+    return decorator

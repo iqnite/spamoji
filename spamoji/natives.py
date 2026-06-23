@@ -2,91 +2,89 @@
 Contains native functions.
 """
 
+import importlib
+import importlib.util
+import pathlib
 import random
 import sys
 import time
 import typing
 
-from spamoji.functions import SpamojiCallable
-from spamoji.helpers import SpamojiValueError, spamojiValueError
+from spamoji.functions import spamoji_function
+from spamoji.helpers import SpamojiValueError, spamoji_value_error
 
 if typing.TYPE_CHECKING:
     from spamoji.interpreter import Interpreter
 
 
-class PythonCall(SpamojiCallable):
-    def call(self, interpreter: "Interpreter", arguments: list[object]) -> object:
-        return eval(str(arguments[0]))
-
-    def arity(self) -> int:
-        return 1
+@spamoji_function("🐍")
+def python_eval(code: str) -> object:
+    return eval(code)
 
 
-class Print(SpamojiCallable):
-    def call(self, interpreter: "Interpreter", arguments: list[object]) -> object:
-        print(interpreter.stringify(arguments[0]))
-        return arguments[0]
-
-    def arity(self) -> int:
-        return 1
-
-
-class PrintNoNewline(Print):
-    def call(self, interpreter: "Interpreter", arguments: list[object]) -> object:
-        print(interpreter.stringify(arguments[0]), end="")
-        return arguments[0]
-
-
-class GetUserInput(SpamojiCallable):
-    def call(self, interpreter: "Interpreter", arguments: list[object]) -> str:
-        return input()
-
-    def arity(self) -> int:
-        return 0
-
-
-class ConvertToNumber(SpamojiCallable):
-    def call(
-        self, interpreter: "Interpreter", arguments: list[object]
-    ) -> float | SpamojiValueError:
-        try:
-            return float(typing.cast(float, arguments[0]))
-        except ValueError:
-            return spamojiValueError
-
-    def arity(self) -> int:
-        return 1
+@spamoji_function("🐍🧩")
+def python_import(_interpreter: "Interpreter", module_path: str) -> object:
+    path = pathlib.Path(module_path).resolve()
+    added_to_sys_path = False
+    module_name = path.stem
+    cwd = str(pathlib.Path.cwd())
+    if cwd not in sys.path:
+        sys.path.insert(0, cwd)
+        added_to_sys_path = True
+    try:
+        spec = importlib.util.spec_from_file_location(module_name, str(path))
+        if spec is None or spec.loader is None:
+            raise ImportError(f"Could not load the module from {path}")
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[module_name] = module
+        spec.loader.exec_module(module)
+        _interpreter.define_natives(module)
+        return module
+    finally:
+        if added_to_sys_path:
+            sys.path.remove(cwd)
 
 
-class Clock(SpamojiCallable):
-    def call(self, interpreter: "Interpreter", arguments: list[object]) -> float:
-        return time.time()
-
-    def arity(self) -> int:
-        return 0
+@spamoji_function("💬")
+def spamoji_print(_interpreter: "Interpreter", obj: object) -> object:
+    print(_interpreter.stringify(obj))
+    return obj
 
 
-class Sleep(SpamojiCallable):
-    def call(self, interpreter: "Interpreter", arguments: list[object]) -> None:
-        time.sleep(float(typing.cast(float, arguments[0])))
-
-    def arity(self) -> int:
-        return 1
+@spamoji_function("💭")
+def spamoji_print_no_newline(_interpreter: "Interpreter", obj: object) -> object:
+    print(_interpreter.stringify(obj), end="")
+    return obj
 
 
-class StopProgram(SpamojiCallable):
-    def call(self, interpreter: "Interpreter", arguments: list[object]) -> float:
-        sys.exit()
-
-    def arity(self) -> int:
-        return 0
+@spamoji_function("⌨️")
+def get_user_input() -> str:
+    return input()
 
 
-class Randint(SpamojiCallable):
-    def call(self, interpreter: "Interpreter", arguments: list[object]) -> object:
-        return random.randint(
-            int(typing.cast(int, arguments[0])), int(typing.cast(int, arguments[1]))
-        )
+@spamoji_function("🔢")
+def convert_to_float(obj: object) -> float | SpamojiValueError:
+    try:
+        return float(typing.cast(float, obj))
+    except ValueError:
+        return spamoji_value_error
 
-    def arity(self) -> int:
-        return 2
+
+@spamoji_function("🕰️")
+def get_time() -> float:
+    return time.time()
+
+
+@spamoji_function("⏳")
+def sleep(seconds: float) -> None:
+    time.sleep(seconds)
+
+
+@spamoji_function("🛑")
+def stop_program() -> float:
+    sys.exit()
+
+
+@spamoji_function("🎲")
+def random_int(min: int, max: int) -> int:
+    return random.randint(min, max)
