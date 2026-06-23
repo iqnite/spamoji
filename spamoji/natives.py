@@ -2,6 +2,7 @@
 Contains native functions.
 """
 
+import importlib
 import random
 import sys
 import time
@@ -17,6 +18,12 @@ if typing.TYPE_CHECKING:
 @spamoji_function("🐍")
 def python_eval(code: str) -> object:
     return eval(code)
+
+
+@spamoji_function("🐍🧩")
+def python_import(_interpreter: "Interpreter", module_name: str) -> object:
+    module = importlib.import_module(module_name)
+    _interpreter.define_natives(module)
 
 
 @spamoji_function("💬")
