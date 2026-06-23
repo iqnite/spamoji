@@ -3,10 +3,10 @@
         🤖👉name 🫴 name
 
     ⚙️ greet❗
-        💬🫸🔤Beep boop! I am 🔤🫸🤖👉name🫷🔤!🔤🫷
+        💬🫸🔤Beep boop! I am 🔤 ➕ 🤖👉name ➕ 🔤!🔤🫷
     
     ⚙️ greetOther🫸other🫷
-        💬🫸🔤Hello 🔤other👉name🔤! I am 🔤🫸🤖👉name🫷🔤!🔤🫷
+        💬🫸🔤Hello 🔤 ➕ other👉name ➕ 🔤! I am 🔤 ➕ 🤖👉name ➕ 🔤!🔤🫷
 
 
 📜 ShootingRobot 🫸Robot🫷
@@ -17,7 +17,7 @@
     ⚙️ shoot🫸power🫷
         🤔 power 🤜 🤖👉maxPower
         👍
-            💬🫸🔤Cannot shoot more than 🔤power🔤 times!🔤🫷
+            💬🫸🔤Cannot shoot more than 🔤 ➕ power ➕ 🔤 times!🔤🫷
             ↩️
         👋 i 🫴 0
         🔃 i 🤛 power

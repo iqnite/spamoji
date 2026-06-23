@@ -1,26 +1,25 @@
 🗒️ This code should run without errors.
 👋 😀 🫴 🔤This shouldn't get printed🔤
 😀 🫴 🔤A 🔤 ➕ 🔤variable🔤
-🐍🫸🔤print("🔤😀🔤")🔤🫷  🗒️ Basic Python evaluation.
+🐍🫸🔤print("🔤 ➕ 😀 ➕ 🔤")🔤🫷  🗒️ Basic Python evaluation.
 💬🫸😀 🫴 1🫷
 💬🫸➖ 1🫷
 💬🫸✅ 🤝 ❌ 🤲 🙅 ❌🫷
-🐍🫸🔤print("🗒️ 1 + 1 is", 🔤🫸1 ➕ 1🫷🔤)🔤🫷
-💬🫸🔤Implicit concatenation (should be 0_0): 🔤 ➕ 0🔤_🔤0🫷
+🐍🫸🔤print("🗒️ 1 + 1 is", 🔤 ➕ 1 ➕ 1 ➕ 🔤)🔤🫷
 
 👋 😎 🫴 1
-    🐍🫸🔤print("🔤😎🔤", end="")🔤🫷
+    🐍🫸🔤print("🔤 ➕ 😎 ➕ 🔤", end="")🔤🫷
     😎 🫴 2
-    🐍🫸🔤print("🔤😎🔤", end="")🔤🫷
+    🐍🫸🔤print("🔤 ➕ 😎 ➕ 🔤", end="")🔤🫷
     👋 😎 🫴 3
-    🐍🫸🔤print("🔤😎🔤", end="")🔤🫷
-🐍🫸🔤print("🔤😎🔤", end="")🔤🫷
+    🐍🫸🔤print("🔤 ➕ 😎 ➕ 🔤", end="")🔤🫷
+🐍🫸🔤print("🔤 ➕ 😎 ➕ 🔤", end="")🔤🫷
 😎 🫴 1
-🐍🫸🔤print("🔤😎🔤")🔤🫷
+🐍🫸🔤print("🔤 ➕ 😎 ➕ 🔤")🔤🫷
 
 👋 😂 🫴 2
     👋 😂 🫴 😂 ✖️ 2
-    🐍🫸🔤print("Should be 4: 🔤😂🔤")🔤🫷
+    🐍🫸🔤print("Should be 4: 🔤 ➕ 😂 ➕ 🔤")🔤🫷
 
 👋 🥸 🫴 ✅
 🤔 🥸
@@ -45,4 +44,4 @@
 
 🤔 🙅 🥸  🗒️ Skip
 
-🐍🫸🔤print("🔤🫸🤔 🥸 👍 🔤Yep!🔤 👎 🔤Nope🔤🫷🔤")🔤🫷
+🐍🫸🔤print("🔤 ➕ 🤔 🥸 👍 🔤Yep!🔤 👎 🔤Nope🔤🫷 ➕ 🔤")🔤🫷

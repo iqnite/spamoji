@@ -3,16 +3,16 @@
     ⏰ 🫴➕ 1
     🤔 ⏰ 🤛🟰 5
     👍
-        💬🫸⏰🔤 <= 5 -> continue🔤🫷
+        💬🫸🔤🔤 ➕ ⏰ ➕ 🔤 <= 5 -> continue🔤🫷
         ⤴️
     👎
         🤔 ⏰ 🤜 10
         👍
             🔃 ⏰ 🤛 15
-                💬🫸⏰🔤 > 10 -> finishing🔤🫷
+                💬🫸🔤🔤 ➕ ⏰ ➕ 🔤 > 10 -> finishing🔤🫷
                 ⏰ 🫴 ⏰ ➕ 1
             ⛔
-        🐍🫸🔤print("🔤⏰🔤 > 5", end="")🔤🫷
+        🐍🫸🔤print("🔤 ➕ ⏰ ➕ 🔤 > 5", end="")🔤🫷
     💬🫸🔤 -> no continue🔤🫷
 💬🫸🔤Finished, type "stop" to stop🔤🫷
 

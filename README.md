@@ -19,7 +19,7 @@ A programming language that only uses emojis as syntax and encourages writing sp
 👍
     💬🫸🔤Invalid input.🔤🫷
 👎
-    💬🫸🔤The factorial of 🔤😀🔤 is 🔤🔢❕🫸😀🫷🫷
+    💬🫸🔤The factorial of 🔤 ➕ 😀 ➕ 🔤 is 🔤 ➕ 🔢❕🫸😀🫷🫷
 ```
 
 ## What's this all about?
@@ -115,12 +115,6 @@ x 🫴➕ 3  🗒️ -> x is 8 now
 
 Strings are sequences of characters enclosed in 🔤 on each side. They can contain any characters, including emojis. Strings can be used in variable assignments, printed to the console, and concatenated using the ➕ operator.
 
-Values directly before or after a string will also be concatenated with that string:
-
-```spamoji
-🔤Hello 🔤0🔤 world🔤  🗒️ -> Hello 0 world
-```
-
 To use the `🔤` character in a string, write `🚧🔤` instead. To use the `🚧` character, write `🚧🚧` instead.
 
 ### Conditions
@@ -188,11 +182,11 @@ Here's an example of a function definition and call:
 
 ```spamoji
 ⚙️ greetAndAsk 🫸firstName 🔸 lastName🫷
-    💬🫸🔤Hello, 🔤firstName🔤 🔤lastName🔤! Please enter a number...🔤🫷
+    💬🫸🔤Hello, 🔤 ➕ firstName ➕ 🔤 🔤 ➕ lastName ➕ 🔤 ! Please enter a number...🔤🫷
     ↩️ ⌨️❗  🗒️ Return the user input
 
 👋 x 🫴 greetAndAsk🫸🔤John🔤🔸🔤Doe🔤🫷
-💬🫸🔤You entered: 🔤 x🫷
+💬🫸🔤You entered: 🔤 ➕ x🫷
 ```
 
 ### Classes
@@ -209,7 +203,7 @@ Inside of methods, the 🤖 emoji can be used to refer to the current instance.
         🤖👉name 🫴 name
 
     ⚙️ greet❗
-        💬🫸🔤Hello, I am 🔤🫸🤖👉name🫷🔤!🔤🫷
+        💬🫸🔤Hello, I am 🔤 ➕ 🤖👉name ➕ 🔤!🔤🫷
 ```
 
 Classes can inherit methods from other classes (superclasses). Superclass names can be written between 🫸 and 🫷, separated by 🔸, after the class name in the definition. The first superclass can be accessed with the 👆 emoji in methods.
@@ -260,7 +254,7 @@ The 🐍 function allows to directly evaluate Python expressions within Spamoji 
 ```spamoji
 👋 x 🫴 10
 👋 y 🫴 2
-👋 z 🫴 🐍🫸x🔤%🔤y🫷
+👋 z 🫴 🐍🫸🔤🔤 ➕ x ➕ 🔤%🔤 ➕ y ➕ 🔤🫷
 💬🫸z🫷
 ```
 
@@ -283,7 +277,7 @@ The 🐍🧩 function can be used to import functions from Python files into a S
 
 ```spamoji
 🐍🧩🫸🔤examples/sine.py🔤🫷
-💬🫸🔤The sine of 3 is: 🔤🌊🫸3🫷🫷
+💬🫸🔤The sine of 3 is: 🔤 ➕ 🌊🫸3🫷🫷
 ```
 
 ## Credits

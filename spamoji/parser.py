@@ -328,18 +328,8 @@ class Parser:
                 right = self.factor()
                 expr = Binary(expr, operator, right)
                 continue
-            if self.can_implicitly_concatenate(expr):
-                operator = Token(TokenType.PLUS, "➕", None, self.peek().line)
-                right = self.factor()
-                expr = Binary(expr, operator, right)
-                continue
             break
         return expr
-
-    def can_implicitly_concatenate(self, expr: Expr) -> bool:
-        if self.is_string_expr(expr):
-            return self.starts_value(self.peek().token_type)
-        return self.peek().token_type == TokenType.STRING
 
     def is_string_expr(self, expr: Expr) -> bool:
         if isinstance(expr, Literal):
