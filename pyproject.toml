@@ -12,6 +12,9 @@ license = "MIT"
 authors = [{ name = "iqnite" }]
 dependencies = []
 
+[project.urls]
+Repository = "https://github.com/iqnite/spamoji"
+
 [project.scripts]
 spamoji = "spamoji.spamoji:main"
 
