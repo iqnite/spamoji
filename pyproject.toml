@@ -11,6 +11,10 @@ requires-python = ">=3.10"
 license = "MIT"
 authors = [{ name = "iqnite" }]
 dependencies = []
+keywords = ["emoji", "programming language", "esolang", "esoteric programming language"]
+
+[project.urls]
+Repository = "https://github.com/iqnite/spamoji"
 
 [project.scripts]
 spamoji = "spamoji.spamoji:main"
