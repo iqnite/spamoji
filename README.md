@@ -59,7 +59,7 @@ python -m spamoji my_program.🍝
 > [!IMPORTANT]
 > The emojis used in the syntax were entered on a Windows machine. While they should work on other platforms, some emojis might not render correctly or might be replaced with different emojis. If you encounter any issues, please try copying and pasting the emojis from this documentation into your code.
 
-### Statements
+### ❗ Statements
 
 Each line of code starts with an emoji that indicates the type of statement. Each statement is followed by the relevant information, separated by spaces. Statements include:
 
@@ -234,7 +234,7 @@ The 🧩 emoji can be used to include code from another file in the current code
 
 The language includes several built-in functions and values for common operations.
 
-### Built-in functions
+### 💬 Built-in functions
 
 - 💬🫸string🫷: Print string to a new line in the console
 - 💭🫸string🫷: Print string to the console without creating a new line
