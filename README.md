@@ -1,8 +1,8 @@
-# spamoji
+# 🍝 spamoji
 
 A programming language that only uses emojis as syntax and encourages writing spaghetti code.
 
-## Example
+## 🎓 Example
 
 ```spamoji
 🗒️ A function to calculate factorial
@@ -22,11 +22,11 @@ A programming language that only uses emojis as syntax and encourages writing sp
     💬🫸🔤The factorial of 🔤 ➕ 😀 ➕ 🔤 is 🔤 ➕ 🔢❕🫸😀🫷🫷
 ```
 
-## What's this all about?
+## 💭 What's this all about?
 
 This language is a learning project. Since it lacks many features of a typical programming language, it is not recommended for production use. If this experiment is successful, I might move on and begin working on Esore, a more serious language I've been designing in the past 2 years.
 
-## Installation
+## 📦 Installation
 
 To install the spamoji interpreter, you will need to have Python 3.10 or higher installed on your machine. You can download Python from the [official website](https://www.python.org/downloads/).
 
@@ -36,7 +36,7 @@ Once you have Python installed, you can install the spamoji interpreter using pi
 pip install spamoji
 ```
 
-## Usage
+## 🚀 Usage
 
 To run a spamoji program, you will need to use the spamoji interpreter.
 
@@ -54,7 +54,7 @@ If the above command doesn't work, you can also run the interpreter using Python
 python -m spamoji my_program.🍝
 ```
 
-## Syntax
+## 📝 Syntax
 
 > [!IMPORTANT]
 > The emojis used in the syntax were entered on a Windows machine. While they should work on other platforms, some emojis might not render correctly or might be replaced with different emojis. If you encounter any issues, please try copying and pasting the emojis from this documentation into your code.
@@ -80,13 +80,13 @@ Statements starting with any other character are going to be considered as expre
 
 Some statements can be nested, such as if statements and loops. Indentation is used to indicate the scope of these statements. Indented blocks are considered part of the previous statement until the indentation level decreases.
 
-### Expressions
+### 🧠 Expressions
 
 An expression is a piece of code that produces a value and/or executes actions. Function calls, variables, and operations are all expressions and can be used on their own or inside of other expressions or statements.
 
 🫸 and 🫷 can be used to group expressions and control the order of evaluation.
 
-### Operators
+### 🔣 Operators
 
 The language supports basic operators for logical and arithmetic operations. These can be used between two values to perform calculations.
 
@@ -111,13 +111,13 @@ Operators can also be combined with variable assignment to perform an operation 
 x 🫴➕ 3  🗒️ -> x is 8 now
 ```
 
-### Strings
+### 🔤 Strings
 
 Strings are sequences of characters enclosed in 🔤 on each side. They can contain any characters, including emojis. Strings can be used in variable assignments, printed to the console, and concatenated using the ➕ operator.
 
 To use the `🔤` character in a string, write `🚧🔤` instead. To use the `🚧` character, write `🚧🚧` instead.
 
-### Conditions
+### 🤔 Conditions
 
 The 🤔 statement allows to run different code depending on a certain condition:
 
@@ -147,7 +147,7 @@ Conditions can also be used inside of other expressions:
 
 Here, if condition is true, `a` will be returned, otherwise `b`. It is important to note that inline conditions like this require both a 👍 and a 👎, otherwise an error will be raised.
 
-### Loops
+### 🔃 Loops
 
 The 🔃 statement can be used to run code repeatedly while a certain condition is true.
 
@@ -158,7 +158,7 @@ The 🔃 statement can be used to run code repeatedly while a certain condition 
 
 Additionally, the ⛔ and ⤴️ statements can be used to control the loop execution. ⛔ stops the loop immediately, regardless of the condition. ⤴️ jumps back to the beginning of the loop.
 
-### Variables
+### 👋 Variables
 
 Variables are declared using the 👋 emoji, followed by the variable assignment expression. An assignment expression starts with the variable name, followed by 🫴 and a value. For example:
 
@@ -172,7 +172,7 @@ Variable names can be any combination of letters, numbers, and emojis, but must 
 
 Variables declared inside of a block are only accessible inside of that block and any nested blocks.
 
-### Functions
+### ⚙️ Functions
 
 Functions are defined using the ⚙️ emoji, followed by the function name and parameters. The function body is indented and can contain any valid statements. The function can return a value using the ↩️ emoji.
 
@@ -196,7 +196,7 @@ In some cases, functions can be called without parentheses:
 💬 1 ➕ 2
 ```
 
-### Classes
+### 📜 Classes
 
 Classes are defined using the 📜 emoji. The class body is indented and can contain any valid statements. Any function statements directly in the class body will be added to the class as methods.
 
@@ -221,7 +221,7 @@ Classes can inherit methods from other classes (superclasses). Superclass names 
         ↩️ 👆👉name
 ```
 
-### Imports
+### 🧩 Imports
 
 The 🧩 emoji can be used to include code from another file in the current code:
 
@@ -230,7 +230,7 @@ The 🧩 emoji can be used to include code from another file in the current code
 👋 bot 🫴 robots👉Robot🫸name🫷
 ```
 
-## Built-ins
+## 🎁 Built-ins
 
 The language includes several built-in functions and values for common operations.
 
@@ -245,16 +245,16 @@ The language includes several built-in functions and values for common operation
 - 🕰️❗: Get time since epoch in seconds
 - 🛑❗: Stop the program
 
-### Built-in values
+### ✅ Built-in values
 
 - ✅: true
 - ❌: false
 - 🫥: unassigned/null/no value
 - ⚠️: error/invalid value
 
-### Python interoperability
+### 🐍 Python interoperability
 
-#### Inline evaluation
+#### ➡️ Inline evaluation
 
 The 🐍 function allows to directly evaluate Python expressions within Spamoji code. The results of these evaluations can be stored in variables and used in Spamoji. For example, the following code prints the modulo of `x` and `y`:
 
@@ -265,7 +265,7 @@ The 🐍 function allows to directly evaluate Python expressions within Spamoji 
 💬🫸z🫷
 ```
 
-#### Exporting functions from Python
+#### 📤 Exporting functions from Python
 
 To make a Python function available in Spamoji, you can use the `spamoji_function` decorator. This decorator takes an emoji as an argument, which will be used to call the function in Spamoji code. For example, the following Python function can be called in Spamoji using the 😎 emoji:
 
@@ -278,7 +278,7 @@ def sine(x):
     return math.sin(x)
 ```
 
-#### Importing Python functions
+#### 📥 Importing Python functions
 
 The 🐍🧩 function can be used to import functions from Python files into a Spamoji program. For example:
 
@@ -287,7 +287,7 @@ The 🐍🧩 function can be used to import functions from Python files into a S
 💬🫸🔤The sine of 3 is: 🔤 ➕ 🌊🫸3🫷🫷
 ```
 
-## Credits
+## 🫂 Credits
 
 Thanks to Robert Nystrom for his book "Crafting Interpreters" which inspired the design of this language and provided guidance on how to implement it.
 
