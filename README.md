@@ -168,7 +168,7 @@ Variables are declared using the 👋 emoji, followed by the variable assignment
 
 The declaration and assignment can also be on separate lines. Any unassigned variables will start with value 🫥.
 
-Variable names can be any combination of letters, numbers, and emojis, but must start with a letter or emoji and cannot contain [statement characters](#statements).
+Variable names can be any combination of letters, numbers, and emojis, but must start with a letter or emoji and cannot contain [statement characters](#-statements).
 
 Variables declared inside of a block are only accessible inside of that block and any nested blocks.
 
