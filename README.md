@@ -202,7 +202,7 @@ Classes are defined using the 📜 emoji. The class body is indented and can con
 
 Class instances are created by calling the class name, like a function. When an instance is created, the special method ✨ will be called.
 
-Inside of methods, the 🤖 emoji can be used to refer to the current instance.
+The 👉 emoji can be used to access instance variables and methods. Inside of methods, the 🤖 emoji can be used to refer to the current instance.
 
 ```spamoji
 📜 MyClass
@@ -223,12 +223,14 @@ Classes can inherit methods from other classes (superclasses). Superclass names 
 
 ### 🧩 Imports
 
-The 🧩 emoji can be used to include code from another file in the current code:
+The 🧩 emoji can be used to include code from another file in the current code. To access imported functions or classes, use the 👉 emoji:
 
 ```spamoji
 🧩 robots.🍝
 👋 bot 🫴 robots👉Robot🫸name🫷
 ```
+
+If the file extension is omitted in the import statement, it will default to `.🍝`.
 
 ## 🎁 Built-ins
 
