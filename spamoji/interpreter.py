@@ -5,7 +5,12 @@ Contains the actual interpreter.
 import typing
 
 from spamoji import expr, natives, stmt
-from spamoji.classes import SpamojiClass, SpamojiInstance, SpamojiModule
+from spamoji.classes import (
+    SpamojiClass,
+    SpamojiInstance,
+    SpamojiModule,
+    SpamojiNativeInstance,
+)
 from spamoji.environment import Environment
 from spamoji.expr import Binary, Expr, Grouping, Literal, Unary
 from spamoji.functions import (
@@ -54,9 +59,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             if not hasattr(func, "_spamoji_callable"):
                 continue
             self.environment.define(
-                getattr(func, "_spamoji_emoji"),
-                getattr(func, "_spamoji_callable", None)
-                or getattr(func, "_spamoji_class"),
+                getattr(func, "_spamoji_emoji"), getattr(func, "_spamoji_callable")
             )
 
     def visit_literal_expr(self, expr: Literal) -> object:
@@ -306,12 +309,22 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             return typing.cast(SpamojiInstance, obj).get(expr.name)
         if isinstance(obj, SpamojiModule):
             return typing.cast(SpamojiModule, obj).get(expr.name)
+        if hasattr(type(obj), "_spamoji_callable"):
+            native_class = getattr(type(obj), "_spamoji_callable")
+            if isinstance(native_class, SpamojiClass):
+                return SpamojiNativeInstance(native_class, obj).get(expr.name)
         raise SpamojiRuntimeError(
             expr.name, "Only instances and modules have properties."
         )
 
     def visit_set_expr(self, expr: expr.Set) -> object:
         obj = self.evaluate(expr.obj)
+        if not isinstance(obj, (SpamojiInstance, SpamojiModule)) and hasattr(
+            type(obj), "_spamoji_callable"
+        ):
+            native_class = getattr(type(obj), "_spamoji_callable")
+            if isinstance(native_class, SpamojiClass):
+                obj = SpamojiNativeInstance(native_class, obj)
         if isinstance(obj, SpamojiInstance):
             if expr.operator is None:
                 value = self.evaluate(expr.value)
