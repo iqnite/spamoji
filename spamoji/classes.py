@@ -2,11 +2,13 @@
 Contains the base construct for Spamoji classes
 """
 
+import inspect
 from typing import TYPE_CHECKING
+import typing
 
 from spamoji.environment import Environment
 from spamoji.expr import Expr
-from spamoji.functions import SpamojiCallable, SpamojiFunction
+from spamoji.functions import SpamojiCallable, SpamojiFunction, spamoji_function
 from spamoji.helpers import SpamojiRuntimeError
 from spamoji.token import Token
 
@@ -92,3 +94,49 @@ class SpamojiModule:
 
     def __str__(self) -> str:
         return f"<🧩 {self.name}>"
+
+
+def spamoji_class(emoji: str | None = None) -> typing.Callable:
+    """
+    Decorator to mark a class as a Spamoji native class.
+    The class will be registered as a native class in the Spamoji interpreter.
+    If the emoji parameter is provided, it will be used as the class's emoji name.
+
+    Example usage:
+    @spamoji_class("🎁")
+    class MyNativeClass:
+        pass
+    """
+
+    def decorator(cls: typing.Type) -> typing.Callable:
+        if hasattr(cls, "_spamoji_class"):
+            return cls
+
+        class WrappedClass(cls, SpamojiClass):
+            def __init__(self, *args, **kwargs):
+                cls.__init__(self, *args, **kwargs)
+                SpamojiClass.__init__(
+                    self,
+                    name=emoji or cls.__name__,
+                    superclasses=[
+                        spamoji_class()(superclass)
+                        for superclass in cls.__bases__
+                        if superclass is not object
+                    ],
+                    methods={
+                        name: SpamojiFunction(
+                            declaration=spamoji_function()(method),
+                            closure=Environment(),
+                            is_initializer=False,
+                        )
+                        for name, method in inspect.getmembers(
+                            cls, predicate=inspect.isfunction
+                        )
+                    },
+                )
+
+        setattr(cls, "_spamoji_emoji", emoji or cls.__name__)
+        setattr(cls, "_spamoji_class", WrappedClass)
+        return cls
+
+    return decorator

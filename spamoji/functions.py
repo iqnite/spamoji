@@ -81,6 +81,9 @@ def spamoji_function(emoji: str | None = None) -> typing.Callable:
     """
 
     def decorator(func: typing.Callable) -> typing.Callable:
+        if hasattr(func, "_spamoji_callable"):
+            return func
+
         parameters = inspect.signature(func).parameters
 
         def call(interpreter: "Interpreter", arguments: list[object]) -> object:
