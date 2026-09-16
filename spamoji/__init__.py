@@ -2,6 +2,7 @@
 Interface for the Spamoji interpreter.
 """
 
+from spamoji.classes import spamoji_class
 from spamoji.functions import spamoji_function
 from spamoji.interpreter import Interpreter
 from spamoji.metadata import __version__
