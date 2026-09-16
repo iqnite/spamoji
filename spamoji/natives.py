@@ -10,6 +10,7 @@ import sys
 import time
 import typing
 
+from spamoji.classes import spamoji_class
 from spamoji.functions import spamoji_function
 from spamoji.helpers import SpamojiValueError, spamoji_value_error
 
@@ -88,3 +89,7 @@ def stop_program() -> float:
 @spamoji_function("🎲")
 def random_int(min: int | float, max: int | float) -> int:
     return random.randint(int(min), int(max))
+
+
+@spamoji_class("🔠")
+class SpamojiString(str): ...

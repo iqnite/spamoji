@@ -94,24 +94,26 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             return obj
         return True
 
-    def stringify(self, obj: object) -> str:
+    def stringify(self, obj: object) -> natives.SpamojiString:
         if obj is None:
-            return "🫥"
+            return natives.SpamojiString("🫥")
         text = str(obj)
         if isinstance(obj, float):
             if text.endswith(".0"):
-                return text[:-2]
+                return natives.SpamojiString(text[:-2])
         if isinstance(obj, bool):
-            return "✅" if obj else "❌"
+            return natives.SpamojiString("✅") if obj else natives.SpamojiString("❌")
         if obj is spamoji_value_error:
-            return "⚠️"
-        return text
+            return natives.SpamojiString("⚠️")
+        return natives.SpamojiString(text)
 
     def visit_grouping_expr(self, expr: Grouping) -> object:
         return self.evaluate(expr.expression)
 
     def evaluate(self, expr: Expr) -> object:
         result = expr.accept(self)
+        if isinstance(result, str):
+            result = natives.SpamojiString(result)
         if self.print_expressions:
             self.prints.append(result)
         return result
