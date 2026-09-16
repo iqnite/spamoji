@@ -107,6 +107,15 @@ class TestExamples(unittest.TestCase):
             "Use the 🔤 character around strings, use the 🚧 character to escape values!\n",
         )
 
+    @patch("sys.stdout", new_callable=io.StringIO)
+    def test_pyclass_example(self, mock_stdout: io.StringIO):
+        self.app.run_file("examples/pyclass.🍝")
+        self.assertFalse(self.app.had_error)
+        self.assertFalse(self.app.had_runtime_error)
+        self.assertEqual(
+            mock_stdout.getvalue(), "thingy\n"
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
