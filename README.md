@@ -101,7 +101,7 @@ The language supports basic operators for logical and arithmetic operations. The
 - 🤜🟰: Greater than or equal
 - 🤛🟰: Less than or equal
 - 🤝: Logical AND
-- 🤲: Logical OR
+- 👐: Logical OR
 - 🙅: Logical NOT
 
 Operators can also be combined with variable assignment to perform an operation and assign the result to the variable in one step. Supported compound forms are `🫴➕`, `🫴➖`, `🫴✖️`, and `🫴➗`:

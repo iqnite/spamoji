@@ -223,7 +223,7 @@ KEYWORDS = {
     "🫴✖️": TokenType.MULTIPLY_ASSIGNMENT,
     "🫴➗": TokenType.DIVIDE_ASSIGNMENT,
     "🤝": TokenType.AND,
-    "🤲": TokenType.OR,
+    "👐": TokenType.OR,
     "🙅": TokenType.NOT,
     "➕": TokenType.PLUS,
     "➖": TokenType.MINUS,
