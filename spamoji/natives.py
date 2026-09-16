@@ -91,5 +91,7 @@ def random_int(min: int | float, max: int | float) -> int:
     return random.randint(int(min), int(max))
 
 
-@spamoji_class("🔠")
-class SpamojiString(str): ...
+@spamoji_class("str", str)
+class SpamojiString(str):
+    def __str__(self) -> str:
+        return self

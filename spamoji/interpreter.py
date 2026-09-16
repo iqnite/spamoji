@@ -23,6 +23,8 @@ from spamoji.functions import (
 from spamoji.helpers import SpamojiRuntimeError, spamoji_value_error
 from spamoji.token import Token, TokenType
 
+StringAlias = str | natives.SpamojiString
+
 
 class Interpreter(expr.Visitor, stmt.Visitor):
     """Interpreter for the Spamoji language. Evaluates an AST and produces a result."""
@@ -34,6 +36,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         self.environment = self.globals
         self.print_expressions = False
         self.prints = []
+        self.bound_types: dict[type, SpamojiClass] = {}
         self.define_natives(natives)
         self.globals.define("⚠️", spamoji_value_error)
 
@@ -61,6 +64,16 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             self.environment.define(
                 getattr(func, "_spamoji_emoji"), getattr(func, "_spamoji_callable")
             )
+            if hasattr(func, "_spamoji_bound_type"):
+                self.bound_types[getattr(func, "_spamoji_bound_type")] = getattr(
+                    func, "_spamoji_callable"
+                )
+
+    def resolve_bound_native(self, obj: object) -> object:
+        for cls, spamoji_class in self.bound_types.items():
+            if isinstance(obj, cls):
+                return spamoji_class.call(self, [obj])
+        return obj
 
     def visit_literal_expr(self, expr: Literal) -> object:
         return expr.value
@@ -116,9 +129,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
         return self.evaluate(expr.expression)
 
     def evaluate(self, expr: Expr) -> object:
-        result = expr.accept(self)
-        if isinstance(result, str):
-            result = natives.SpamojiString(result)
+        result = self.resolve_bound_native(expr.accept(self))
         if self.print_expressions:
             self.prints.append(result)
         return result
@@ -260,7 +271,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             case TokenType.PLUS:
                 if isinstance(left, float) and isinstance(right, float):
                     return left + right
-                if isinstance(left, str) or isinstance(right, str):
+                if isinstance(left, StringAlias) or isinstance(right, StringAlias):
                     return self.stringify(left) + self.stringify(right)
                 raise SpamojiRuntimeError(
                     expr.operator, "Operands must be numbers or strings."

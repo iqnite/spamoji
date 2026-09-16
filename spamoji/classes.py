@@ -9,7 +9,7 @@ import typing
 from spamoji.environment import Environment
 from spamoji.expr import Expr
 from spamoji.functions import SpamojiCallable, SpamojiFunction
-from spamoji.helpers import SpamojiRuntimeError
+from spamoji.helpers import SpamojiRuntimeError, spamoji_value_error
 from spamoji.token import Token
 
 if TYPE_CHECKING:
@@ -152,6 +152,9 @@ class SpamojiNativeMethod(SpamojiFunction):
         if "_interpreter" in self.parameters:
             idx = list(self.parameters).index("_interpreter")
             args.insert(idx, interpreter)
+        if "_spamoji_instance" in self.parameters:
+            idx = list(self.parameters).index("_spamoji_instance")
+            args.insert(idx, self.instance)
         result = self.func(*args)
         if self.is_initializer:
             return self.instance
@@ -166,6 +169,8 @@ class SpamojiNativeMethod(SpamojiFunction):
     def arity(self) -> int:
         count = len(self.parameters)
         if "_interpreter" in self.parameters:
+            count -= 1
+        if "_spamoji_instance" in self.parameters:
             count -= 1
         if self.has_self:
             count -= 1
@@ -215,12 +220,17 @@ class SpamojiNativeClass(SpamojiClass):
             idx = list(self.init_parameters).index("_interpreter")
             args.insert(idx, interpreter)
         native_obj = self.cls(*args)
-        if isinstance(native_obj, SpamojiInstance):
+        if (
+            isinstance(native_obj, (SpamojiInstance, float, str, int, bool))
+            or native_obj is spamoji_value_error
+        ):
             return native_obj
         return SpamojiNativeInstance(self, native_obj)
 
 
-def spamoji_class(emoji_or_cls: str | None = None) -> typing.Callable:
+def spamoji_class(
+    emoji_or_cls: str | typing.Type | None = None, bound_type: typing.Type | None = None
+) -> typing.Callable:
     """
     Decorator to mark a class as a Spamoji native class.
     The class will be registered as a native class in the Spamoji interpreter.
@@ -276,6 +286,8 @@ def spamoji_class(emoji_or_cls: str | None = None) -> typing.Callable:
             setattr(cls, "_spamoji_emoji", class_name)
             setattr(cls, "_spamoji_callable", native_class)
             setattr(cls, "_spamoji_class", native_class)
+            if bound_type is not None:
+                setattr(cls, "_spamoji_bound_type", bound_type)
         except TypeError:
             pass
         return cls

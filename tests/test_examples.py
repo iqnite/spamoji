@@ -113,7 +113,7 @@ class TestExamples(unittest.TestCase):
         self.assertFalse(self.app.had_error)
         self.assertFalse(self.app.had_runtime_error)
         self.assertEqual(
-            mock_stdout.getvalue(), "thingy\n"
+            mock_stdout.getvalue(), "thingy\nTEST\n"
         )
 
 
