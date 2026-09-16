@@ -83,7 +83,7 @@ class Scanner:
                 self.string()
                 self.is_line_start = False
             case _:
-                if c.isdigit():
+                if self.is_digit(c):
                     self.number()
                 else:
                     self.identifier()
@@ -159,17 +159,21 @@ class Scanner:
 
     def number(self):
         """Scans a number literal."""
-        while self.peek().isdigit():
+        while self.is_digit(self.peek()) or self.peek() in ("\ufe0f", "\u20e3"):
             self.advance()
 
-        if self.peek() == "." and self.peek_next().isdigit():
+        if self.peek() == "." and (
+            self.is_digit(self.peek_next()) or self.peek_next() in ("\ufe0f", "\u20e3")
+        ):
             # Consume the "."
             self.advance()
 
-            while self.peek().isdigit():
+            while self.is_digit(self.peek()) or self.peek() in ("\ufe0f", "\u20e3"):
                 self.advance()
 
-        value = float(self.source[self.start : self.current])
+        raw_str = self.source[self.start : self.current]
+        clean_str = raw_str.replace("\ufe0f", "").replace("\u20e3", "")
+        value = float(clean_str)
         self.add_token(TokenType.NUMBER, value)
 
     def peek_next(self) -> str:
@@ -189,6 +193,10 @@ class Scanner:
             return
 
         self.add_token(TokenType.IDENTIFIER, text)
+
+    def is_digit(self, c: str) -> bool:
+        """Checks if a character is a digit."""
+        return c.isdigit()
 
 
 KEYWORDS = {
