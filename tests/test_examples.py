@@ -104,7 +104,10 @@ class TestExamples(unittest.TestCase):
         self.assertFalse(self.app.had_runtime_error)
         self.assertEqual(
             mock_stdout.getvalue(),
-            "Use the 🔤 character around strings, use the 🚧 character to escape values!\n",
+            "Use the 🔤 character around strings, use the 🚧 character to escape values!\n"
+            "TEST\n"
+            "t\n"
+            "4\n",
         )
 
     @patch("sys.stdout", new_callable=io.StringIO)
@@ -113,7 +116,7 @@ class TestExamples(unittest.TestCase):
         self.assertFalse(self.app.had_error)
         self.assertFalse(self.app.had_runtime_error)
         self.assertEqual(
-            mock_stdout.getvalue(), "thingy\nTEST\n"
+            mock_stdout.getvalue(), "thingy\n"
         )
 
 
