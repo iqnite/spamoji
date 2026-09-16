@@ -100,7 +100,7 @@ class Interpreter(expr.Visitor, stmt.Visitor):
 
     def check_number_operands(self, operator: Token, *operands: object):
         for operand in operands:
-            if not isinstance(operand, float):
+            if not isinstance(operand, float | int):
                 raise SpamojiRuntimeError(operator, "Operands must be numbers.")
 
     def is_truthy(self, obj: object) -> bool:

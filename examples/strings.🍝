@@ -1,6 +1,8 @@
 👋 escape 🫴 🔤🚧🚧🔤
 👋 a 🫴 🔤Use the 🚧🔤 character around strings, use the 🔤 ➕ escape ➕ 🔤 character to escape values!🔤
 💬🫸a🫷
-💬 🔤test🔤👉upper❗
-💬 🔤test🔤👉🤏🫸0🫷
-💬 📏🫸🔤test🔤🫷
+👋 text 🫴 🔤test🔤
+👋 c 🫴 0
+🔃 c 🤛 📏🫸text🫷
+    💬🫸text👉🤏🫸c🫷👉upper❗🫷
+    c 🫴➕ 1
