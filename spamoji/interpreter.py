@@ -54,7 +54,9 @@ class Interpreter(expr.Visitor, stmt.Visitor):
             if not hasattr(func, "_spamoji_callable"):
                 continue
             self.environment.define(
-                getattr(func, "_spamoji_emoji"), getattr(func, "_spamoji_callable")
+                getattr(func, "_spamoji_emoji"),
+                getattr(func, "_spamoji_callable", None)
+                or getattr(func, "_spamoji_class"),
             )
 
     def visit_literal_expr(self, expr: Literal) -> object:
@@ -112,8 +114,6 @@ class Interpreter(expr.Visitor, stmt.Visitor):
 
     def evaluate(self, expr: Expr) -> object:
         result = expr.accept(self)
-        if isinstance(result, str):
-            result = natives.SpamojiString(result)
         if self.print_expressions:
             self.prints.append(result)
         return result
