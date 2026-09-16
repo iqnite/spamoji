@@ -115,6 +115,13 @@ x 🫴➕ 3  🗒️ -> x is 8 now
 
 Strings are sequences of characters enclosed in 🔤 on each side. They can contain any characters, including emojis. Strings can be used in variable assignments, printed to the console, and concatenated using the ➕ operator.
 
+To get a character at a specific index in a string, use the 🤏 method:
+
+```spamoji
+👋 text 🫴 🔤test🔤
+💬 text👉🤏🫸0🫷  🗒️ Output: t
+```
+
 To use the `🔤` character in a string, write `🚧🔤` instead. To use the `🚧` character, write `🚧🚧` instead.
 
 ### 🤔 Conditions
@@ -243,6 +250,7 @@ The language includes several built-in functions and values for common operation
 - ⌨️❗: Get user input from the console
 - ⏳🫸time🫷: Wait for a specified number of seconds
 - 🔢🫸value🫷: Convert value to a number, return ⚠️ if the conversion fails
+- 📏🫸value🫷: Get the length of the value
 - 🎲🫸min🔸max🫷: Get a random integer from min to max
 - 🕰️❗: Get time since epoch in seconds
 - 🛑❗: Stop the program
