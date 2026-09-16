@@ -177,6 +177,8 @@ class Parser:
         initializer = None
         if self.match(TokenType.ASSIGNMENT):
             initializer = self.expression()
+            if not self.match(TokenType.NEWLINE, TokenType.EOF):
+                initializer = self.finish_call(initializer, implicit=True)
         return stmt.Variable(name, initializer)
 
     def expression_statement(self) -> Stmt:
@@ -214,6 +216,13 @@ class Parser:
         ):
             assignment_operator = self.previous()
             value = self.assignment()
+            if not self.check(
+                TokenType.NEWLINE,
+                TokenType.EOF,
+                TokenType.RIGHT_PAREN,
+                TokenType.COMMA,
+            ):
+                value = self.finish_call(value, implicit=True)
             compound_operator = self.compound_assignment_operator(assignment_operator)
             if isinstance(expression, expr.Variable):
                 name = expression.name

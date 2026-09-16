@@ -52,12 +52,12 @@
       "args": "${workspaceFolder}/examples/implicit_call.🍝"
     },
     {
-      "name": "Sine function example",
+      "name": "Pyclass example",
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/main.py",
       "console": "integratedTerminal",
-      "args": "${workspaceFolder}/examples/sine.🍝"
+      "args": "${workspaceFolder}/examples/pyclass.🍝"
     },
     {
       "name": "Custom file",
