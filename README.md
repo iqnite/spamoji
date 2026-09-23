@@ -277,7 +277,7 @@ The 🐍 function allows to directly evaluate Python expressions within Spamoji 
 
 #### 📤 Exporting classes and functions from Python
 
-To make a Python class or function available in Spamoji, you can use the `spamoji_class` and `spamoji_function` decorators. These decorators take an emoji as an argument, which will be used to call the class or function in Spamoji code. For example, the following Python function can be called in Spamoji using the 😎 emoji:
+To make a Python class or function available in Spamoji, you can use the `spamoji_class` and `spamoji_function` decorators. These decorators take an emoji as an argument, which will be used to call the class or function in Spamoji code. For example, the following Python function can be called in Spamoji using the 🌊 emoji:
 
 ```python
 import math
